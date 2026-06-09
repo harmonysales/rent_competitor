@@ -105,7 +105,7 @@ tr:hover td{background:var(--bg)}
 <body>
 <div class="hd">
   <div><h1>전국 렌트카업체 대수 현황</h1><p>하모니렌트카 전용 대시보드 · 업체별 · 월별 · 차종별 보유 대수</p></div>
-  <span class="badge" id="latestBadge">기준: 데이터 로드 중</span>
+  <span class="badge" id="latestBadge">기준: 데이터 없음</span>
 </div>
 <div class="upbar">
   <span class="ul">데이터 업데이트</span>
@@ -114,7 +114,7 @@ tr:hover td{background:var(--bg)}
     최신 엑셀 업데이트
   </label>
   <input type="file" id="fi" accept=".xlsx,.xls">
-  <span class="uh">기본 데이터가 내장되어 있어 파일 전송 시 다른 직원도 바로 볼 수 있습니다.</span>
+  <span class="uh">전국 엑셀 파일을 여기에 업로드하세요.</span>
   <span id="us" class="us"></span>
 </div>
 <div class="mntab">
@@ -131,7 +131,7 @@ tr:hover td{background:var(--bg)}
   </div>
   <div class="r2">
     <div class="card">
-      <div class="chr"><div><div class="ct">월별 총 보유 대수 추이</div><div class="cs" id="tSub"></div></div></div>
+      <div class="chr"><div><div class="ct">월별 총 보유 대수 추이</div><div class="cs" id="tSub">엑셀 데이터를 업로드해주세요</div></div></div>
       <div class="cw"><canvas id="tChart"></canvas></div>
       <button class="rtbtn" onclick="tog('tRep',this)"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>간단 리포트 보기</button>
       <div class="rbox" id="tRep"></div>
@@ -191,14 +191,9 @@ tr:hover td{background:var(--bg)}
     <div id="csArea"><div class="nf">업체명을 검색하면 추이 그래프가 나타납니다</div></div>
   </div>
 </div>
-<div class="ft">전국 렌트카업체 대수 현황 대시보드 · 하모니렌트카 전용 · 데이터 내장형 공유 버전</div>
+<div class="ft">전국 렌트카업체 대수 현황 대시보드 · 하모니렌트카 전용</div>
 
 <script>
-// --- 하모니렌트카 마스터 데이터 코드 내부 고정 매립 ---
-const BUILTIN_M=[{"m":"2025.01","t":1250206,"s":1227974,"v":22038,"e":194,"co":1184},{"m":"2025.02","t":1253249,"s":1231060,"v":21965,"e":224,"co":1184},{"m":"2025.03","t":1257909,"s":1235687,"v":22009,"e":213,"co":1191},{"m":"2025.04","t":1262929,"s":1240828,"v":21909,"e":192,"co":1193},{"m":"2025.05","t":1267612,"s":1245640,"v":21779,"e":193,"co":1195},{"m":"2025.06","t":1270568,"s":1248839,"v":21573,"e":156,"co":1195},{"m":"2025.07","t":1280322,"s":1258433,"v":21726,"e":163,"co":1200},{"m":"2025.08","t":1286889,"s":1265031,"v":21697,"e":161,"co":1205},{"m":"2025.09","t":1292102,"s":1270514,"v":21415,"e":173,"co":1205},{"m":"2025.10","t":1292044,"s":1270451,"v":21426,"e":167,"co":1218},{"m":"2025.11","t":1297251,"s":1276223,"v":20861,"e":167,"co":1218},{"m":"2025.12","t":1296233,"s":1276135,"v":19932,"e":166,"co":1218},{"m":"2026.01","t":1296232,"s":1276383,"v":19686,"e":163,"co":1220},{"m":"2026.02","t":1301996,"s":1282149,"v":19685,"e":162,"co":1222},{"m":"2026.03","t":1309798,"s":1290052,"v":19596,"e":162,"co":1233},{"m":"2026.04","t":1313975,"s":1294425,"v":19404,"e":146,"co":1234}];
-const BUILTIN_H=[{"m":"2025.01","r":18,"t":11941,"s":11902,"v":39},{"m":"2025.02","r":18,"t":12214,"s":12175,"v":39},{"m":"2025.03","r":18,"t":12472,"s":12433,"v":39},{"m":"2025.04","r":17,"t":13090,"s":13051,"v":39},{"m":"2025.05","r":17,"t":13090,"s":13051,"v":39},{"m":"2025.06","r":17,"t":13437,"s":13399,"v":38},{"m":"2025.07","r":17,"t":13872,"s":13834,"v":38},{"m":"2025.08","r":17 attach:"t",14272,"s":14234,"v":38},{"m":"2025.08","r":17,"t":14272,"s":14234,"v":38},{"m":"2025.09","r":17,"t":14315,"s":14259,"v":56},{"m":"2025.10","r":17,"t":14743,"s":14688,"v":55},{"m":"2025.11","r":17,"t":15045,"s":14990,"v":55},{"m":"2025.12","r":17,"t":15245,"s":15190,"v":55},{"m":"2026.01","r":16,"t":15247,"s":15192,"v":55},{"m":"2026.02","r":16,"t":15377,"s":15323,"v":54},{"m":"2026.03","r":16,"t":15679,"s":15625,"v":54},{"m":"2026.04","r":16,"t":15863,"s":15810,"v":53}];
-const BUILTIN_P={"2026.04":[{"n":"롯데렌탈(주)","t":250614,"s":247808,"v":2806,"e":0,"r":1},{"n":"에스케이렌터카(주)","t":195008,"s":192191,"v":2817,"e":0,"r":2},{"n":"현대캐피탈(주)","t":157790,"s":155229,"v":2561,"e":0,"r":3},{"n":"하나캐피탈(주)","t":91931,"s":91669,"v":262,"e":0,"r":4},{"n":"케이비캐피탈(주)","t":54392,"s":54302,"v":90,"e":0,"r":5},{"n":"우리금융캐피탈(주)","t":53914,"s":53781,"v":133,"e":0,"r":6},{"n":"신한카드(주)","t":44031,"s":43737,"v":294,"e":0,"r":7},{"n":"(주)하모니렌트카","t":15863,"s":15810,"v":53,"e":0,"r":16}]};
-
 const f=n=>Number(n).toLocaleString('ko-KR');
 const fk=n=>n>=10000?(n/10000).toFixed(1)+'만':f(n);
 Chart.defaults.font.family="'Inter','Noto Sans KR',sans-serif";
@@ -206,7 +201,7 @@ Chart.defaults.color='#888880';
 Chart.defaults.font.size=11;
 const CC={bl:'#2563eb',gn:'#059669',am:'#d97706',pu:'#7c3aed',rd:'#dc2626',hm:'#0f766e',bd:'#e6e6e2',bla:'rgba(37,99,235,0.1)',hma:'rgba(15,118,110,0.1)'};
 
-let G={monthly:BUILTIN_M,ht:BUILTIN_H,pm:BUILTIN_P,ch:{},cl:[],months:BUILTIN_M.map(r=>r.m),sel:BUILTIN_M[BUILTIN_M.length-1].m,sk:'t',sa:false,tsq:'',comps:[]};
+let G={monthly:[],ht:[],pm:{},ch:{},cl:[],months:[],sel:'',sk:'t',sa:false,tsq:'',comps:[]};
 let C={};
 let isTableExpanded = false;
 
@@ -284,7 +279,7 @@ function updTable(){
   
   let rows=(G.pm[G.sel]||[]).filter(r=>!G.tsq||r.n.includes(G.tsq));
   if(!rows.length){
-    tbody.innerHTML='<tr><td colspan="7" class="nf">해당 년월 데이터 셋이 없거나 가공되지 않았습니다.</td></tr>';
+    tbody.innerHTML='<tr><td colspan="7" class="nf">검색 결과가 없거나 데이터가 비어있습니다.</td></tr>';
     moreWrap.style.display = 'none';
     return;
   }
@@ -332,7 +327,7 @@ function updComp(){
   dc('cp'); if(!comps.length||!G.ht.length) return;
   const HN='하모니', all=[HN,...comps], lb=G.ht.map(r=>r.m), colors=[CC.hm,CC.bl,CC.am,CC.pu,CC.rd,CC.gn];
   const ds=all.map((n,i)=>{
-    const clean=n.replace(/\(주\)|㈜/g,'').trim();
+    const clean=n.replace(/\(주\)|Icons/g,'').trim();
     const targetKey=G.cl.find(k=>k.includes(clean))||n;
     const h=G.ch[targetKey]||[];
     const dm=Object.fromEntries(h.map(r=>[r.m,r.r]));
@@ -385,21 +380,32 @@ function saveToLocalStorage(data) {
 function loadFromLocalStorage() {
   const saved = localStorage.getItem('HARMONY_RENT_DATA');
   const savedComps = localStorage.getItem('HARMONY_COMP_LIST');
+  const st = document.getElementById('us');
   
   if (savedComps) { try { comps = JSON.parse(savedComps); } catch(e){} }
   
   if (saved) {
     try {
       G = JSON.parse(saved);
-      const st = document.getElementById('us');
       st.className = 'us ok';
       st.style.display = 'inline-block';
-      st.textContent = `✓ 최신 사용자 엑셀 구동 중`;
-    } catch (e) {}
+      st.textContent = `✓ 저장된 엑셀 데이터 자동 로드 완료`;
+      buildTabs();
+      renderTags();
+      updateAll();
+    } catch (e) {
+      clearDashboardWait();
+    }
+  } else {
+    clearDashboardWait();
   }
-  buildTabs();
-  renderTags();
-  updateAll();
+}
+
+function clearDashboardWait() {
+  const st = document.getElementById('us');
+  st.className = 'us er';
+  st.style.display = 'inline-block';
+  st.textContent = `💡 대기 중: [최신 엑셀 업데이트] 버튼을 눌러 파일을 등록해주세요.`;
 }
 
 document.getElementById('fi').addEventListener('change',async e=>{
@@ -470,7 +476,7 @@ document.getElementById('fi').addEventListener('change',async e=>{
     buildTabs();
     updateAll();
     st.className = 'us ok';
-    st.textContent = `✓ 새 데이터 반영 및 백업 완료`;
+    st.textContent = `✓ 저장 완료 (${monthly.length}개년월 데이터 자동 영구 백업됨)`;
   } catch(err) {
     st.className = 'us er'; st.textContent = '실패: ' + err.message;
   }
@@ -481,6 +487,7 @@ document.getElementById('tSrch').addEventListener('input',e=>{G.tsq=e.target.val
 function tog(id,btn){ const el=document.getElementById(id); el.classList.toggle('sh'); btn.classList.toggle('op'); }
 setupAC('ci','cl'); setupAC('csi','csl');
 
+// 앱 초기화 구동 순서 변경 (버그 원천 해결)
 window.addEventListener('DOMContentLoaded', loadFromLocalStorage);
 </script>
 </body>
