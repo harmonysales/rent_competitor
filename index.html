@@ -48,7 +48,7 @@ body{background:var(--bg);color:var(--tx);font-family:'Inter','Noto Sans KR',san
 .card{background:var(--sur);border:1px solid var(--bd);border-radius:9px;padding:16px 18px}
 .ch{margin-bottom:12px}
 .chr{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:12px;flex-wrap:wrap}
-.ct{font-size:13px;font-weight:600}
+.ct font-size:13px;font-weight:600}
 .cs{font-size:11px;color:var(--mu);margin-top:2px}
 .cw{position:relative;height:210px}
 .cw.sm{height:150px}
@@ -192,30 +192,32 @@ tr:hover td{background:var(--bg)}
     </div>
   </div>
 </div>
-<div class="ft">전국 렌트카업체 대수 현황 대시보드 · 하모니렌트카 전용 v2.6</div>
+<div class="ft">전국 렌트카업체 대수 현황 대시보드 · 하모니렌트카 전용 v2.7</div>
 
 <script id="masterDataScript">
-const MONTHLY=[{"m":"2025.01","t":1250206,"s":1227974,"v":22038,"e":194,"co":1184},{"m":"2025.02","t":1253249,"s":1231060,"v":21965,"e":224,"co":1184},{"m":"2025.03","t":1257909,"s":1235687,"v":22009,"e":213,"co":1191},{"m":"2025.04","t":1262929,"s":1240828,"v":21909,"e":192,"co":1193},{"m":"2025.05","t":1267612,"s":1245640,"v":21779,"e":193,"co":1195},{"m":"2025.06","t":1270568,"s":1248839,"v":21573,"e":156,"co":1195},{"m":"2025.07","t":1280322,"s":1258433,"v":21726,"e":163,"co":1200},{"m":"2025.08","t":1286889,"s":1265031,"v":21697,"e":161,"co":1205},{"m":"2025.09","t":1292102,"s":1270514,"v":21415,"e":173,"co":1205},{"m":"2025.10","t":1292044,"s":1270451,"v":21426,"e":167,"co":1218},{"m":"2025.11","t":1297251,"s":1276223,"v":20861,"e":167,"co":1218},{"m":"2025.12","t":1296233,"s":1276135,"v":19932,"e":166,"co":1218},{"m":"2026.01","t":1296232,"s":1276383,"v":19686,"e":163,"co":1220},{"m":"2026.02","t":1301996,"s":1282149,"v":19685,"e":162,"co":1222},{"m":"2026.03","t":1309798,"s":1290052,"v":19596,"e":162,"co":1233},{"m":"2026.04","t":1313975,"s":1294425,"v":19404,"e":146,"co":1234}];
-const HT=[{"m":"2025.01","r":18,"t":11941,"s":11902,"v":39},{"m":"2025.02","r":18,"t":12214,"s":12175,"v":39},{"m":"2025.03","r":18,"t":12472,"s":12433,"v":39},{"m":"2025.04","r":17,"t":13090,"s":13051,"v":39},{"m":"2025.05","r":17,"t":13090,"s":13051,"v":39},{"m":"2025.06","r":17,"t":13437,"s":13399,"v":38},{"m":"2025.07","r":17,"t":13872,"s":13834,"v":38},{"m":"2025.08","r":17,"t":14272,"s":14234,"v":38},{"m":"2025.09","r":17,"t":14315,"s":14259,"v":56},{"m":"2025.10","r":17,"t":14743,"s":14688,"v":55},{"m":"2025.11","r":17,"t":15045,"s":14990,"v":55},{"m":"2025.12","r":17,"t":15245,"s":15190,"v":55},{"m":"2026.01","r":16,"t":15247,"s":15192,"v":55},{"m":"2026.02","r":16,"t":15377,"s":15323,"v":54},{"m":"2026.03","r":16,"t":15679,"s":15625,"v":54},{"m":"2026.04","r":16,"t":15863,"s":15810,"v":53}];
-
-let MASTER_RAW = [];
+// 초기 빈 데이터셋 방지 및 완전 동적 데이터 구조화
+let DATABASE = null;
 try {
-  const storedData = localStorage.getItem('H_MASTER_RAW_DATA');
-  if (storedData) {
-    MASTER_RAW = JSON.parse(storedData);
-  } else {
-    MASTER_RAW = [{"n":"롯데렌탈(주)","t":250614,"s":247808,"v":2806,"e":0,"r":1},{"n":"에스케이렌터카(주)","t":195008,"s":192191,"v":2817,"e":0,"r":2},{"n":"현대캐피탈(주)","t":157790,"s":155229,"v":2561,"e":0,"r":3},{"n":"하나캐피탈(주)","t":91931,"s":91669,"v":262,"e":0,"r":4},{"n":"케이비캐피탈(주)","t":54392,"s":54302,"v":90,"e":0,"r":5},{"n":"우리금융캐피탈(주)","t":53914,"s":53781,"v":133,"e":0,"r":6},{"n":"신한카드(주)","t":44031,"s":43737,"v":294,"e":0,"r":7},{"n":"비엔케이캐피탈(주)","t":35121,"s":35001,"v":120,"e":0,"r":8},{"n":"메리츠캐피탈(주)","t":30302,"s":30254,"v":48,"e":0,"r":9},{"n":"기아(주)","t":25094,"s":25061,"v":33,"e":0,"r":10},{"n":"(주)레드캡투어","t":24371,"s":23916,"v":455,"e":0,"r":11},{"n":"(주)아마존카","t":22807,"s":22806,"v":1,"e":0,"r":12},{"n":"오릭스캐피탈코리아(주)","t":21095,"s":21018,"v":77,"e":0,"r":13},{"n":"(주)아이엠캐피탈","t":20727,"s":20725,"v":2,"e":0,"r":14},{"n":"(주)쏘카","t":20694,"s":20573,"v":121,"e":0,"r":15},{"n":"(주)하모니렌트카","t":15863,"s":15810,"v":53,"e":0,"r":16},{"n":"롯데캐피탈(주)","t":15851,"s":15628,"v":223,"e":0,"r":17},{"n":"엔에이치농협캐피탈(주)","t":15605,"s":15587,"v":18,"e":0,"r":18},{"n":"(주)우리카드","t":12776,"s":12638,"v":138,"e":0,"r":19},{"n":"제이비우리캐피탈(주)","t":10046,"s":9951,"v":95,"e":0,"r":20}];
-  }
+  const stored = localStorage.getItem('H_DB_v2');
+  if(stored) DATABASE = JSON.parse(stored);
 } catch(e) { console.error(e); }
+
+if (!DATABASE) {
+  DATABASE = {
+    MONTHLY: [{"m":"2025.01","t":1250206,"s":1227974,"v":22038,"e":194,"co":1184},{"m":"2025.02","t":1253249,"s":1231060,"v":21965,"e":224,"co":1184},{"m":"2025.03","t":1257909,"s":1235687,"v":22009,"e":213,"co":1191},{"m":"2025.04","t":1262929,"s":1240828,"v":21909,"e":192,"co":1193},{"m":"2025.05","t":1267612,"s":1245640,"v":21779,"e":193,"co":1195},{"m":"2025.06","t":1270568,"s":1248839,"v":21573,"e":156,"co":1195},{"m":"2025.07","t":1280322,"s":1258433,"v":21726,"e":163,"co":1200},{"m":"2025.08","t":1286889,"s":1265031,"v":21697,"e":161,"co":1205},{"m":"2025.09","t":1292102,"s":1270514,"v":21415,"e":173,"co":1205},{"m":"2025.10","t":1292044,"s":1270451,"v":21426,"e":167,"co":1218},{"m":"2025.11","t":1297251,"s":1276223,"v":20861,"e":167,"co":1218},{"m":"2025.12","t":1296233,"s":1276135,"v":19932,"e":166,"co":1218},{"m":"2026.01","t":1296232,"s":1276383,"v":19686,"e":163,"co":1220},{"m":"2026.02","t":1301996,"s":1282149,"v":19685,"e":162,"co":1222},{"m":"2026.03","t":1309798,"s":1290052,"v":19596,"e":162,"co":1233},{"m":"2026.04","t":1313975,"s":1294425,"v":19404,"e":146,"co":1234}],
+    HT: [{"m":"2025.01","r":18,"t":11941,"s":11902,"v":39},{"m":"2025.02","r":18,"t":12214,"s":12175,"v":39},{"m":"2025.03","r":18,"t":12472,"s":12433,"v":39},{"m":"2025.04","r":17,"t":13090,"s":13051,"v":39},{"m":"2025.05","r":17,"t":13090,"s":13051,"v":39},{"m":"2025.06","r":17,"t":13437,"s":13399 nighttime,"v":38},{"m":"2025.07","r":17,"t":13872,"s":13834,"v":38},{"m":"2025.08","r":17,"t":14272,"s":14234,"v":38},{"m":"2025.09","r":17,"t":14315,"s":14259,"v":56},{"m":"2025.10","r":17,"t":14743,"s":14688,"v":55},{"m":"2025.11","r":17,"t":15045,"s":14990,"v":55},{"m":"2025.12","r":17,"t":15245,"s":15190,"v":55},{"m":"2026.01","r":16,"t":15247,"s":15192,"v":55},{"m":"2026.02","r":16,"t":15377,"s":15323,"v":54},{"m":"2026.03","r":16,"t":15679,"s":15625,"v":54},{"m":"2026.04","r":16,"t":15863,"s":15810,"v":53}],
+    DETAILS: {} // 각 월별 전체 업체 상세 현황 데이터셋 매핑 공간
+  };
+  
+  // 기본 데이터 매핑 제공 (2026.04 기준 최초 셋업)
+  DATABASE.DETAILS["2026.04"] = [{"n":"롯데렌탈(주)","t":250614,"s":247808,"v":2806,"e":0,"r":1},{"n":"에스케이렌터카(주)","t":195008,"s":192191,"v":2817,"e":0,"r":2},{"n":"현대캐피탈(주)","t":157790,"s":155229,"v":2561,"e":0,"r":3},{"n":"하나캐피탈(주)","t":91931,"s":91669,"v":262,"e":0,"r":4},{"n":"케이비캐피탈(주)","t":54392,"s":54302,"v":90,"e":0,"r":5},{"n":"우리금융캐피탈(주)","t":53914,"s":53781,"v":133,"e":0,"r":6},{"n":"신한카드(주)","t":44031,"s":43737,"v":294,"e":0,"r":7},{"n":"비엔케이캐피탈(주)","t":35121,"s":35001,"v":120,"e":0,"r":8},{"n":"메리츠캐피탈(주)","t":30302,"s":30254,"v":48,"e":0,"r":9},{"n":"기아(주)","t":25094,"s":25061,"v":33,"e":0,"r":10},{"n":"(주)레드캡투어","t":24371,"s":23916,"v":455,"e":0,"r":11},{"n":"(주)아마존카","t":22807,"s":22806,"v":1,"e":0,"r":12},{"n":"오릭스캐피탈코리아(주)","t":21095,"s":21018,"v":77,"e":0,"r":13},{"n":"(주)아이엠캐피탈","t":20727,"s":20725,"v":2,"e":0,"r":14},{"n":"(주)쏘카","t":20694,"s":20573,"v":121,"e":0,"r":15},{"n":"(주)하모니렌트카","t":15863,"s":15810,"v":53,"e":0,"r":16},{"n":"롯데캐피탈(주)","t":15851,"s":15628,"v":223,"e":0,"r":17},{"n":"엔에이치농협캐피탈(주)","t":15605,"s":15587,"v":18,"e":0,"r":18},{"n":"(주)우리카드","t":12776,"s":12638,"v":138,"e":0,"r":19},{"n":"제이비우리캐피탈(주)","t":10046,"s":9951,"v":95,"e":0,"r":20}];
+}
 </script>
 
 <script>
-let CL = [];
-let PM = {};
-let CH = {};
-let comps = []; 
 let G = {};
 let C = {};
+let comps = []; 
 let isTableExpanded = false;
 
 const f=n=>Number(n).toLocaleString('ko-KR');
@@ -223,48 +225,38 @@ const fk=n=>n>=10000?(n/10000).toFixed(1)+'만':f(n);
 Chart.defaults.font.family="'Inter','Noto Sans KR',sans-serif";
 Chart.defaults.color='#888880';
 Chart.defaults.font.size=11;
-const CC={bl:'#2563eb',gn:'#059669',am:'#d97706',pu:'#7c3aed',rd:'#dc2626',hm:'#0f766e',bd:'#e6e6e2',bla:'rgba(37,99,235,0.1)',hma:'rgba(15,118,110,0.1)'};
+const CC={bl:#2563eb',gn:'#059669',am:'#d97706',pu:'#7c3aed',rd:'#dc2626',hm:'#0f766e',bd:'#e6e6e2',bla:'rgba(37,99,235,0.1)',hma:'rgba(15,118,110,0.1)'};
 
 const dc=id=>{if(C[id]){C[id].destroy();delete C[id];}};
 
 function initDataProcessor() {
-  CL = MASTER_RAW.map(item => item.n);
-  PM = {};
-  MONTHLY.forEach(m => {
-    const ratio = m.t / 1313975;
-    PM[m.m] = MASTER_RAW.map(item => {
-      if (item.n.includes("하모니")) {
-        const hData = HT.find(h => h.m === m.m) || item;
-        return { "n": item.n, "t": hData.t, "s": hData.s, "v": hData.v, "e": 0, "r": hData.r };
-      }
-      return {
-        "n": item.n,
-        "t": Math.round(item.t * ratio),
-        "s": Math.round(item.s * ratio),
-        "v": Math.round(item.v * ratio),
-        "e": item.e ? Math.round(item.e * ratio) : 0,
-        "r": item.r
-      };
-    });
-  });
+  // 정렬 순서 보장
+  DATABASE.MONTHLY.sort((a,b)=>a.m.localeCompare(b.m));
+  DATABASE.HT.sort((a,b)=>a.m.localeCompare(b.m));
 
-  CH = {};
-  CL.forEach(name => {
-    if (name.includes("하모니")) { CH[name] = HT; return; }
-    CH[name] = MONTHLY.map(m => {
-      const matched = PM[m.m].find(p => p.n === name);
-      return { "m": m.m, "t": matched ? matched.t : 0, "r": matched ? matched.r : 99 };
+  let allCompanyNames = new Set();
+  Object.keys(DATABASE.DETAILS).forEach(m => {
+    DATABASE.DETAILS[m].forEach(item => allCompanyNames.add(item.n));
+  });
+  
+  // 전체 기간 시계열 매핑용 구조
+  let companyHistory = {};
+  allCompanyNames.forEach(name => {
+    companyHistory[name] = DATABASE.MONTHLY.map(m => {
+      const monthData = DATABASE.DETAILS[m.m] || [];
+      const matched = monthData.find(p => p.n === name);
+      return { "m": m.m, "t": matched ? matched.t : 0, "r": matched ? matched.r : 999 };
     });
   });
 
   G = {
-    monthly: MONTHLY,
-    ht: HT,
-    pm: PM,
-    ch: CH,
-    cl: CL,
-    months: MONTHLY.map(r => r.m),
-    sel: G.sel || MONTHLY[MONTHLY.length - 1].m,
+    monthly: DATABASE.MONTHLY,
+    ht: DATABASE.HT,
+    pm: DATABASE.DETAILS,
+    ch: companyHistory,
+    cl: Array.from(allCompanyNames),
+    months: DATABASE.MONTHLY.map(r => r.m),
+    sel: G.sel || DATABASE.MONTHLY[DATABASE.MONTHLY.length - 1].m,
     sk: G.sk || 'r',
     sa: G.sa !== undefined ? G.sa : true,
     tsq: G.tsq || ''
@@ -288,11 +280,17 @@ function updKPI(){
   document.getElementById('kV').innerHTML=f(d.v)+'<span class="ku">대</span>';
   document.getElementById('kVs').textContent=(d.v/d.t*100).toFixed(1)+'% 비중';
   
-  const currentCompanyCount = MASTER_RAW.length > 25 ? MASTER_RAW.length : (d.co || '—');
-  document.getElementById('kC').innerHTML=f(currentCompanyCount)+'<span class="ku">개사</span>';
+  const currentMonthDetails = G.pm[G.sel] || [];
+  document.getElementById('kC').innerHTML=f(currentMonthDetails.length || d.co || '—')+'<span class="ku">개사</span>';
   
-  const h=G.ht.find(r=>r.m===G.sel);
-  if(h){document.getElementById('kH').innerHTML=f(h.t)+'<span class="ku">대</span>';document.getElementById('kHs').innerHTML='<strong>전국 '+h.r+'위</strong>';}
+  const h=G.ht.find(r=>r.m===G.sel) || currentMonthDetails.find(r=>r.n.includes('하모니'));
+  if(h){
+    document.getElementById('kH').innerHTML=f(h.t)+'<span class="ku">대</span>';
+    document.getElementById('kHs').innerHTML='<strong>전국 '+(h.r || '—')+'위</strong>';
+  } else {
+    document.getElementById('kH').innerHTML='—';
+    document.getElementById('kHs').innerHTML='—';
+  }
   document.getElementById('latestBadge').textContent='기준: '+G.sel;
 }
 
@@ -322,10 +320,19 @@ function updBar(){
 
 function updHarmony(){
   dc('hm');
-  const ht=G.ht, lb=ht.map(r=>r.m);
+  const ht=G.ht, lb=G.monthly.map(r=>r.m);
+  const data 대수 = G.monthly.map(m => {
+    const found = G.ht.find(h => h.m === m.m) || (G.pm[m.m] || []).find(r => r.n.includes('하모니'));
+    return found ? found.t : null;
+  });
+  const data 순위 = G.monthly.map(m => {
+    const found = G.ht.find(h => h.m === m.m) || (G.pm[m.m] || []).find(r => r.n.includes('하모니'));
+    return found ? found.r : null;
+  });
+
   C.hm=new Chart(document.getElementById('hChart'),{type:'line',data:{labels:lb,datasets:[
-    {label:'보유 대수',data:ht.map(r=>r.t),borderColor:CC.hm,backgroundColor:CC.hma,fill:true,tension:0.3,pointRadius:3,pointBackgroundColor:'#fff',pointBorderColor:CC.hm,pointBorderWidth:1.5,borderWidth:1.5,yAxisID:'y'},
-    {label:'순위',data:ht.map(r=>r.r),borderColor:CC.am,tension:0.3,pointRadius:3,pointBackgroundColor:'#fff',pointBorderColor:CC.am,pointBorderWidth:1.5,borderWidth:1.5,borderDash:[4,3],yAxisID:'y2'}
+    {label:'보유 대수',data:data대수,borderColor:CC.hm,backgroundColor:CC.hma,fill:true,tension:0.3,pointRadius:3,pointBackgroundColor:'#fff',pointBorderColor:CC.hm,pointBorderWidth:1.5,borderWidth:1.5,yAxisID:'y'},
+    {label:'순위',data:data순위,borderColor:CC.am,tension:0.3,pointRadius:3,pointBackgroundColor:'#fff',pointBorderColor:CC.am,pointBorderWidth:1.5,borderWidth:1.5,borderDash:[4,3],yAxisID:'y2'}
   ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{boxWidth:7,padding:11,font:{size:11}}},tooltip:{callbacks:{label:c=>c.dataset.label==='순위'?c.dataset.label+': '+c.raw+'위':c.dataset.label+': '+f(c.raw)+'대'}}},scales:{x:{grid:{color:CC.bd},ticks:{font:{size:10}}},y:{grid:{color:CC.bd},ticks:{callback:v=>fk(v),font:{size:10}}},y2:{position:'right',reverse:true,grid:{display:false},ticks:{stepSize:1,font:{size:10}}}}}});
 }
 
@@ -359,7 +366,7 @@ function updTable(){
     }
   }
 
-  tbody.innerHTML=renderTarget.map(r=>`<tr class="${r.n.includes('하모니')?'tr-hm':''}"><td class="rk">${r.r}</td><td>${r.n}</td><td class="nm">${f(r.t)}</td><td class="br"><div class="bt"><div class="bf" style="width:${(r.t/mx*100).toFixed(1)}%"></div></div></td><td class="nm">${f(r.s)}</td><td class="nm">${f(r.v)}</td><td class="nm">${f(r.e)}</td></tr>`).join('');
+  tbody.innerHTML=renderTarget.map(r=>`<tr class="${r.n.includes('하모니')?'tr-hm':''}"><td class="rk">${r.r || '—'}</td><td>${r.n}</td><td class="nm">${f(r.t)}</td><td class="br"><div class="bt"><div class="bf" style="width:${(r.t/mx*100).toFixed(1)}%"></div></div></td><td class="nm">${f(r.s)}</td><td class="nm">${f(r.v)}</td><td class="nm">${f(r.e)}</td></tr>`).join('');
   document.getElementById('tbSub').textContent=G.sel+' 기준 · 총 '+rows.length+'개사 현황';
 }
 
@@ -385,11 +392,12 @@ function renderTags(){
 }
 
 function updComp(){
-  dc('cp'); if(!comps.length||!G.ht.length) return;
-  const HN='(주)하모니렌트카', all=[HN,...comps], lb=G.ht.map(r=>r.m), colors=[CC.hm,CC.bl,CC.am,CC.pu,CC.rd,CC.gn];
+  dc('cp'); if(!comps.length) return;
+  const HN='하모니렌트카', all=[HN,...comps], lb=G.monthly.map(r=>r.m), colors=[CC.hm,CC.bl,CC.am,CC.pu,CC.rd,CC.gn];
   const ds=all.map((n,i)=>{
     const clean=n.replace(/\(주\)|㈜/g,'').trim();
-    const h=G.ch[n] || G.ch[G.cl.find(k=>k.includes(clean))] || [];
+    const matchedKey = G.cl.find(k=>k.includes(clean)) || n;
+    const h=G.ch[matchedKey] || [];
     return{label:clean,data:h.map(r=>r.t),borderColor:colors[i%colors.length],tension:0.3,pointRadius:3,borderWidth:1.5,spanGaps:true};
   });
   C.cp=new Chart(document.getElementById('cChart'),{type:'line',data:{labels:lb,datasets:ds},options:{responsive:true,maintainAspectRatio:false,scales:{y:{ticks:{callback:v=>fk(v),font:{size:10}}}}}});
@@ -397,10 +405,11 @@ function updComp(){
 
 function updCompRep(){
   const el=document.getElementById('cRep'); if(!comps.length) { el.innerHTML=''; return; }
-  const hmd=(G.pm[G.sel]||[]).find(r=>r.n.includes('하모니'));
+  const currentMonthData = G.pm[G.sel] || [];
+  const hmd=currentMonthData.find(r=>r.n.includes('하모니'));
   const lines=comps.map(n=>{
-    const md=(G.pm[G.sel]||[]).find(r=>r.n.includes(n.replace(/\(주\)|㈜/g,'').trim()));
-    if(!md||!hmd) return `<strong>${n}</strong>: 순위 권외`;
+    const md=currentMonthData.find(r=>r.n.includes(n.replace(/\(주\)|㈜/g,'').trim()));
+    if(!md) return `<strong>${n}</strong>: 당월 순위 권외 또는 데이터 없음`;
     return`<strong>${md.n}</strong>: ${md.r}위 (${f(md.t)}대)`;
   });
   el.innerHTML=lines.join('<br>');
@@ -411,7 +420,7 @@ function searchCo(name){
   const clean=name.replace(/\(주\)|㈜/g,'').trim();
   const targetKey=G.cl.find(k=>k.includes(clean))||name;
   const hist=G.ch[targetKey];
-  if(!hist){area.innerHTML='<div class="nf">데이터가 검색되지 않습니다.</div>';return;}
+  if(!hist || hist.every(r=>r.t===0)){area.innerHTML='<div class="nf">해당 업체의 전기간 시계열 데이터가 존재하지 않습니다.</div>';return;}
   area.innerHTML='<div class="cw lg" style="width:100%;"><canvas id="csC"></canvas></div>';
   dc('csC');
   C.csC=new Chart(document.getElementById('csC'),{type:'line',data:{labels:hist.map(r=>r.m),datasets:[{label:clean+' 전기간 추이',data:hist.map(r=>r.t),borderColor:CC.hm,backgroundColor:CC.hma,fill:true,tension:0.3,pointRadius:3}]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{ticks:{callback:v=>fk(v)}}}}});
@@ -439,6 +448,13 @@ function importExcel(input) {
   const file = input.files[0];
   if (!file) return;
 
+  // 1단계: 기준년월 확인 피드백 창
+  const targetMonth = prompt("업로드할 엑셀 데이터의 기준년월을 입력하세요.\n(예시: 2026.05)", G.sel);
+  if (!targetMonth || !/^\d{4}\.\d{2}$/.test(targetMonth.trim())) {
+    alert("올바른 기준년월 형식(YYYY.MM)이 아닙니다. 업로드가 취소되었습니다.");
+    return;
+  }
+
   const reader = new FileReader();
   reader.onload = function(e) {
     const data = new Uint8Array(e.target.result);
@@ -460,11 +476,13 @@ function importExcel(input) {
     let idxEtc = headers.findIndex(h => h.includes("기타"));
 
     if (idxName === -1 || idxTotal === -1) {
-      alert("엑셀 파일 내 '업체명'과 '총 대수' 열을 찾을 수 없습니다. 열 이름을 확인해주세요.");
+      alert("엑셀 파일 내 '업체명'과 '총 대수' 열을 찾을 수 없습니다.");
       return;
     }
 
     let parsedList = [];
+    let sumT = 0, sumS = 0, sumV = 0, sumE = 0;
+
     for (let i = 1; i < json.length; i++) {
       const row = json[i];
       if (!row[idxName]) continue;
@@ -478,36 +496,61 @@ function importExcel(input) {
       if (total === 0) continue;
 
       parsedList.push({ n: name, t: total, s: sedan, v: van, e: etc < 0 ? 0 : etc });
+      
+      sumT += total; sumS += sedan; sumV += van; sumE += (etc < 0 ? 0 : etc);
     }
-
-    parsedList.sort((a, b) => b.t - a.t);
-    parsedList.forEach((item, index) => {
-      item.r = index + 1;
-    });
 
     if (parsedList.length === 0) {
       alert("가져올 수 있는 업체 데이터가 없습니다.");
       return;
     }
 
-    MASTER_RAW = parsedList;
-    localStorage.setItem('H_MASTER_RAW_DATA', JSON.stringify(MASTER_RAW));
+    parsedList.sort((a, b) => b.t - a.t);
+    parsedList.forEach((item, index) => { item.r = index + 1; });
+
+    // 2단계: DATABASE 구조 업데이트 개편 (전국 총 보유 대수 및 하모니 누적)
+    DATABASE.DETAILS[targetMonth] = parsedList;
+
+    // MONTHLY 데이터 갱신 또는 새롭게 삽입
+    let mIdx = DATABASE.MONTHLY.findIndex(m => m.m === targetMonth);
+    let mObj = { m: targetMonth, t: sumT, s: sumS, v: sumV, e: sumE, co: parsedList.length };
+    if (mIdx !== -1) DATABASE.MONTHLY[mIdx] = mObj; 
+    else DATABASE.MONTHLY.push(mObj);
+
+    // 하모니렌트카 자체 데이터 동적 추출 후 HT 업데이트
+    let harmonyData = parsedList.find(r => r.n.includes('하모니'));
+    if (harmonyData) {
+      let hIdx = DATABASE.HT.findIndex(h => h.m === targetMonth);
+      let hObj = { m: targetMonth, r: harmonyData.r, t: harmonyData.t, s: harmonyData.s, v: harmonyData.v };
+      if (hIdx !== -1) DATABASE.HT[hIdx] = hObj;
+      else DATABASE.HT.push(hObj);
+    }
+
+    // 로컬 스토리지 보존
+    localStorage.setItem('H_DB_v2', JSON.stringify(DATABASE));
     
-    alert(`성공적으로 ${MASTER_RAW.length}개 업체의 데이터를 가져왔습니다!\n[현재 대시보드 저장/배포] 버튼을 눌러 팀원들과 공유하세요.`);
+    alert(`[${targetMonth}] 기준 총 ${parsedList.length}개사의 데이터가 누적 반영되었습니다!\n모두와 공유하려면 우측 상단의 [💾 현재 대시보드 저장/배포] 단추를 클릭해 새로 생성된 파일을 공유하세요.`);
     
+    G.sel = targetMonth;
     initDataProcessor();
+    buildTabs();
     updateAll();
   };
   reader.readAsArrayBuffer(file);
 }
 
+// 3단계: 소스코드 내 데이터를 원천 주입하여 파일화하는 저장/배포 로직
 function exportDashboard() {
   const currentHTML = document.documentElement.outerHTML;
-  const dataString = JSON.stringify(MASTER_RAW);
+  const dataString = JSON.stringify(DATABASE);
+  
   let newHTML = currentHTML;
-  if (newHTML.includes("let MASTER_RAW = [];")) {
-    newHTML = newHTML.replace("let MASTER_RAW = [];", `let MASTER_RAW = ${dataString};`);
-  }
+  
+  // 정규식을 사용해 소스코드 내 고정값 선언문을 최신 갱신된 DATABASE 객체값으로 전면 치환
+  const dbRegex = /let DATABASE\s*=\s*null;[\s\S]*?if\s*\(\!DATABASE\)\s*\{[\s\S]*?\};/;
+  const replaceString = `let DATABASE = ${dataString};`;
+  
+  newHTML = newHTML.replace(dbRegex, replaceString);
   
   const blob = new Blob([newHTML], { type: "text/html;charset=utf-8" });
   const a = document.createElement("a");
