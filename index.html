@@ -97,11 +97,10 @@ tr:hover td{background:var(--bg)}
 .ssec{background:var(--sur);border:1px solid var(--bd);border-radius:9px;padding:16px 18px}
 .nf{font-size:12px;color:var(--mu);padding:28px;text-align:center}
 .ft{text-align:center;padding:16px;font-size:11px;color:var(--mu);border-top:1px solid var(--bd);background:var(--sur)}
-@media(max-width:860px){
-  .main,.hd,.upbar,.mntab{padding-left:14px;padding-right:14px}
-  .krow{grid-template-columns:repeat(2,1fr)}
-  .r2,.r2b{grid-template-columns:1fr}
-}
+/* 더보기 버튼 스타일 */
+.more-wrap{text-align:center;padding:14px 0 4px}
+.mbtn{background:#fff;border:1px solid var(--bd2);color:var(--tx);padding:6px 20px;border-radius:20px;font-size:11px;font-weight:500;cursor:pointer;transition:all .15s}
+.mbtn:hover{border-color:var(--bl);color:var(--bl);background:var(--bl-l)}
 </style>
 </head>
 <body>
@@ -116,7 +115,7 @@ tr:hover td{background:var(--bg)}
     전국 엑셀 파일 업로드
   </label>
   <input type="file" id="fi" accept=".xlsx,.xls">
-  <span class="uh">여기에 엑셀을 한 번만 등록해 두면 새로고침해도 영구 유지됩니다.</span>
+  <span class="uh">엑셀 및 설정한 경쟁사 목록이 브라우저에 영구 보존됩니다.</span>
   <span id="us" class="us"></span>
 </div>
 <div class="mntab">
@@ -149,7 +148,7 @@ tr:hover td{background:var(--bg)}
       <div class="cw md"><canvas id="bChart"></canvas></div>
     </div>
     <div class="card">
-      <div class="ch"><div class="ct">경쟁사 업체 순위</div><div class="cs">비교할 업체를 추가하세요</div></div>
+      <div class="ch"><div class="ct">경쟁사 업체 순위</div><div class="cs">비교할 업체를 추가하세요 (자동 저장됨)</div></div>
       <div class="ci-row">
         <div class="acw"><input class="si" id="ci" placeholder="업체명 입력..." autocomplete="off" style="width:170px"><div class="acl" id="cl"></div></div>
         <button class="ubtn" onclick="addComp()" style="padding:4px 11px">추가</button>
@@ -181,6 +180,9 @@ tr:hover td{background:var(--bg)}
       </tr></thead>
       <tbody id="tb"></tbody>
     </table></div>
+    <div class="more-wrap" id="moreWrap" style="display:none">
+      <button class="mbtn" id="moreBtn" onclick="toggleTableExpand()">▼ 현황 더보기 (21위 이하)</button>
+    </div>
   </div>
   <div class="ssec">
     <div class="chr">
@@ -190,7 +192,7 @@ tr:hover td{background:var(--bg)}
     <div id="csArea"><div class="nf">업체명을 검색하면 추이 그래프가 나타납니다</div></div>
   </div>
 </div>
-<div class="ft">전국 렌트카업체 대수 현황 대시보드 · 하모니렌트카 전용 · 로컬 스토리지 자동 영구 저장 버전</div>
+<div class="ft">전국 렌트카업체 대수 현황 대시보드 · 하모니렌트카 전용 · 로컬 스토리지 최적화 세이브 버전</div>
 
 <script>
 const f=n=>Number(n).toLocaleString('ko-KR');
@@ -202,6 +204,8 @@ const CC={bl:'#2563eb',gn:'#059669',am:'#d97706',pu:'#7c3aed',rd:'#dc2626',hm:'#
 
 let G={monthly:[],ht:[],pm:{},ch:{},cl:[],months:[],sel:'',sk:'t',sa:false,tsq:'',comps:[]};
 let C={};
+let isTableExpanded = false; // 테이블 전개 상태 플래그
+
 const dc=id=>{if(C[id]){C[id].destroy();delete C[id];}};
 
 function buildTabs(){
@@ -264,19 +268,47 @@ function updHarmony(){
   C.hm=new Chart(document.getElementById('hChart'),{type:'line',data:{labels:lb,datasets:[
     {label:'보유 대수',data:ht.map(r=>r.t),borderColor:CC.hm,backgroundColor:CC.hma,fill:true,tension:0.3,pointRadius:3,pointBackgroundColor:'#fff',pointBorderColor:CC.hm,pointBorderWidth:1.5,borderWidth:1.5,yAxisID:'y'},
     {label:'순위',data:ht.map(r=>r.r),borderColor:CC.am,tension:0.3,pointRadius:3,pointBackgroundColor:'#fff',pointBorderColor:CC.am,pointBorderWidth:1.5,borderWidth:1.5,borderDash:[4,3],yAxisID:'y2'}
-  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{boxWidth:7,padding:11,font:{size:11}}},tooltip:{callbacks:{label:c=>c.dataset.label==='순위'?c.dataset.label+': '+c.raw+'位':c.dataset.label+': '+f(c.raw)+'대'}}},scales:{x:{grid:{color:CC.bd},ticks:{font:{size:10}}},y:{grid:{color:CC.bd},ticks:{callback:v=>fk(v),font:{size:10}}},y2:{position:'right',reverse:true,grid:{display:false},ticks:{stepSize:1,font:{size:10}}}}}});
+  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{boxWidth:7,padding:11,font:{size:11}}},tooltip:{callbacks:{label:c=>c.dataset.label==='순위'?c.dataset.label+': '+c.raw+'위':c.dataset.label+': '+f(c.raw)+'대'}}},scales:{x:{grid:{color:CC.bd},ticks:{font:{size:10}}},y:{grid:{color:CC.bd},ticks:{callback:v=>fk(v),font:{size:10}}},y2:{position:'right',reverse:true,grid:{display:false},ticks:{stepSize:1,font:{size:10}}}}}});
   const fi=ht[0],la=ht[ht.length-1],gr=((la.t-fi.t)/fi.t*100).toFixed(1);
   document.getElementById('hRep').innerHTML=`하모니렌트카 <strong>${fi.m}</strong> <strong>${f(fi.t)}대(${fi.r}위)</strong> → <strong>${la.m}</strong> <strong>${f(la.t)}대(${la.r}위)</strong>. 보유 대수 변화: <strong>${gr}%</strong>`;
 }
 
+// 렉 방지 처리된 업그레이드형 테이블 출력 기능
 function updTable(){
   const tbody=document.getElementById('tb');
+  const moreWrap=document.getElementById('moreWrap');
+  const moreBtn=document.getElementById('moreBtn');
+  
   let rows=(G.pm[G.sel]||[]).filter(r=>!G.tsq||r.n.includes(G.tsq));
-  if(!rows.length){tbody.innerHTML='<tr><td colspan="7" class="nf">검색 결과가 없거나 데이터가 비어있습니다.</td></tr>';return;}
+  if(!rows.length){
+    tbody.innerHTML='<tr><td colspan="7" class="nf">검색 결과가 없거나 데이터가 비어있습니다.</td></tr>';
+    moreWrap.style.display = 'none';
+    return;
+  }
+  
   rows=[...rows].sort((a,b)=>{const av=a[G.sk],bv=b[G.sk];return typeof av==='string'?(G.sa?av.localeCompare(bv):bv.localeCompare(av)):(G.sa?av-bv:bv-av);});
   const mx=Math.max(...rows.map(r=>r.t),1);
-  tbody.innerHTML=rows.map(r=>`<tr class="${r.n.includes('하모니')?'tr-hm':''}"><td class="rk">${r.r}</td><td>${r.n}</td><td class="nm">${f(r.t)}</td><td class="br"><div class="bt"><div class="bf" style="width:${(r.t/mx*100).toFixed(1)}%"></div></div></td><td class="nm">${f(r.s)}</td><td class="nm">${f(r.v)}</td><td class="nm">${f(r.e)}</td></tr>`).join('');
+  
+  // 전체 데이터가 20개보다 많을 때 접기/펼치기 활성화
+  let renderTarget = rows;
+  if(rows.length > 20 && !isTableExpanded) {
+    renderTarget = rows.slice(0, 20);
+    moreWrap.style.display = 'block';
+    moreBtn.textContent = `▼ 현황 펼쳐보기 (총 ${rows.length}개사 중 ${rows.length - 20}개 숨겨짐)`;
+  } else if (rows.length > 20 && isTableExpanded) {
+    moreWrap.style.display = 'block';
+    moreBtn.textContent = `▲ 현황 접기 (상위 20개만 보기)`;
+  } else {
+    moreWrap.style.display = 'none';
+  }
+
+  tbody.innerHTML=renderTarget.map(r=>`<tr class="${r.n.includes('하모니')?'tr-hm':''}"><td class="rk">${r.r}</td><td>${r.n}</td><td class="nm">${f(r.t)}</td><td class="br"><div class="bt"><div class="bf" style="width:${(r.t/mx*100).toFixed(1)}%"></div></div></td><td class="nm">${f(r.s)}</td><td class="nm">${f(r.v)}</td><td class="nm">${f(r.e)}</td></tr>`).join('');
   document.getElementById('tbSub').textContent=G.sel+' 기준 · 총 '+rows.length+'개사 현황';
+}
+
+function toggleTableExpand(){
+  isTableExpanded = !isTableExpanded;
+  updTable();
 }
 
 let comps=[];
@@ -284,9 +316,17 @@ function addComp(){
   const v=document.getElementById('ci').value.trim();
   if(!v||comps.includes(v)) return;
   comps.push(v); document.getElementById('ci').value='';
+  
+  // 경쟁사 리스트 로컬스토리지 백업
+  localStorage.setItem('HARMONY_COMP_LIST', JSON.stringify(comps));
+  
   renderTags(); updComp(); updCompRep();
 }
-function rmComp(n){comps=comps.filter(c=>c!==n);renderTags();updComp();updCompRep();}
+function rmComp(n){
+  comps=comps.filter(c=>c!==n);
+  localStorage.setItem('HARMONY_COMP_LIST', JSON.stringify(comps));
+  renderTags(); updComp(); updCompRep();
+}
 function renderTags(){document.getElementById('ctags').innerHTML=comps.map(c=>`<span class="ctag">${c} <button onclick="rmComp('${c.replace(/'/g,"\\'")}')">×</button></span>`).join('');}
 
 function updComp(){
@@ -339,7 +379,6 @@ function selAC(inId,lsId,v){
   if(inId==='ci') addComp(); else if(inId==='csi') searchCo(v);
 }
 
-// 로컬 스토리지 저장 및 복구 엔진
 function saveToLocalStorage(data) {
   try {
     localStorage.setItem('HARMONY_RENT_DATA', JSON.stringify(data));
@@ -348,19 +387,27 @@ function saveToLocalStorage(data) {
   }
 }
 
+// 초기화 시 엑셀과 함께 저장해둔 경쟁사 리스트도 동시 복구
 function loadFromLocalStorage() {
   const saved = localStorage.getItem('HARMONY_RENT_DATA');
+  const savedComps = localStorage.getItem('HARMONY_COMP_LIST');
+  
+  if (savedComps) {
+    try { comps = JSON.parse(savedComps); } catch(e){}
+  }
+  
   if (saved) {
     try {
       G = JSON.parse(saved);
       const st = document.getElementById('us');
       st.className = 'us ok';
       st.style.display = 'inline-block';
-      st.textContent = `✓ 자동 로드됨 (${G.months.length}개년월 데이터 연속 가동 중)`;
+      st.textContent = `✓ 자동 로드됨 (${G.months.length}개년월 연속 가동 중)`;
       buildTabs();
+      renderTags();
       updateAll();
     } catch (e) {
-      console.error('로컬스토리지 파싱 실패', e);
+      console.error(e);
     }
   }
 }
@@ -442,8 +489,8 @@ document.getElementById('fi').addEventListener('change',async e=>{
       sk: 't', sa: false, tsq: '', comps: []
     };
 
-    // 로컬스토리지 세이브 처리
     saveToLocalStorage(G);
+    isTableExpanded = false; // 새 파일 로드 시 테이블 뷰 초기화
 
     buildTabs();
     updateAll();
@@ -463,7 +510,6 @@ function tog(id,btn){
 }
 setupAC('ci','cl'); setupAC('csi','csl');
 
-// 앱 켜질 때 자동 복구 작동
 window.addEventListener('DOMContentLoaded', loadFromLocalStorage);
 </script>
 </body>
