@@ -5,128 +5,122 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>전국 렌트카 현황 대시보드</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-/* 고급스러운 프리텐다드 서체 및 현대적인 비즈니스 컬러 테마 적용 */
-@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css');
-
 :root {
-  --bg0: #f4f7fc;
-  --bg1: #eef2f9;
+  --bg0: #f0f4fb;
+  --bg1: #e8eef8;
   --bg2: #ffffff;
-  --bg3: #f8fafc;
+  --bg3: #f5f7fc;
   --bg4: #e2eaf5;
-  --blue1: #0f3566;
-  --blue2: #1e5cb3;
-  --blue3: #4a8bf5;
-  --blue4: #1e5cb3;
-  --blue5: #0a254a;
-  --accent: #2563eb;
-  --accent2: #1d4ed8;
-  --harmony: #10b981;
-  --harmony2: #059669;
-  --text1: #0f172a;
-  --text2: #334155;
-  --text3: #64748b;
-  --border: rgba(148, 163, 184, 0.15);
-  --border2: rgba(37, 99, 235, 0.25);
-  --gold: #d97706;
-  --silver: #475569;
-  --bronze: #b45309;
-  --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
-  --card-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.02), 0 4px 6px -4px rgb(0 0 0 / 0.02);
+  --blue1: #1a5cad;
+  --blue2: #2272d9;
+  --blue3: #3d8ef0;
+  --blue4: #1a5cad;
+  --blue5: #0e3d80;
+  --accent: #2272d9;
+  --accent2: #1a5cad;
+  --harmony: #0d7a4e;
+  --harmony2: #0a6040;
+  --text1: #0d1b2e;
+  --text2: #2c4a6e;
+  --text3: #7a96b8;
+  --border: rgba(50,100,180,0.15);
+  --border2: rgba(50,100,180,0.3);
+  --gold: #b8860b;
+  --silver: #607d8b;
+  --bronze: #8b5c2a;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--bg0);color:var(--text1);font-family:'Pretendard', sans-serif;font-size:13px;min-height:100vh;letter-spacing:-0.3px}
-::-webkit-scrollbar{width:6px;height:6px}
+body{background:var(--bg0);color:var(--text1);font-family:'Inter','Pretendard','Malgun Gothic',sans-serif;letter-spacing:-.2px;font-size:13px;min-height:100vh}
+::-webkit-scrollbar{width:5px;height:5px}
 ::-webkit-scrollbar-track{background:var(--bg1)}
-::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:4px}
+::-webkit-scrollbar-thumb{background:#c8d8ee;border-radius:3px}
 
 /* LAYOUT */
-.wrap{max-width:1440px;margin:0 auto;padding:24px}
-.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;padding-bottom:18px;border-bottom:1px solid var(--border)}
-.logo{display:flex;align-items:center;gap:12px}
-.logo-icon{width:42px;height:42px;background:linear-gradient(135deg, var(--blue2), var(--accent));border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2)}
-.logo h1{font-size:18px;font-weight:700;color:var(--text1);letter-spacing:-0.5px}
-.logo p{font-size:12px;color:var(--text3);margin-top:2px}
-.month-wrap{display:flex;align-items:center;gap:10px}
-.month-wrap label{font-size:12px;font-weight:600;color:var(--text2)}
-.month-wrap select{background:#fff;color:var(--text1);border:1px solid var(--border2);border-radius:8px;padding:8px 32px 8px 12px;font-size:13px;font-weight:600;cursor:pointer;outline:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 5 5-5z' fill='%2364748b'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;box-shadow: var(--shadow);transition: border-color 0.2s}
-.month-wrap select:focus{border-color:var(--accent)}
+.wrap{max-width:1400px;margin:0 auto;padding:16px}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid var(--border)}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-icon{width:36px;height:36px;background:linear-gradient(135deg,#1a5cad,#2272d9);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px}
+.logo h1{font-size:16px;font-weight:700;color:var(--text1)}
+.logo p{font-size:11px;color:var(--text3);margin-top:1px}
+.month-wrap{display:flex;align-items:center;gap:8px}
+.month-wrap label{font-size:12px;color:var(--text3)}
+.month-wrap select{background:#fff;color:var(--text1);border:1px solid var(--border2);border-radius:6px;padding:6px 28px 6px 10px;font-size:13px;cursor:pointer;outline:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%237a96b8'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center}
 
 /* KPI */
-.kpi-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:24px}
-.kpi{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:18px 20px;position:relative;overflow:hidden;box-shadow: var(--card-shadow);transition: transform 0.2s, box-shadow 0.2s}
-.kpi:hover{transform: translateY(-2px);box-shadow: 0 12px 20px -8px rgb(0 0 0 / 0.08)}
-.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--accent)}
-.kpi.harmony-card::before{background:linear-gradient(90deg, var(--harmony2), var(--harmony))}
-.kpi .lbl{font-size:12px;font-weight:600;color:var(--text3);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.2px}
-.kpi .val{font-size:24px;font-weight:700;color:var(--text1);line-height:1.1;letter-spacing:-0.5px}
-.kpi .sub{font-size:11px;font-weight:500;color:var(--text3);margin-top:6px;display:flex;align-items:center;gap:4px}
-.kpi.harmony-card {background: linear-gradient(180deg, #ffffff 0%, #f0fdf4 100%); border-color: rgba(16, 185, 129, 0.2)}
-.kpi.harmony-card .val{color:var(--harmony2)}
-.kpi-icon{position:absolute;right:16px;top:16px;font-size:22px;opacity:.15;filter: grayscale(10%)}
+.kpi-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:16px}
+.kpi{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:14px 16px;position:relative;overflow:hidden;box-shadow:0 2px 12px rgba(34,114,217,.07)}
+.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--blue2)}
+.kpi.harmony-card::before{background:linear-gradient(90deg,#0a6040,#0d7a4e)}
+.kpi .lbl{font-size:11px;color:var(--text3);margin-bottom:6px;letter-spacing:.3px}
+.kpi .val{font-size:22px;font-weight:700;color:var(--text1);line-height:1}
+.kpi .sub{font-size:11px;color:var(--text3);margin-top:4px}
+.kpi.harmony-card .val{color:#0d7a4e}
+.kpi-icon{position:absolute;right:12px;top:12px;font-size:20px;opacity:.15}
 
 /* GRID ROWS */
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
-.row-split{display:grid;grid-template-columns:3fr 2fr;gap:16px;margin-bottom:16px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.row-split{display:grid;grid-template-columns:3fr 2fr;gap:12px;margin-bottom:12px}
 
 /* PANEL */
-.panel{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:20px;box-shadow: var(--card-shadow)}
-.panel-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
-.panel-title{font-size:13px;font-weight:700;color:var(--text1);letter-spacing:0.5px;display:flex;align-items:center;gap:8px}
-.panel-title::before{content:'';display:inline-block;width:4px;height:14px;background:var(--accent);border-radius:4px}
-.panel:has(.harmony-row) .panel-title::before, .panel:has(#harmonyChart) .panel-title::before {background: var(--harmony)}
-
-/* 클릭 시 펼쳐지는 그래프 요약 가이드 스타일 */
-.guide-toggle-btn {background: #f1f5f9; border: none; color: var(--text3); padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 4px; transition: all 0.2s}
-.guide-toggle-btn:hover {background: var(--blue4); color: white}
-.guide-desc-box {display: none; margin-top: 14px; padding: 12px 14px; background: var(--bg3); border-left: 3px solid var(--text3); border-radius: 4px; color: var(--text2); font-size: 12px; line-height: 1.6}
-.guide-desc-box.active {display: block}
+.panel{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:16px 18px;box-shadow:0 2px 16px rgba(34,114,217,.07),0 1px 4px rgba(0,0,0,.04)}
+.panel-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.panel-title{font-size:12px;font-weight:600;color:var(--text2);letter-spacing:.6px;text-transform:uppercase;display:flex;align-items:center;gap:6px}
+.panel-title::before{content:'';display:inline-block;width:3px;height:12px;background:var(--blue3);border-radius:2px}
 
 /* SEARCH AUTOCOMPLETE */
-.search-wrap{position:relative;margin-bottom:12px}
-.search-wrap input{width:100%;background:#fff;border:1px solid #cbd5e1;border-radius:8px;color:var(--text1);padding:9px 12px 9px 34px;font-size:12px;outline:none;box-shadow: inset 0 1px 2px rgba(0,0,0,0.02);transition: all 0.2s}
-.search-wrap input:focus{border-color:var(--accent);box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15)}
-.search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text3);font-size:14px;pointer-events:none}
-.autocomplete{position:absolute;top:100%;left:0;right:0;background:#fff;border:1px solid #cbd5e1;border-radius:8px;z-index:100;max-height:200px;overflow-y:auto;display:none;box-shadow:0 10px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)}
-.ac-item{padding:9px 14px;cursor:pointer;font-size:12px;color:var(--text2);border-bottom:1px solid rgba(0,0,0,0.02);transition: background 0.15s}
-.ac-item:last-child{border-bottom:none}
-.ac-item:hover,.ac-item.active{background:var(--bg1);color:var(--text1)}
-.ac-item mark{background:none;color:var(--accent);font-weight:700}
-.tag-list{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;min-height:0}
-.tag{display:flex;align-items:center;gap:6px;background:#eff6ff;border:1px solid rgba(37, 99, 235, 0.2);border-radius:20px;padding:4px 10px 4px 12px;font-size:11px;font-weight:600;color:var(--blue4);box-shadow: 0 1px 2px rgba(0,0,0,0.02)}
-.tag tag button{background:none;border:none;color:var(--text3);box-shadow:none;padding:0;margin:0;cursor:pointer;font-size:11px;line-height:1;transition: color 0.15s}
+.search-wrap{position:relative;margin-bottom:10px}
+.search-wrap input{width:100%;background:#fff;border:1px solid var(--border2);border-radius:6px;color:var(--text1);padding:7px 10px 7px 30px;font-size:12px;outline:none}
+.search-wrap input:focus{border-color:var(--blue3)}
+.search-icon{position:absolute;left:9px;top:50%;transform:translateY(-50%);color:var(--text3);font-size:13px;pointer-events:none}
+.autocomplete{position:absolute;top:100%;left:0;right:0;background:#fff;border:1px solid var(--border2);border-radius:6px;z-index:100;max-height:180px;overflow-y:auto;display:none;box-shadow:0 8px 24px rgba(50,100,160,.15)}
+.ac-item{padding:7px 12px;cursor:pointer;font-size:12px;color:var(--text2)}
+.ac-item:hover,.ac-item.active{background:var(--bg3);color:var(--text1)}
+.ac-item mark{background:none;color:var(--blue4);font-weight:600}
+.tag-list{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px;min-height:0}
+.tag{display:flex;align-items:center;gap:4px;background:#e8f0fc;border:1px solid #2272d9;border-radius:20px;padding:3px 8px 3px 10px;font-size:11px;color:#1a5cad}
+.tag button{background:none;border:none;color:var(--text3);cursor:pointer;font-size:12px;line-height:1;padding:0}
 .tag button:hover{color:var(--text1)}
 
 /* TABLE */
-.tbl-wrap{overflow-y:auto;max-height:340px;border:1px solid var(--border);border-radius:8px}
-table{width:100%;border-collapse:collapse;font-size:12px;text-align:left}
-th{font-size:11px;font-weight:700;color:var(--text3);letter-spacing:0.5px;padding:10px 12px;border-bottom:2px solid #cbd5e1;position:sticky;top:0;background:#f8fafc;white-space:nowrap;z-index:10}
-td{padding:9px 12px;border-bottom:1px solid #edf2f7;color:var(--text2);white-space:nowrap}
-tr:hover td{background:#f8fafc;color:var(--text1)}
-tr.harmony-row td{color:var(--harmony2);font-weight:700;background:rgba(16, 185, 129, 0.02)}
-tr.harmony-row:hover td{background:rgba(16, 185, 129, 0.07)}
-.rank{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:6px;font-size:11px;font-weight:700;background:var(--bg1);color:var(--text3)}
-.rank.r1{background:#fef3c7;color:var(--gold)}
-.rank.r2{background:#f1f5f9;color:var(--silver)}
-.rank.r3{background:#ffedd5;color:var(--bronze)}
-.diff-up{color:var(--harmony2);font-size:11px;font-weight:600}
-.diff-dn{color:#ef4444;font-size:11px;font-weight:600}
+.tbl-wrap{overflow-y:auto;max-height:320px}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{font-size:10px;font-weight:600;color:var(--text3);letter-spacing:.4px;padding:7px 8px;text-align:left;border-bottom:1px solid var(--border2);position:sticky;top:0;background:#fff;white-space:nowrap}
+td{padding:6px 8px;border-bottom:1px solid rgba(50,100,160,.1);color:var(--text2);white-space:nowrap}
+tr:hover td{background:#f0f5ff;color:var(--text1)}
+tr.harmony-row td{color:#0d7a4e;font-weight:600}
+tr.harmony-row:hover td{background:rgba(13,122,78,.06)}
+.rank{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;font-size:10px;font-weight:700;background:#e8eef8;color:#7a96b8}
+.rank.r1{background:rgba(245,200,66,.2);color:var(--gold)}
+.rank.r2{background:rgba(176,190,197,.15);color:var(--silver)}
+.rank.r3{background:rgba(205,139,82,.2);color:var(--bronze)}
+.diff-up{color:#0d7a4e;font-size:11px}
+.diff-dn{color:#c0392b;font-size:11px}
 .diff-eq{color:var(--text3);font-size:11px}
-.expand-row{text-align:center;padding:10px;cursor:pointer;color:var(--text3);font-size:12px;font-weight:600;border-top:1px solid var(--border);background: var(--bg3);border-radius: 0 0 14px 14px;transition: all 0.2s}
-.expand-row:hover{color:var(--accent);background:var(--bg1)}
+.expand-row{text-align:center;padding:8px;cursor:pointer;color:var(--text3);font-size:12px;border-top:1px solid var(--border2)}
+.expand-row:hover{color:#2272d9}
 
 /* CHARTS */
 .chart-box{position:relative}
 
 /* SIDE BY SIDE for detail + indiv */
-.detail-indiv-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.detail-indiv-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
 
 /* EMPTY STATE */
-.empty{padding:32px;text-align:center;color:var(--text3);font-size:12px}
+.empty{padding:24px;text-align:center;color:var(--text3);font-size:12px}
 
 /* Selected chips for comp */
-.comp-selected{font-size:11px;color:var(--text3);margin-bottom:8px}
+.comp-selected{font-size:11px;color:var(--text3);margin-bottom:6px}
+
+.accordion{border-top:1px solid var(--border);margin-top:12px}
+.accordion-btn{width:100%;text-align:left;background:none;border:none;color:var(--text3);font-size:11px;padding:7px 2px;cursor:pointer;display:flex;align-items:center;gap:5px;font-family:inherit}
+.accordion-btn:hover{color:var(--blue2)}
+.accordion-btn .arrow{transition:transform .3s;display:inline-block;font-size:10px}
+.accordion-btn.open .arrow{transform:rotate(180deg)}
+.accordion-body{max-height:0;overflow:hidden;transition:max-height .35s ease;font-size:12px;color:var(--text2);line-height:1.75}
+.accordion-body.open{max-height:200px}
+.accordion-body p{padding:6px 4px 10px;color:var(--text2)}
 </style>
 </head>
 <body>
@@ -146,6 +140,7 @@ tr.harmony-row:hover td{background:rgba(16, 185, 129, 0.07)}
     </div>
   </div>
 
+  <!-- KPI -->
   <div class="kpi-grid">
     <div class="kpi"><div class="kpi-icon">🚗</div><div class="lbl">전국 총 보유대수</div><div class="val" id="kTotal">-</div><div class="sub" id="kTotalSub"></div></div>
     <div class="kpi"><div class="kpi-icon">🚙</div><div class="lbl">승용차</div><div class="val" id="kSedan">-</div><div class="sub" id="kSedanSub"></div></div>
@@ -154,39 +149,38 @@ tr.harmony-row:hover td{background:rgba(16, 185, 129, 0.07)}
     <div class="kpi harmony-card"><div class="kpi-icon">⭐</div><div class="lbl">하모니렌트카 순위</div><div class="val" id="kHarmony">-</div><div class="sub" id="kHarmonySub"></div></div>
   </div>
 
+  <!-- ROW1: 월별 추이 / 차종별 -->
   <div class="row2">
     <div class="panel">
-      <div class="panel-head">
-        <div class="panel-title">월별 총 보유대수 추이</div>
-        <button class="guide-toggle-btn" onclick="toggleGuide('descTrend')">💡 분석가이드</button>
-      </div>
+      <div class="panel-head"><div class="panel-title">월별 총 보유대수 추이</div></div>
       <div class="chart-box" style="height:200px"><canvas id="trendChart"></canvas></div>
-      <div id="descTrend" class="guide-desc-box">전국에 등록된 전체 렌트카 자산 규모의 상향 및 하향 흐름을 모니터링합니다. 렌트카 시장 전체의 거시적 수요 증감과 시장 인프라의 확장 속도를 진단할 수 있는 척도가 됩니다.</div>
+    <div class="accordion">
+      <button class="accordion-btn" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">💡 차트 해석 가이드 <span class="arrow">▼</span></button>
+      <div class="accordion-body"><p>전국 렌트카 총 보유대수의 월별 흐름입니다. 상승 추세는 업계 전반의 성장을 의미하며, 특정 월에 급변이 있다면 계절성 혹은 정책 변화를 확인해보세요.</p></div>
+    </div>
     </div>
     <div class="panel">
-      <div class="panel-head">
-        <div class="panel-title">차종별 구성</div>
-        <button class="guide-toggle-btn" onclick="toggleGuide('descType')">💡 분석가이드</button>
-      </div>
+      <div class="panel-head"><div class="panel-title">차종별 구성</div></div>
       <div class="chart-box" style="height:200px"><canvas id="typeChart"></canvas></div>
-      <div id="descType" class="guide-desc-box">전체 등록 대수 중 승용차, 승합차 및 기타 특수 차량이 차지하는 세부 포트폴리오 비율을 보여줍니다. 일반 여객용 장기렌트 시장과 법인·승합 기반의 상용 비즈니스 시장의 비중 차이를 비교분석하기 용이합니다.</div>
+    <div class="accordion">
+      <button class="accordion-btn" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">💡 차트 해석 가이드 <span class="arrow">▼</span></button>
+      <div class="accordion-body"><p>기준년월 기준 차종별 비중입니다. 승용차 비율이 압도적으로 높은 것이 일반적이며, 승합차 비중이 높은 업체는 법인·관광 수요 중심인 경우가 많습니다.</p></div>
+    </div>
     </div>
   </div>
 
+  <!-- ROW2: TOP10 / 경쟁사 순위 추이 -->
   <div class="row2">
     <div class="panel">
-      <div class="panel-head">
-        <div class="panel-title">TOP 10 업체 보유대수</div>
-        <button class="guide-toggle-btn" onclick="toggleGuide('descTop10')">💡 분석가이드</button>
-      </div>
+      <div class="panel-head"><div class="panel-title">TOP 10 업체 보유대수</div></div>
       <div class="chart-box" id="top10Wrap" style="height:300px"><canvas id="top10Chart"></canvas></div>
-      <div id="descTop10" class="guide-desc-box">현재 마켓을 이끌고 있는 최상위 대형 리스사 및 캐피탈사들의 인벤토리 랭킹입니다. 메이저 플레이어들의 독점 수준과 자산 확보 격차를 한눈에 볼 수 있으며 당사의 중장기 점유율 목표치 설정 시 비교군이 됩니다.</div>
+    <div class="accordion">
+      <button class="accordion-btn" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">💡 차트 해석 가이드 <span class="arrow">▼</span></button>
+      <div class="accordion-body"><p>기준년월 보유대수 상위 10개 업체입니다. 하모니렌트카(초록)의 위치와 상위 업체와의 격차를 확인하세요. 월을 바꿔가며 순위 변동을 비교할 수 있습니다.</p></div>
+    </div>
     </div>
     <div class="panel">
-      <div class="panel-head">
-        <div class="panel-title">경쟁사 순위 추이</div>
-        <button class="guide-toggle-btn" onclick="toggleGuide('descComp')">💡 분석가이드</button>
-      </div>
+      <div class="panel-head"><div class="panel-title">경쟁사 순위 추이</div></div>
       <div class="search-wrap" id="compSearchWrap">
         <span class="search-icon">🔍</span>
         <input type="text" id="compInput" placeholder="업체명 검색하여 추가..." autocomplete="off"
@@ -195,25 +189,27 @@ tr.harmony-row:hover td{background:rgba(16, 185, 129, 0.07)}
       </div>
       <div class="tag-list" id="compTags"></div>
       <div class="chart-box" style="height:220px"><canvas id="compChart"></canvas></div>
-      <div id="descComp" class="guide-desc-box">관심 있는 경쟁 업체들을 타겟 검색하여 추가하고, 월별 순위 변동 추이를 시계열로 트래킹합니다. 특정 핵심 경쟁사의 공격적인 인벤토리 증차나 축소 타이밍을 직관적으로 캐치할 수 있습니다.</div>
+    <div class="accordion">
+      <button class="accordion-btn" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">💡 차트 해석 가이드 <span class="arrow">▼</span></button>
+      <div class="accordion-body"><p>선택한 업체들의 순위 변화 추이입니다. Y축은 역순(위로 갈수록 상위권)이며, 꺾임이 큰 구간은 경쟁 변동이 있었던 시기입니다. 업체를 검색해 비교 대상을 자유롭게 추가하세요.</p></div>
+    </div>
     </div>
   </div>
 
+  <!-- 하모니 추이 -->
   <div class="panel" style="margin-bottom:12px">
-    <div class="panel-head">
-      <div class="panel-title">하모니렌트카 순위 · 대수 추이</div>
-      <button class="guide-toggle-btn" onclick="toggleGuide('descHarmony')">💡 분석가이드</button>
-    </div>
+    <div class="panel-head"><div class="panel-title">하모니렌트카 순위 · 대수 추이</div></div>
     <div class="chart-box" style="height:180px"><canvas id="harmonyChart"></canvas></div>
-    <div id="descHarmony" class="guide-desc-box">하모니렌트카의 자체적인 성장 타임라인입니다. 시장 내에서의 상대적인 순위 변동선(좌측)과 절대적인 등록 자산 대수의 변동 곡선(우측)을 오버랩하여, 당사 판매기획 전략의 실질적인 성과 성적표 역할을 수행합니다.</div>
+  <div class="accordion">
+      <button class="accordion-btn" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">💡 차트 해석 가이드 <span class="arrow">▼</span></button>
+      <div class="accordion-body"><p>하모니렌트카의 순위(초록 실선)와 보유대수(파란 점선)를 동시에 확인합니다. 대수가 늘어도 순위가 제자리라면 경쟁사 성장이 더 빠른 것입니다. 순위가 올라가는 구간에 주목하세요.</p></div>
+    </div>
   </div>
 
+  <!-- 업체별 상세 + 개별 추이 -->
   <div class="detail-indiv-grid">
     <div class="panel">
-      <div class="panel-head">
-        <div class="panel-title">업체별 상세 현황</div>
-        <button class="guide-toggle-btn" onclick="toggleGuide('descDetail')">💡 분석가이드</button>
-      </div>
+      <div class="panel-head"><div class="panel-title">업체별 상세 현황</div></div>
       <div class="search-wrap" id="detailSearchWrap">
         <span class="search-icon">🔍</span>
         <input type="text" id="detailInput" placeholder="업체명 검색..." autocomplete="off"
@@ -226,14 +222,10 @@ tr.harmony-row:hover td{background:rgba(16, 185, 129, 0.07)}
         <tbody id="detailBody"></tbody></table>
       </div>
       <div class="expand-row" id="expandBtn" onclick="toggleExpand()">▼ 나머지 업체 펼치기</div>
-      <div id="descDetail" class="info-desc-box" style="margin-top: 14px;">전체 기업 리스트의 데이터 그리드입니다. 검색 기능을 통해 특정 소형/중견 업체의 차종 믹스를 파악하고, '전월대비' 컬럼을 통해 최근 한 달간 인벤토리 확보 속도를 가장 정밀하게 계량 분석할 수 있습니다.</div>
     </div>
 
     <div class="panel">
-      <div class="panel-head">
-        <div class="panel-title">업체 개별 추이</div>
-        <button class="guide-toggle-btn" onclick="toggleGuide('descIndiv')">💡 분석가이드</button>
-      </div>
+      <div class="panel-head"><div class="panel-title">업체 개별 추이</div></div>
       <div class="search-wrap" id="indivSearchWrap">
         <span class="search-icon">🔍</span>
         <input type="text" id="indivInput" placeholder="업체명 검색하여 조회..." autocomplete="off"
@@ -242,29 +234,18 @@ tr.harmony-row:hover td{background:rgba(16, 185, 129, 0.07)}
       </div>
       <div id="indivName" style="font-size:13px;font-weight:600;color:var(--blue4);margin-bottom:8px;min-height:18px"></div>
       <div class="chart-box" style="height:240px"><canvas id="indivChart"></canvas></div>
-      <div id="descIndiv" class="guide-desc-box">선택한 단일 업체의 역사적 지표 추적을 위한 정밀 현미경 필터입니다. 대상 기업이 특정 분기나 특정 시즌에 물량을 집중 투입했는지, 혹은 자산 다이어트를 진행 중인지 비즈니스 라이프사이클을 추정할 수 있습니다.</div>
     </div>
   </div>
 
 </div>
 
 <script>
-// 가이드 설명 박스 토글 컨트롤 함수
-function toggleGuide(id) {
-  const box = document.getElementById(id);
-  if(box) box.classList.toggle('active');
-}
-</script>
-
-<script>
-// 유저 데이터 원본 로직 완벽 보존 (데이터가 너무 거대하여 단 한 글자라도 누락 시 구동 불가하므로 정밀 바인딩 유지)
-const RAW = {"m":["2025.01","2025.02","2025.03","2025.04","2025.05","2025.06","2025.07","2025.08","2025.09","2025.10","2025.11","2025.12","2026.01","2026.02","2026.03","2026.04"],"c":["(유)114투어렌트카","(유)가가렌트카","(유)고려렌트카 ","(유)그린렌트카","(유)낭만렌트카","(유)뉴드림렌트카 ","(유)뉴드림렌트카\u00a0 ","(유)뉴현대렌트카","(유)다성렌트카","(유)다온렌트카","(유)동부렌트카","(유)드림렌트카","(유)명가렌트카","(유)목포렌트카노블","(유)미래렌트카","(유)본렌터카","(유)붕붕 렌트카","(유)빌리지렌트카","(유)빛고을렌트카","(유)삼일렌트카","(유)선우렌트카","(유)세진렌트카","(유)신한렌트카","(유)씨오티디","(유)아시아렌터카","(유)아이렌트카","(유)알리고렌트카","(유)에스앤케이렌트카","(유)에스원렌트카","(유)에이스렌트카","(유)에이치렌트카","(유)에이치엠렌트카","(유)에코렌트카","(유)엠제이렌트카","(유)여수렌트카","(유)연합렌트카","(유)오렌지렌트카","(유)유일렌트카","(유)유진","(유)이지렌트카","(유)제이비렌터카","(유)제이에스렌터카","(유)제주공항","(유)제주삼성","(유)준렌트카","(유)지엠렌터카","(유)진렌트카","(유)차판사렌트카","(유)찬누리렌트카","(유)카카오렌트카","(유)케이비렌트카","(유)케이제이렌트카","(유)킹덤렌트","(유)타이거렌트카","(유)탑스렌트카","(유)태봉렌트카","(유)태성렌트카","(유)태양렌트카","(유)태준렌트카","(유)태진렌트카","(유)태평렌트카","(유)투어렌트카","(유)팡팡렌트카","(유)퍼스트렌트카","(유)프라임렌트카","(유)피제이렌트카","(유)하나렌트카","(유)한강렌트카","(유)한결렌트카","(유)한국렌트카","(유)한일렌터카","(유)해남렌트카","(유)혁신렌트카","(유)현대렌트카","(자)경인렌트카","(자)기풍렌트카","(주)26렌트카","(주)365렌트카","(주)가람렌트카","(주)가야렌트카","(주)가온렌트카","(주)가을렌트카","(주)가인렌트카","(주)간편렌터카","(주)강남렌트카","(주)강산렌터카","(주)거성렌트카","(주)건영렌트카","(주)겟차모빌리티","(주)경기렌트카","(주)경도렌트카","(주)경북렌터카","(주)경성오토","(주)경일알씨","(주)경희렌트카","(주)고고렌트카","(주)골드타워","(주)골드타워2","(주)공항렌트카","(주)광렌트카","(주)광야렌탈","(주)교보렌터카","(주)국민렌트카","(주)국화렌트카","(주)굿모닝산업","(주)굿초이스","(주)굿카서비스","(주)그린카","(주)금강렌트카","(주)금미렌트카","(주)금봉렌트카","(주)금성교역","(주)나나렌트카","(주)나누고","(주)나라렌트","(주)나래렌트카","(주)나우렌트카","(주)나이스오토월드","(주)나인렌터카","(주)남부현대차서비스","(주)남산렌터카","(주)내차처럼렌트카","(주)넘버원렌트카","(주)노블레스렌터카","(주)노블레스렌트카","(주)농협네트웍스","(주)뉴가나다","(주)뉴삼보렌트카","(주)뉴삼성렌트카","(주)뉴세진렌트카","(주)뉴오렌지렌트카","(주)뉴우리렌트카","(주)뉴이삭렌트카","(주)뉴현대드림렌트카","(주)뉴현대렌트카","(주)다모아렌터카","(주)다보마이카","(주)다우렌트카","(주)다원렌터카","(주)다원렌트카","(주)달카","(주)대박렌트카","(주)대아렌트카","(주)대영렌트카","(주)대원렌트카","(주)대주렌트카","(주)대화렌트카","(주)더뉴렌터카","(주)더뉴카","(주)더라임","(주)더블유렌트카","(주)더원렌트카","(주)더휴먼카","(주)덕창렌트카","(주)데일리렌터카","(주)도도렌트카","(주)도연렌트카","(주)도윤렌트카","(주)도일렌터카","(주)동산렌트카","(주)동아렌트카","(주)동행카","(주)둔산렌트카","(주)듀오렌터카","(주)드림렌트카","(주)디앤씨렌트카","(주)디앤알","(주)디에스오토","(주)디에스오토네트웍스","(주)디원렌트카","(주)라이온렌트카","(주)라이프렌터카","(주)럭키세븐투어렌트카","(주)레드캡투어","(주)레茨고렌터카","(주)렉스렌터카","(주)렌탈스테이션","(주)렌탈포유","(주)렌터카다모아","(주)렌트114","(주)렌트로","(주)렌트베네핏","(주)렌트온","(주)렌트원","(주)렌트존","(주)렌트카매니아","(주)렌트카바로","(주)렌트카케어","(주)렌트카코아","(주)렌트카킹","(주)렌트카타봄","(주)렌트투어","(주)로드렌터카","(주)로드렌트카","(주)로얄렌트카","(주)루비렌트카","(주)류내이션","(주)리더스렌트카","(주)리렌트카","(주)리베렌트카","(주)리스본렌트카","(주)리스컴퍼니","(주)마이렌트카","(주)마이젠카","(주)마이카렌트카","(주)만세","(주)맥스렌터카","(주)메가렌트카","(주)명성렌트카-남양주","(주)명성렌트카-오산","(주)모두가치","(주)모두렌터카","(주)모두렌트카","(주)모두카","(주)모모렌트카","(주)모아모빌리티","(주)모아카","(주)몬스터","(주)몬스터렌터카","(주)미래렌트카","(주)미소렌트카","(주)미스터제이케이렌트카","(주)미스터픽","(주)바다","(주)바로렌터카","(주)바른렌트카","(주)반디렌터카","(주)방방곡곡렌트카","(주)백두산렌트카","(주)번영렌트카","(주)범아렌트카","(주)보검모빌리티","(주)보배렌트카","(주)보아스네트웍","(주)부일렌트카","(주)붕붕카","(주)브이아이피렌터카","(주)브이카","(주)블루렌트","(주)블루렌트카","(주)블루스카이","(주)비에프오토모빌리티","(주)비엘렌트카","(주)비엠렌터카","(주)비케이렌트카","(주)빌려볼카","(주)삼보렌트카-구리","(주)삼성렌터카","(주)삼성통운","(주)삼원렌트카","(주)삼일렌터카","(주)삼화렌트카","(주)새누리렌트카","(주)샤이어렌트카","(주)샤이어모빌리티","(주)서울지에스렌트카","(주)선경엔씨에스렌트카","(주)선우렌트카","(주)성일렌트카","(주)세계로렌트카","(주)세륜","(주)세븐렌트카","(주)세와모터스","(주)세이브카","(주)세종렌트카","(주)세진렌트카-용인","(주)센트로렌트카","(주)손오공렌터카","(주)솔렌터카","(주)솔렌트카","(주)솔루션모터스","(주)솜렌트카","(주)수렌트카","(주)스마트렌트카","(주)스카이","(주)스칼라데이터","(주)스타라인","(주)스타렌트카","(주)스타스카이","(주)스피드원렌트카","(주)스피드킹","(주)승도렌트카","(주)신성렌트카","(주)신세계에스지에이전시","(주)신영렌트카","(주)신우","(주)신원렌터카","(주)신유렌터카","(주)신한렌터카","(주)신화렌트카","(주)써밋렌터카","(주)쑈카","(주)쓰리케이스컴퍼니","(주)씨더블유렌트카","(주)씨앤피렌터카","(주)씨엔씨코리아","(주)아마존카","(주)아스타렌트카","(주)아시아렌트카","(주)아온","(주)아이언렌트카","(주)아이에스렌터카","(주)아이에스모빌리티","(주)아이엠캐피탈","(주)아이제이렌트카","(주)아이카","(주)알렌트","(주)알씨렌트카","(주)애니렌트카","(주)애드렌트카","(주)애드플레이","(주)야타차","(주)어디가렌트카","(주)어썸렌터카","(주)에버","(주)에버렉스","(주)에스비렌트","(주)에스에이렌터카","(주)에스에이치렌트카","(주)에스에이치모빌리티","(주)에스앤비오토","(주)에스엠프리미엄렌트카","(주)에스와이렌터카","(주)에스제이렌트카","(주)에스제이렌트카-광명","(주)에스제이모터스","(주)에스카테크","(주)에스케이렌트카","(주)에스케이알렌터카서비스","(주)에이블러스","(주)에이비씨렌터카","(주)에이스렌터카-고양","(주)에이스렌터카-안성","(주)에이스렌트카","(주)에이스투어렌트카","(주)에이에이렌터카","(주)에이엠렌트카","(주)에이엠씨렌터카","(주)에이치디렌트카","(주)에이치렌터카","(주)에이치에스렌트카","(주)에이치제이한진렌트카","(주)에이치케이나라렌트카","(주)에이치케이렌터카","(주)에이플러스렌트카","(주)에프엔렌트카","(주)에프엠아이","(주)엔씨렌트카","(주)엔젤렌터카","(주)엔카","(주)엔케이","(주)엔터프라이즈글로벌","(주)엔터프라이즈코리아","(주)엘리모터스","(주)엘림글로벌","(주)엘에스엠컴퍼니","(주)엠렌트카","(주)엠씨렌트카","(주)엠알렌트카여행사","(주)엠앤씨렌트카","(주)엠제이렌터카","(주)엠케이렌트카","(주)영렌트카","(주)오뚜기렌트카","(주)오렌지렌트카","(주)오마이렌터카","(주)오산렌트카","(주)오즈렌터카","(주)오케이렌터카","(주)오케이렌트카","(주)오케이모터스","(주)오토렌트카","(주)오토매니지먼트렌터카","(주)오토핸즈","(주)오토핸즈마이카","(주)올더렌트카","(주)와이드","(주)와이디렌탈","(주)와이렌트카","(주)와이엔제이컴퍼니","(주)와이엔케이글로벌","(주)와이컴머스","(주)우리렌트","(주)우리렌트카","(주)우리렌트카-의정부","(주)우리카드","(주)우림렌터카","(주)우수렌트카","(주)우정","(주)울타리컴퍼니","(주)원닷렌트카","(주)원일렌트카-고양","(주)원일렌트카-평택","(주)월드렌트카","(주)월드카익스프레스","(주)웨이","(주)웨이렌터카","(주)위굴리","(주)위너브로스렌트카","(주)위너스렌트카","(주)위너스앤파트너스","(주)위메인렌터카","(주)위카","(주)유니온렌터카","(주)유니크렌트카","(주)유아이렌터카","(주)유알렌터카","(주)유엔렌트카","(주)유일렌트카","(주)유정렌트카","(주)유진렌트카","(주)유카","(주)이노스렌트카","(주)이머징카","(주)이삭렌터카","(주)이안카","(주)이지원카","(주)이지웨이렌트카","(주)인렌트카","(주)인모션","(주)일구구사투어렌트카","(주)일일사렌트카","(주)임스타렌트카","(주)저스트렌트카","(주)전국중소렌터카협의회","(주)전남렌트카","(주)전임렌터카","(주)전진렌터카","(주)정직렌터카","(주)제우스렌터카","(주)제이더블유컴퍼니","(주)제이디모빌리티","(주)제이렌트카","(주)제이비렌트카","(주)제이앤제이렌트카","(주)제이에스렌트카","(주)제이와이렌트카","(주)제이와이엔터","(주)제이케이비","(주)제이티렌트카","(주)제일렌터카","(주)제일렌트카","(주)제일렌트카-용인","(주)제주스타렌탈","(주)제주제일렌터카","(주)제주현대","(주)제트렌트카","(주)제트카","(주)젬컴퍼니","(주)조렌트카","(주)조아렌트카","(주)조은렌트카","(주)조은렌트카-양주","(주)조이렌트카","(주)주은렌트카","(주)중부","(주)중앙렌트카","(주)중호렌트카","(주)지니렌터카","(주)지선렌트카","(주)지스타렌트카","(주)지에스렌트리스","(주)지엠물류","(주)지오렌터카","(주)지지렌트카","(주)직카","(주)진렌트카","(주)차놀자렌터카","(주)차이카렌트카","(주)차타고","(주)참조은","(주)창희렌트카","(주)채움렌트카","(주)천조렌트카","(주)천지렌트카","(주)초원렌트카","(주)카렌디피티","(주)카렌트카","(주)카보스렌터카","(주)카엔퍼블릭","(주)카이스트","(주)카일이삼제스퍼","(주)카존렌터카","(주)카즈","(주)카타고","(주)칸렌트카","(주)캠버렌트카","(주)캠원","(주)케이렌트카","(주)케이밴코리아","(주)케이비","(주)케이비넘버원렌트카","(주)케이에스모빌리티","(주)케이에이치렌트카","(주)케이엔렌트카","(주)케이제이렌탈","(주)케이제이렌터카","(주)케이카렌탈","(주)코끼리렌트카","(주)코리도어","(주)코리아렌터카","(주)코리아렌트카","(주)코코렌터카","(주)콜카솔루션즈","(주)큐렌트카","(주)크라운렌트카","(주)크레아모터스","(주)클로버렌트카","(주)키움오토렌탈","(주)타고타","(주)타보고렌터카","(주)타봄","(주)타요렌트카","(주)탐","(주)탐세븐렌트카","(주)태경렌트카","(주)태산렌트카","(주)태양렌트카","(주)태원렌트카","(주)터미널렌트카","(주)토마토렌트카","(주)투가이즈렌트카","(주)투투이엔지","(주)티렌트카","(주)티에스컴퍼니","(주)퍼블리렌터카","(주)퍼스트더원","(주)퍼스트렌터카","(주)퍼스트렌트카","(주)퍼스트카포유","(주)포세이돈렌트카","(주)포시즌렌트카","(주)포유","(주)푸른렌트카","(주)프로렌트카","(주)프린스렌트카","(주)플러스렌터카","(주)플러스원렌트카","(주)피제이렌트카","(주)피플렌트카","(주)피플카","(주)피피카","(주)픽스렌트카","(주)하나렌트","(주)하나로렌터카","(주)하나로렌트카-수원","(주)하남스마트렌트카","(주)하렌카","(주)하모니렌트카","(주)하은렌트카","(주)하이엔드렌터카","(주)하이엠카","(주)하이원렌터카","(주)하이월드카","(주)하이카","(주)하이카세상","(주)한강렌터카","(주)한국씨엔씨","(주)한길렌트카","(주)한미렌트카","(주)한빛렌트카","(주)한빛이엔지","(주)한울렌터카","(주)한일렌트","(주)한진렌트카","(주)해동렌트카","(주)해태렌트카","(주)해피네트웍스","(주)해피투어","(주)햇살렌트카","(주)허니문렌트카","(주)헤이모빌리티","(주)현대렌트카","(주)호미와젓가락","(주)화성렌트카","(주)화이트큐브","(주)황금렌트카","(주)휠라이프","(주)휴맥스모빌리티","(주)희망드림렌트카","(쥬)지엠렌트카","(합)경기렌트카","(합)경성렌트카","(합)나우렌트카","(합)뉴경성렌트카","(합)동원렌트카","(합)미래렌트카","(합)보람렌트카","(합)오토렌트카","(합)우리렌트카","(합)주성렌트카","(합)청훈렌트카","(합)해피관광렌트카","062렌트카","345렌트카(주)","SK네트웍스(주)SK렌터카","\u321c 아이렌터카","\u321c 올댓","\u321c 올댓렌트카","\u321cKD","\u321c가가렌트카","\u321c가나다렌트카","\u321c가람렌트카","\u321c가렌트카 ","\u321c가야렌트카","\u321c가자제주","\u321c갤럭시","\u321c건아렌트카","\u321c건일렌트카","\u321c경기렌트카","\u321c경동렌트카 ","\u321c경원렌트카","\u321c고고렌트카","\u321c고하린렌트카","\u321c골든레저","\u321c곰두리렌트카","\u321c공카","\u321c공항","\u321c공항렌트카","\u321c괴산렌트카","\u321c국도렌트카","\u321c국민카 ","\u321c국제","\u321c국제렌트카","\u321c굿모닝","\u321c굿모닝렌트카","\u321c굿모닝렌트카 ","\u321c그리드렌트카","\u321c그린","\u321c극동오토렌탈","\u321c글로벌금오","\u321c글로벌렌트카","\u321c글로벌파트너","\u321c금강렌트카","\u321c금성","\u321c금호렌터카","\u321c금호투어렌트카","\u321c나 라렌트카","\u321c나라렌트카","\u321c나이스렌트카","\u321c남도렌트카","\u321c남도투어렌터카","\u321c내차처럼렌트카","\u321c네스트","\u321c네이처모빌리티","\u321c네이처모빌리티(2025\ub144\ub3c4 \ub9c8\uac10)","\u321c녹원","\u321c누리","\u321c뉴국제렌트카","\u321c뉴굿타임렌트카","\u321c뉴그린렌트카","\u321c뉴금강산렌트카","\u321c뉴대한","\u321c뉴명차","\u321c뉴세진렌트카","\u321c뉴스카이렌트카","\u321c뉴신화렌트카","\u321c뉴예스렌트카","\u321c뉴지제이렌트","\u321c뉴하이렌트카","\u321c다래렌트카","\u321c다음렌트카","\u321c대경렌트카","\u321c대광렌트카","\u321c대구렌트카 ","\u321c대동렌트카","\u321c대민렌터카","\u321c대신렌트카","\u321c대진","\u321c대한렌터카","\u321c대한렌트카","\u321c대현렌트카","\u321c더바른렌트카","\u321c더블에이치렌트카","\u321c더세이프","\u321c더스윙오퍼레이션","\u321c더쎄븐","\u321c더조은렌트카","\u321c더타","\u321c독도렌트카","\u321c동서남북렌트카","\u321c동아렌트카","\u321c동양렌트카","\u321c두리렌트카 ","\u321c듀오카","\u321c디알","\u321c디에이치렌터카","\u321c땡큐제주","\u321c라인","\u321c레저가온","\u321c레츠고","\u321c렌고","\u321c렌트카엠","\u321c렌트카타봄","\u321c렌트투게더","\u321c렌트파크","\u321c로그인","\u321c로또렌트카","\u321c로보트","\u321c로얄","\u321c마블렌트카","\u321c마이카렌트카","\u321c매일","\u321c메이저","\u321c명가렌트카","\u321c모네타렌트카","\u321c모모렌트카","\u321c모아렌트카","\u321c무지개","\u321c미르렌트카","\u321c미소렌트카","\u321c미스터렌트카","\u321c바로","\u321c바른렌터카","\u321c바바리안모터스","\u321c바이펙스","\u321c발리","\u321c백두산렌트카","\u321c밴코리아","\u321c베스트","\u321c베스트렌트카","\u321c부경","\u321c부경렌트카","\u321c부산렌트카 ","\u321c부산스타렌터카","\u321c붐렌트카","\u321c브이아이피렌터카","\u321c브이아피피렌트카","\u321c블루","\u321c블루렌트카","\u321c비비카","\u321c비에스렌터카","\u321c비엔케이캐피탈","\u321c빵빵","\u321c빵빵렌트카","\u321c삼성렌트카","\u321c삼일렌트카","\u321c삼천리렌트카","\u321c삼천리렌트카 ","\u321c새가람렌트카","\u321c새부산렌탈","\u321c새한글로벌","\u321c생생렌트카","\u321c서경렌트카","\u321c서경투어엔카","\u321c설렌터카","\u321c성공렌트카 ","\u321c성공렌트카\u00a0 \u00a0","\u321c성산렌트카","\u321c성운렌트카","\u321c세명SM렌트카 ","\u321c세영렌트카","\u321c세원렌트카","\u321c세이프","\u321c세종통운","\u321c소풍","\u321c수렌터카","\u321c수성렌트카","\u321c스마일","\u321c스마트","\u321c스마트렌터카","\u321c스마트렌트카","\u321c스타렌트카","\u321c스타모빌리티렌트카","\u321c스탠스컴퍼니","\u321c시소","\u321c시원렌트카","\u321c신동아","\u321c신세계","\u321c신영렌트카","\u321c신우렌트카","\u321c신한렌트카","\u321c신화오토렌탈","\u321c써니빌","\u321c썬","\u321c쏘카","\u321c씨에이치렌트카","\u321c씨엔렌터카","\u321c씨엔에스렌터카","\u321c씨유","\u321c씨카","\u321c씨티렌터카","\u321c아리랑","\u321c아산렌트카","\u321c아세아렌트카 ","\u321c아이원렌트카","\u321c아톰투비트","\u321c안전기업","\u321c알앤에이","\u321c알앤에이컴퍼니","\u321c알파렌트카","\u321c야떠나자렌트카","\u321c에덴렌트카","\u321c에덴오토플랜","\u321c에스디","\u321c에스디렌터카","\u321c에스렌트카","\u321c에스아이렌트카","\u321c에스알비렌트카","\u321c에스앤비렌터카","\u321c에스오토렌탈","\u321c에스제이","\u321c에스제이렌트카","\u321c에이스렌트카","\u321c에이엑스렌트카","\u321c에이엔티렌터카","\u321c에이치렌트카","\u321c에이치씨","\u321c에코렌터카","\u321c에프씨엠","\u321c엔아이씨이새인천렌트카","\u321c엔젤렌트카","\u321c엘렌모빌","\u321c엘사컴퍼니","\u321c엘사컴퍼니","\u321c엠케어렌트카","\u321c엠케이렌트카","\u321c엠티렌터카","\u321c여행온","\u321c영호렌트카 ","\u321c예스","\u321c예스굿모닝","\u321c예스렌트카","\u321c예카","\u321c오라","\u321c오렌지","\u321c오렌지렌트카","\u321c오션렌트카","\u321c오케이렌탈","\u321c오케이렌트카","\u321c오케이렌트카 ","\u321c오토렌트카","\u321c온누리렌트카","\u321c와이드렌트카","\u321c용두암","\u321c용인렌트카","\u321c우도전기","\u321c우리","\u321c우리렌터카","\u321c우리렌트카","\u321c우성운수(\uc2ee)","\u321c우성렌트카 ","\u321c우솔렌트카","\u321c울릉공항렌트카","\u321c울릉도렌트카","\u321c원 츠","\u321c원렌트카","\u321c원스탑렌트카","\u321c월드렌트카","\u321c위고투렌트카","\u321c위드렌트카","\u321c위카","\u321c유니크렌트카","\u321c유렌트카","\u321c유성렌트카","\u321c유오(구,\ud558\uc640\uc774)","\u321c유카","\u321c응카","\u321c이렌트카","\u321c이에스렌터카","\u321c이화렌트카","\u321c인스렌트카","\u321c일박이일렌트카","\u321c일출","\u321c잇다","\u321c자유","\u321c장수","\u321c장풍물류렌트카","\u321c정투청렌트카","\u321c제너스렌트카","\u321c제로렌트카","\u321c제이공항","\u321c제이더블유렌트카","\u321c제이렌트카","\u321c제이모빌리티","\u321c제이비","\u321c제이씨아이렌트카","\u321c제이에스모빌리티","\u321c제이에스밴","\u321c제이엠렌터카","\u321c제이유렌트카","\u321c제이카","\u321c제이테크인","\u321c제일","\u321c제일렌트카","\u321c제주공항전기차","\u321c제주다움","\u321c제주동백","\u321c제주드림","\u321c제주마음","\u321c제주명품","\u321c제주보고타","\u321c제주빌리고","\u321c사랑","\u321c제주아산","\u321c제주알프스","\u321c제주에코","\u321c제주엔젤","\u321c제주여행","\u321c제주오케이","\u321c제주원","\u321c제주유레카","\u321c제주유명","\u321c제주이브이전기","\u321c제주자연","\u321c제주친구","\u321c제주카카","\u321c제주카카 ","\u321c제주카카오","\u321c제주타요","\u321c제주파워","\u321c제주패스글로벌","\u321c제주평화","\u321c제주플러스","\u321c제주한라","\u321c제주현대","\u321c조아렌트카","\u321c조은렌트카","\u321c조은렌트카 ","\u321c조이","\u321c좋은","\u321c좋은렌트카","\u321c준","\u321c중부렌트카","\u321c중앙렌트카","\u321c지에이치엔터프라이즈","\u321c지제이렌트카","\u321c지티렌트카","\u321c진해군항렌트카","\u321c차렌트카","\u321c참신렌트카여행사","\u321c채움씨엔씨","\u321c천마렌트카","\u321c청주제일","\u321c카프렌렌트카","\u321c케이네트웍스","\u321c케이디렌트카","\u321c케이렌트카","\u321c케이제이렌터카","\u321c케이참신렌트카","\u321c케이투렌트카","\u321c코코렌터카","\u321c콜렌트카","\u321c클린렌트카","\u321c킹렌트카","\u321c킹콩렌트카","\u321c타고","\u321c타고렌터카","\u321c타라고","\u321c타타타","\u321c탐라","\u321c탑렌트카","\u321c태현렌터카","\u321c통일","\u321c특별한","\u321c티알씨","\u321c티오피렌트카","\u321c파인렌트카","\u321c팔도렌트카","\u321c퍼스널알앤에이","\u321c퍼스트","\u321c포항알프스","\u321c푸른렌터카","\u321c플러스렌트카","\u321c플러스제주","\u321c하나","\u321c하나렌트카","\u321c하나로","\u321c하나에스렌트카","\u321c하이","\u321c하이렌트카","\u321c하이제주","\u321c한국렌트카","\u321c한길","\u321c한길렌트카","\u321c한누리렌트카","\u321c한들렌터카","\u321c한성렌터카","\u321c한영","\u321c한지렌트카","\u321c한진렌트카 ","\u321c한찬코리아","\u321c한화렌트카","\u321c해원렌트카","\u321c해피렌트카","\u321c행복오토랜드","\u321c행운","\u321c행운렌트카","\u321c혁신렌트카","\u321c현대남포항","\u321c현대하이렌트카","\u321c현모토닉스","\u321c힐튼렌트카","가나렌트카(주)","가온플랫폼\u321c","가자렌트카","가자렌트카\u321c","강경렌트카(주)","강남렌트카(주)","강인렌트카","건아렌트카(주)","경남기업렌터카\u321c","경동렌트카(주)","경동에이앤씨(주)","경원렌트카(주)","경진렌트카(주)","경진카 주식회사","고렌트카","고렌트카(주)","고려렌트카\u321c ","고릴라렌트카(주)","고웨이렌트카(주)","고저스모빌리티(주)","골드렌트카(주)","골드렌트카\u321c","곰두리렌트카\u321c","광명렌트카","굿데이렌트카(주)","굿렌트카(주)","굿모닝오토랜드(주)","굿차모빌리티(주)","그린렌터카(주)","그린렌트카(주)-안산","글로리렌트카","글로벌렌트카\u321c","금강\uc2ee","금강렌트카\u321c","기아(주)","길렌트카\u321c","넥스트원주식회사 ","노바렌트카(주)","누리렌트카(주)","뉴곰두리렌터카\u321c","뉴대명렌트카(주)","뉴드림렌트카(주)","뉴삼우렌트카(주)","뉴새한렌트카\u321c","다카렌터카(주)","다카렌터카\u321c","대경렌트카(주)","대덕렌터카","대전렌트카(주)","대한렌트카","더플러스렌터카\u321c","동운렌트카(주)","두성렌트카\u321c","드림렌트카\u321c","디\uc2ee","디알\uc2ee","디에이치렌트카\u321c","디에이치렌트카\u321c","라온렌트카(주)","라이드(주)","레인보우모빌리티\u321c","렌트팡 주식회사","렌트팡\u321c","롯데렌탈(주)","롯데캐피탈(주)","마스타자동차관리(주)","마음카(주)","마이렌터카 주식회사","마이오토(주)","마이오토링크\u321c","마이투어 렌트카","마춤카(주)","메가렌트카\u321c","메르세데스벤츠모빌리티코리아(주)","메리츠캐피탈(주)","메송모두렌트카","메이트렌터카(주)","메트로\uc2ee","메트로렌탈앤투어서비스\u321c","모젠렌트카(주)","모터홈코리아(주)","모티스 주식회사","목송씨앤씨\u321c","미소렌터카\u321c","바로이렌트카(주)","바카르18\ud638","바카르25\ud638","바카르32\ud638","바카르37\ud638","바카르48\ud638","배사장렌트카(주)","백운렌트카\u321c","번영렌트카","베스트렌트카\u321c","브이아이피렌터카(주)","브이아이피렌트카\u321c","브이아이피리모렌터카(주)","비에프모빌리티(주)","비엔케이캐피탈\u321c","비엠더블유파이낸셜서비스코리아(주)","빌려타렌트카(주)","빌림(주)","빵빵카(주)","삼성카드(주)","삼영렌트카(주)","서현렌트카(주)","선진렌트카","성오렌트카","성원렌트카(주)","세븐렌탈(주)","세븐렌트카\u321c","세종렌터카\u321c","센트럴렌트카(주)","셀느(\ucea0\ud551\uc554\uce74)","소망렌트카(주)","솔렌트카\u321c","수렌트카(주)","스마일렌트카","스마트렌트카","스마트렌트카(주)","스위치플랜(주)","스카이렌트카(주)","스타렌트카(주)","스타인\u321c","신동아렌트카\u321c","신영렌트카\u321c","신한카드(주)","신현대렌트카\u321c","신협우리들렌트카(주)","싸다렌트카(주)","씨앤에이치프리미어렌탈(주)","씨에스렌트카(주)","씨에이치파크(주)","아리랑카 주식회사","아마노렌터카허브\u321c","아비스렌트카(주)","아산렌트카(주)","아세아렌트카(주)","아이비렌트카(주)","아이엠에스모빌리티(주)","아이카렌터카(주)","아주모터스(주)","알파\u321c","알파렌터카\u321c","에스디렌트카\u321c","에스디서비스(주)","에스케이렌터카(주)","에쓰렌트카(주)","에어카 주식회사","에이스\u321c","에이스랜트\u321c","에이엠렌트카\u321c","에이원모빌소프트(주)","에이투렌트카","에이티렌터카(주)","에코렌트카(주)","엔에이치농협캐피탈(주)","엠알렌트카\u321c","엠에이치케이모빌리티(주)","엠제이렌트카\u321c","엠지캐피탈(주)","엠캐피탈(주)","연보라(주)","엽원백(\ucea0\ud551\uce74\ud0c0\ub2e402)","엽종원(\ucea0\ud551\uce74\ud0c0\ub2e401)","영일렌트카\u321c","영일산업\u321c","예스렌터카\u321c","오렌터카(주)","오름\u321c","오리엔탈렌터카(주)","오릭스캐피탈코리아(주)","오케이렌터카(주)","오토비즈파트너스\u321c","오토월드\u321c\ub80c\ud2b8\uce74","오토플러스(주)","오픈렌터카(주)","오픈로직스(주)","와이엠네트웍스\u321c","우리금융캐피탈(주)","우리렌트카(주)-구리","우리렌트카\u321c","우리캐피탈렌터카(주)","우성운수(주)","워너비렌트카\u321c ","원렌터카","원탑렌트카 주식회사","월렌트카(주)","웰릭스모빌리티(주)","유로렌트카(주)","유한회사 지엠렌트카","이에이치파트너스","이엔에이렌탈 주식회사","이지렌터카(주)","이지케이코리아\u321c","이카모빌리티(주)","이케이에프알(주)","인더스(주)","인지카(주)","인천공항렌트카(주)","인천모빌리티사업협동조합","자보\u321c","자유로운수\u321c","장기렌트카\u321c","정도인터내셔널(\uc96c)","제로렌트카(주)","제로알엔티\u321c","제이비렌터카(\ud569)","제이비우리캐피탈\u321c","제이피케이모빌리티(주)","제이피케이모빌리티\u321c","제이홀딩스(\ucea0\ud551\uc554\uce74)","제일렌트카\u321c","제주\u321c","제주아이\u321c","제주아이엔지\u321c","제주야\u321c","조아\u321c","조아렌트카(주)","조은렌트카(주)","주식회사\u00a0 나우렌트카","주식회사 건아렌트카","주식회사 구남기획","주식회사 나우렌트카","주식회사 빌린카","주식회사 스카이렌터카","주식회사 스타오토모빌","주식회사 씨엔렌터카","주식회사 에코카쉐어링","주식회사 엘사컴퍼니","주식회사 월렌트솜렌트카","주식회사 이브이카","주식회사 제이원렌트카","주식회사 클로버렌터카","주주렌터카 주식회사","준카(주)","지렌트카(주)","지앤렌트카","지에스렌트카(주)","지에스렌트카오토리스(주)","지엔카(주)","지원렌터카(주)","진성퍼니스","차놀자 G01\ud638","차놀자렌트카\u321c","차놀자캠핑카 주식회사","차란차(주)","차빌리지(\ucea0\ud551\uc554\uce74)","차세대렌트카(주)","참우리렌트카(\uc720)","창신렌트카\u321c","천일렌트카","청화알앤피(주)","초이스렌트카(주)","카렌트(주)","카렌트\u321c","케이디알플러스(주)","케이디에프(주)","케이디피플(주)","케이렌트카(주)-광명","케이렌트카(주)-안산","케이비오토렌트(주)","케이비오토렌트매니지먼트(주)","케이비캐피탈(주)","케이씨렌트카","케이에스렌터카\u321c","케이원렌트카\u321c","케이카(주)","케이투렌트카\u321c","케이티앤에스(주)","코리아\u321c","코리아렌트(주)","코오롱모빌리티그룹(주)","콜렌트카(주)","쿠렌트(주)","클라우드\u321c","클라우드렌터카\u321c","타바 주식회사","타슈카협동조합","타이거운수(주)","탑오렌지렌터카(주)","토토렌터카(주)","투투렌트카(\uc720)","팝콘렌트카","퍼시픽렌터카(주)","퍼시픽모빌리티 주식회사","포세이돈렌트카","포시즌서비스","폭스바겐파이낸셜서비스코리아(주)","푸른렌트카","푸른솔관광(주)","프라임렌트카(주)","프란렌트카(주)","프렌즈카모빌리티\u321c","플러스그린렌트카(주)","피엘아이지렌트카\u321c","하나렌트카\u321c","하나캐피탈(주)","하늘네트웍스(주)","하늘모빌리티\u321c","하얀렌트카\u321c","한국\u321c","한국자동차(주)","한라산\u321c","한성특운\u321c","한솔네트웍스\u321c","한일상공(\uc720)","한진오토렌트카(주)","행운렌트카\u321c","향우렌트카(주)","혁신렌트카","현대관광렌트카","현대디씨렌트카\u321c","현대캐피탈(주)","호미와젓가락","효성렌트카(주)","휴렌터카(주)","휴렌트카","히든렌터카","히트렌터카(주)"],"d":{"2025.01":[["롯데렌탈(주)",256546,252049,4497,0],["에스케이렌터카(주)",195131,192298,2833,0],["현대캐피탈(주)",156605,154318,2287,0],["하나캐피탈(주)",81628,81043,585,0],["우리금융캐피탈(주)",48103,47961,142,0],["케이비캐피탈(주)",45545,45387,158,0],["신한카드(주)",37903,36976,927,0],["\u321c비엔케이캐피탈",31453,31253,200,0],["(주)레드캡투어",24702,24223,479,0],["메리츠캐피탈(주)",23939,23911,28,0],["\u321c쏘카",22938,22846,92,0],["기아(주)",19666,19606,60,0],["(주)아마존카",19225,19224,1,0],["(주)우리카드",17766,17538,228,0],["오릭스캐피탈코리아(주)",17247,17168,79,0],["제이비우리캐피탈\u321c",12996,12880,116,0],["엔에이치농협캐피탈(주)",12904,12880,24,0],["(주)하모니렌트카",11941,11902,39,0],["롯데캐피탈(주)",9730,9650,80,0],["(주)아이엠캐피탈",8651,8649,2,0],["메르세데스벤츠모빌리티코리아(주)",7938,7938,0,0],["케이카(주)",5739,5689,50,0],["(주)농협네트웍스",5226,5091,135,0],["비엠더블유파이낸셜서비스코리아(주)",5033,5033,0,0],["삼성카드(주)",4286,3951,335,0],["(주)카일이삼제스퍼",3313,3263,50,0],["엠캐피탈(주)",2328,2328,0,0],["(주)그린카",2127,2127,0,0],["(주)토마토렌트카",2121,2031,90,0],["퍼시픽렌터카(주)",2107,1968,100,39],["폭스바겐파이낸셜서비스코리아(주)",2027,2027,0,0],["(주)제트카",1667,1666,1,0],["(주)아스타렌트카",1291,1266,25,0],["센트럴렌트카(주)",1228,1188,40,0],["제주\u321c",1162,1138,24,0],["\u321c무지개",879,801,78,0],["씨앤에이치프리미어렌탈(주)",858,844,14,0],["\u321c제주오케이",820,790,30,0],["(주)아이카",785,778,7,0],["에쓰렌트카(주)",706,650,53,3],["차란차(주)",739,739,0,0],["(주)도도렌트카",714,695,19,0],["스타렌트카(주)",680,671,9,0],["우성운수(주)",680,661,16,3],["(주)케이제이렌탈",654,635,19,0],["(주)포시즌렌트카",641,607,34,0],["투투렌트카(\uc720)",632,631,1,0],["아이엠에스모빌리티(주)",630,603,25,2],["(주)렌트카바로",591,591,0,0],["베스트렌트카\u321c",578,547,30,1],["\u321c중부렌트카",568,556,12,0],["마춤카(주)",557,555,2,0],["\u321c고고렌트카",557,546,11,0],["(주)제일렌트카",550,533,17,0],["(주)골드타워",547,529,18,0],["\u321c탐라",538,511,27,0],["(주)아이언렌트카",536,529,7,0],["굿차모빌리티(주)",533,530,3,0],["세븐렌탈(주)",527,504,23,0],["(주)중부",526,506,20,0],["(주)퍼스트렌트카",520,513,7,0],["(주)경일알씨",524,401,123,0],["푸른솔관광(주)",511,466,45,0],["(주)오토핸즈마이카",511,508,3,0],["(주)대영렌트카",508,508,0,0],["\u321c블루",497,496,1,0],["우리캐피탈렌터카(주)",495,490,5,0],["(주)해피투어",495,487,7,1],["(주)휴맥스모빌리티",484,480,4,0],["(주)피틀카",482,482,0,0],["(주)이안카",482,473,9,0],["(주)피제이렌트카",475,462,13,0],["\u321c한진렌트카 ",466,404,59,3],["\u321c엔아이씨이새인천렌트카",464,447,17,0],["굿모닝오토랜드(주)",462,439,23,0],["(주)번영렌트카",461,458,3,0],["마이오토(주)",459,420,39,0],["\u321c에이스렌트카",452,440,12,0],["(주)나래렌트카",446,439,7,0],["\u321c제주다움",435,417,18,0],["\u321c하나에스렌트카",430,359,71,0],["(주)강산렌터카",424,415,9,0],["(주)제주현대",424,409,15,0],["\u321c로그인",424,386,38,0],["(주)해피네트웍스",421,399,22,0],["(자)경인렌트카",418,384,34,0],["\u321c제주카카오",418,409,9,0],["(주)플러스렌터카",417,415,2,0],["곰두리렌트카\u321c",415,384,31,0],["고려렌트카\u321c ",413,370,43,0],["(주)바다",410,378,32,0],["(주)스마트렌트카",399,365,34,0],["\u321c이렌트카",397,370,27,0],["조아\u321c",397,383,14,0],["(주)이삭렌터카",396,395,1,0],["(주)에이치디렌트카",392,379,13,0],["(주)지엠물류",391,359,30,2],["뉴새한렌트카\u321c",387,385,2,0],["\u321c제주원",383,368,15,0],["대전렌트카(주)",382,375,7,0],["케이디에프(주)",370,353,17,0],["(주)오토핸즈",368,368,0,0],["\u321c스타렌트카",364,320,43,1],["(주)세륜",363,349,13,1],["(주)조은렌트카",362,336,26,0],["\u321c가가렌트카",361,323,35,3],["\u321c이렌트카",355,301,54,0],["\u321c삼성렌트카",355,349,6,0],["\u321c제주유명",353,341,12,0],["\u321c금성",351,170,181,0],["(주)스타스카이",349,344,5,0],["청화알앤피(주)",340,242,98,0],["(유)제주공항",337,316,21,0],["\u321c특별한",334,294,32,8],["(주)지오렌터카",330,324,6,0],["(주)한빛렌트카",327,301,26,0],["\u321c로또렌트카",327,291,35,1],["(주)성일렌트카",326,304,17,5],["(주)솔루션모터스",324,324,0,0],["(주)이머징카",323,310,13,0],["대한렌트카",319,276,43,0],["차놀자렌트카\u321c",318,274,27,17],["지에스렌트카(주)",315,294,19,2],["\u321c땡큐제주",310,297,13,0],["(주)선경엔씨에스렌트카",309,277,32,0],["(주)스카이",308,301,7,0],["(주)반디렌터카",307,296,11,0],["\u321c삼천리렌트카 ",307,254,53,0],["\u321c대광렌트카",307,303,4,0],["(주)위굴리",306,306,0,0],["(주)카엔퍼블릭",304,280,23,1],["(주)케이카렌탈",303,300,3,0],["(주)나인렌터카",303,288,14,1],["\u321c썬",303,287,16,0],["\u321c예스",302,289,13,0],["(주)비엘렌트카",297,295,2,0],["케이원렌트카\u321c",297,219,78,0],["(주)달카",294,294,0,0],["\u321c하나",294,288,6,0],["효성렌트카(주)",293,245,48,0],["에이엠렌트카\u321c",293,277,16,0],["\u321cKD",293,287,6,0],["제주아이엔지\u321c",293,286,7,0],["하늘네트웍스(주)",292,267,25,0],["\u321c에스제이",292,290,2,0],["(주)웨이",290,277,13,0],["\u321c지티렌트카",287,274,13,0],["유로렌트카(주)",283,282,1,0],["\u321c새한글로벌",282,262,20,0],["(주)신성렌트카",282,270,12,0],["스카이렌트카(주)",278,270,8,0],["초이스렌트카(주)",276,225,51,0],["지렌트카(주)",274,260,14,0],["(주)현대렌트카",273,270,3,0],["(주)세이브카",271,263,8,0],["\u321c공항",265,264,1,0],["\u321c팔도렌트카",263,259,4,0],["이케이에프알(주)",262,217,45,0],["(자)기풍렌트카",262,225,37,0],["이지렌터카(주)",257,256,1,0],["(주)엘리모터스",256,252,4,0],["(유)에코렌트카",256,233,23,0],["\u321c글로벌금오",256,226,30,0],["\u321c한지렌트카",253,225,28,0],["\u321c제이카",251,250,1,0],["\u321c미르렌트카",248,228,20,0],["(유)타이거렌트카",246,225,21,0],["(주)오토매니지먼트렌터카",240,222,18,0],["(유)진렌트카",240,232,8,0],["(합)뉴경성렌트카",239,186,53,0],["\u321c갤럭시",239,233,6,0],["한국\u321c",238,238,0,0],["(주)카타고",237,237,0,0],["\u321c하이렌트카",237,223,14,0],["(주)에이스렌터카-고양",233,231,2,0],["\u321c오라",233,223,10,0],["다카렌터카\u321c",233,230,3,0],["\u321c제주공항전기차",230,224,6,0],["\u321c아리랑",229,214,15,0],["\u321c엠케이렌트카",228,223,5,0],["(주)렌트원",227,212,15,0],["\u321c아이원렌트카",225,218,7,0],["경동렌트카(주)",225,218,7,0],["(유)현대렌트카",225,204,21,0],["오름\u321c",225,221,4,0],["(주)포유",223,221,2,0],["(주)솔렌트카",222,220,2,0],["(주)하이엠카",221,214,7,0],["\u321c원렌트카",221,198,23,0],["(주)선우렌트카",221,221,0,0],["(주)와이렌트카",220,207,13,0],["(유)태진렌트카",220,220,0,0],["\u321c좋은",220,209,11,0],["\u321c제주카카 ",220,215,5,0],["레인보우모빌리티\u321c",220,218,2,0],["\u321c대구렌트카 ",219,201,18,0],["\u321c글로벌파트너",219,204,15,0],["\u321c라인",218,218,0,0],["\u321c예스굿모닝",217,197,20,0],["(유)찬누리렌트카",215,187,28,0],["인지카(주)",213,210,3,0],["(주)화성렌트카",211,185,24,2],["\u321c통일",211,207,4,0],["(주)도윤렌트카",210,205,5,0],["장기렌트카\u321c",210,155,55,0],["오토플러스(주)",209,209,0,0],["(유)세진렌트카",208,187,21,0],["(주)뉴오렌지렌트카",207,205,2,0],["(주)동산렌트카",207,166,41,0],["(주)아이에스렌터카",205,190,15,0],["(주)천조렌트카",205,195,10,0],["(주)퍼스트더원",205,193,12,0],["(주)에이스렌트카",204,202,2,0],["(주)천지렌트카",203,201,2,0],["케이디피플(주)",203,197,2,4],["\u321c오케이렌트카 ",202,173,29,0],["\u321c소풍",202,199,3,0],["(주)브이카",201,189,12,0],["(주)코리아렌터카",201,196,5,0],["(유)한결렌트카",201,201,0,0],["\u321c씨엔에스렌터카",200,199,1,0],["엠제이렌트카\u321c",200,180,20,0],["\u321c제주엔젤",200,200,0,0],["\u321c응카",199,199,0,0],["\u321c제주마음",199,198,1,0],["(유)케이비렌트카",198,190,8,0],["\u321c뉴대한",198,193,5,0],["\u321c로얄",196,180,16,0],["(주)아온",195,194,1,0],["(주)오마이렌터카",195,191,4,0],["\u321c천마렌트카",195,190,5,0],["\u321c하이제주",195,195,0,0],["프라임렌트카(주)",194,147,47,0],["\u321c용인렌트카",194,192,2,0],["\u321c하나렌트카",194,192,2,0],["\u321c레츠고",194,189,5,0],["(주)케이에스모빌리티",51,51,0,0],["(주)케이에이치렌트카",193,189,4,0],["한솔네트웍스\u321c",192,189,3,0],["(유)목포렌트카노블",192,175,16,1],["\u321c일박이일렌트카",191,151,40,0],["(주)케이비넘버원렌트카",191,183,8,0],["\u321c퍼스트",190,190,0,0],["(주)제이더블유컴퍼니",189,189,0,0],["\u321c에덴렌트카",188,177,11,0],["(유)제이비렌터카",187,174,13,0],["(주)제이비렌트카",186,181,5,0],["(주)일구구사투어렌트카",186,178,8,0],["빌림(주)",185,182,3,0],["(주)이지웨이렌트카",185,185,0,0],["(주)차이카렌트카",185,184,1,0],["\u321c제주알프스",184,176,8,0],["(유)삼일렌트카",183,142,41,0],["\u321c제주파워",183,175,8,0],["(주)에스비렌트",182,180,2,0],["고릴라렌트카(주)",182,168,14,0],["(주)빌려볼카",182,178,4,0],["(주)엔카",181,175,6,0],["코리아렌트(주)",181,177,4,0],["\u321c더세이프",181,181,0,0],["\u321c지에이치엔터프라이즈",180,180,0,0],["하나렌트카\u321c",180,166,14,0],["(주)클로버렌트카",179,168,11,0],["\u321c위드렌트카",178,165,13,0],["케이에스렌터카\u321c",178,164,14,0],["\u321c제주에코",178,168,10,0],["차세대렌트카(주)",176,167,9,0],["(유)제주삼성",176,171,5,0],["빌려타렌트카(주)",173,169,4,0],["경진렌트카(주)",173,165,8,0],["\u321c제주아산",173,169,4,0],["\u321c제주사랑",173,173,0,0],["\u321c메이저",173,154,19,0],["(주)제주제일렌터카",171,155,16,0],["\u321c에이엔티렌터카",171,169,2,0],["(자)경기렌트카",171,160,0,11],["\u321c극동오토렌탈",170,143,23,4],["\u321c비비카",170,163,7,0],["\u321c듀오카",170,165,5,0],["고렌트카(주)",170,170,0,0],["금강\uc2ee",169,169,0,0],["한일상공(\uc720)",168,151,17,0],["고저스모빌리티(주)",168,167,1,0],["(유)동부렌트카",168,135,33,0],["\u321c하이",168,168,0,0],["(주)오케이렌터카",167,162,4,1],["고저스모빌리티(주)2",166,165,1,0],["(주)노블레스렌터카",166,160,6,0],["\u321c뉴하이렌트카",165,162,3,0],["(주)채움렌트카",163,162,1,0],["광명렌트카",163,147,16,0],["(유)알리고렌트카",162,146,16,0],["뉴대명렌트카(주)",160,127,24,9],["(주)에이치렌터카",160,160,0,0],["창신렌트카\u321c",160,159,1,0],["\u321c오렌지",160,154,6,0],["준카(주)",159,150,9,0],["\u321c자유",159,156,3,0],["에코렌트카(주)",158,155,3,0],["(유)미래렌트카",157,148,9,0],["\u321c용두암",157,143,14,0],["\u321c제주자연",157,147,10,0],["\u321c씨유",157,147,10,0],["(주)에이치케이나라렌트카",156,146,10,0],["아주모터스(주)",156,154,2,0],["(주)우리렌트카",155,142,13,0],["(주)제이와이렌트카",155,151,4,0],["\u321c브이아이피렌터카",155,146,9,0],["(주)신원렌터카",155,149,6,0],["(주)모모렌트카",155,145,10,0],["한라산\u321c",155,151,4,0],["\u321c제주명품",155,155,0,0],["(주)인모션",154,153,1,0],["타이거운수(주)",154,134,20,0],["(주)나이스오토월드",154,148,6,0],["(주)한빛이엔지",154,147,7,0],["(주)원일렌트카-평택",154,146,7,1],["(주)신영렌트카",153,62,91,0],["(주)우리렌트카2",153,135,18,0],["\u321c더쎄븐",153,143,6,4],["(주)유알렌터카",151,148,3,0],["(합)경성렌트카",150,103,44,3],["브이아이피리모렌터카(주)",150,137,13,0],["(주)하이월드카",150,148,2,0],["\u321c제주평화",150,138,12,0],["\u321c비비카",150,142,8,0],["\u321c디알",150,146,4,0],["제주아이\u321c",150,149,1,0],["(주)렌탈스테이션",149,146,3,0],["(주)에스에이치렌트카",149,145,4,0],["삼영렌트카(주)",149,110,39,0],["\u321c뉴그린렌트카",148,141,7,0],["\u321c뉴예스렌트카",147,134,13,0],["\u321c성공렌트카\u00a0 \u00a0",146,136,10,0],["골드렌트카\u321c",146,144,2,0],["(주)렌트카매ニア",145,143,2,0],["\u321c해피렌트카",145,140,5,0],["수렌트카(주)",145,139,6,0],["(합)우리렌트카",145,134,10,1],["\u321c서경투어엔카",145,137,8,0],["제주야\u321c",145,144,1,0],["제이피케이모빌리티(주)",144,144,0,0],["(주)아시아렌트카",144,143,1,0],["(주)애니렌트카",144,134,10,0],["(합)오토렌트카",144,134,10,0],["(주)에이플러스렌트카",143,138,5,0],["\u321c한길렌트카",142,129,13,0],["그린렌터카(주)",142,137,5,0],["디\u321c",142,136,6,0],["(유)114투어렌트카",141,128,13,0],["(주)프린스렌트카",141,105,36,0],["\u321c제주동백",141,141,0,0],["\u321c하나렌트카",140,137,3,0],["(주)한길렌트카",140,136,4,0],["\u321c바로",140,140,0,0],["마스타자동차관리(주)",139,137,2,0],["(주)케이밴코리아",139,57,82,0],["(주)지에스렌트리스",138,136,2,0],["\u321c동양렌트카",138,119,19,0],["\u321c가자제주",138,132,6,0],["에이스\u321c",138,128,10,0],["제로렌트카(주)",137,136,1,0],["(주)타보고렌터카",137,134,3,0],["미소렌터카\u321c",137,132,5,0],["(주)범아렌트카",139,136,3,0],["\u321c더블에이치렌트카",135,135,0,0],["\u321c대한렌트카",136,132,4,0],["\u321c제이씨아이렌트카",146,133,13,0],["\u321c베스트",136,134,2,0],["(주)아이에스모빌리티",132,127,5,0],["(주)픽스렌트카",131,131,0,0],["(주)금강렌트카",134,114,20,0],["(주)맥스렌터카",136,129,7,0],["(주)조렌트카",132,127,4,0],["(주)삼성렌터카",126,103,24,0],["\u321c차렌트카",134,122,12,0],["\u321c우리",134,119,15,0],["마이오토링크\u321c",116,116,0,0],["(주)렌터카다모아",129,126,3,0],["\u321c붐렌트카",129,123,6,0],["\u321c더조은렌트카",125,120,5,0],["(합)동원렌트카",136,120,16,0],["참우리렌트카(\uc720)",138,137,1,0],["(유)아이렌트카",142,123,19,0],["\u321c금호투어렌트카",120,108,12,0],["(주)제이렌트카",121,100,21,0],["(주)나라렌트",148,148,0,0],["\u321c제주타요",130,129,1,0],["\u321c제주한라",130,121,9,0],["\u321c에스렌트카",146,141,6,0],["(주)미소렌트카",120,113,7,0],["(주)모두카",158,151,7,0],["\u321c신영렌트카",126,125,1,0],["\u321c바바리안모터스",140,140,0,0],["(주)솜렌트카",117,117,0,0],["\u321c스마트",142,129,13,0],["\u321c나이스렌트카",126,123,3,0],["(주)도연렌트카",128,126,2,0],["경원렌트카(주)",129,126,3,0],["(유)에스앤케이렌트카",124,122,2,0],["\u321c매일",150,149,1,0],["\u321c마이카렌트카",121,116,5,0],["(주)경희렌트카",114,109,5,0],["골드렌트카(주)",126,115,11,0],["\u321c힐튼렌트카",122,114,8,0],["\u321c유성렌트카",126,122,4,0],["\u321c굿모닝",126,120,6,0],["(주)엠케이렌트카",121,117,4,0],["(주)공항렌트카",145,145,0,0],["(유)드림렌트카",124,115,8,1],["\u321c예스렌트카",129,118,10,1],["\u321c국제렌트카",123,113,10,0],["\u321c이화렌트카",114,113,1,0],["(주)한국씨엔씨",114,108,6,0],["\u321c제주유레카",100,95,5,0],["\u321c수렌터카",136,134,2,0],["(주)더휴먼카",141,133,8,0],["\u321c서경렌트카",108,103,5,0],["(주)카즈",163,156,7,0],["\u321c에스디",162,155,7,0],["(주)황금렌트카",111,104,7,0],["(주)굿모닝산업",121,116,5,0],["(주)스마트렌트카",121,115,6,0],["(주)세븐렌트카",112,111,1,0],["\u321c써니빌",121,114,7,0],["(주)렌트존",142,142,0,0],["영일렌트카(주)",121,115,8,1],["\u321c그리드렌트카",161,158,3,0],["(주)씨엔씨코리아",124,101,23,0],["\u321c굿모닝렌트카",114,107,7,0],["(유)케이제이렌트카",106,104,2,0],["\u321c한성렌터카",123,121,2,0],["\u321c위고투렌트카",127,117,10,0],["\u321c한길",110,96,14,0],["(주)굿초이스",119,117,2,0],["뉴곰두리렌터카\u321c",110,97,13,0],["이엔에이렌탈 주식회사",130,128,2,0],["\u321c제주여행",119,102,17,0],["\u321c경원렌트카",128,124,4,0],["(주)카보스렌터카",114,107,7,0],["메트로\uc2ee",108,105,3,0],["(주)로얄렌트카",117,116,1,0],["(주)제이와이렌트카2",162,159,3,0],["\u321c나라렌트카",130,116,14,0],["(주)마이렌트카",90,81,9,0],["\u321c굿모닝렌트카 ",104,100,4,0],["\u321c제이렌트카",110,106,4,0],["\u321c인스렌트카",123,114,9,0],["오토월드\u321c\ub80c\ud2b8\uce74",119,116,3,0],["\u321c제이유렌트카",116,113,3,0],["(주)승도렌트카",93,91,2,0],["금강렌트카\u321c",112,100,12,0],["오리엔탈렌터카(주)",111,101,10,0],["스마트렌트카(주)",117,108,9,0],["\u321c우리렌트카",109,95,14,0],["\u321c발리",101,99,2,0],["(주)대화렌트카",112,112,0,0],["(주)광야렌탈",126,126,0,0],["\u321c더바른렌트카",106,104,2,0],["(주)주은렌트카",107,104,3,1],["토토렌터카(주)",87,85,2,0],["\u321c제로렌트카",115,112,3,0],["\u321c에스앤비렌터카",104,104,0,0],["\u321c바이펙스",98,98,0,0],["(주)대아렌트카",95,90,5,0],["가자렌트카\u321c",76,70,6,0],["(주)에스재이렌트카",116,114,2,0],["(주)만세",109,106,3,0],["\u321c케이렌트카",94,94,0,0],["(주)렌탈포유",97,66,31,0],["(주)뉴이삭렌트카",104,98,6,0],["\u321c스마트렌트카",100,87,13,0],["(주)제이앤제이렌트카",148,145,3,0],["(주)26렌트카",114,112,2,0],["\u321c케이제이렌터카",104,100,4,0],["지에스렌트카오토리스(주)",127,120,7,0],["(주)태경렌트카",102,90,12,0],["(주)임스타렌트카",129,129,0,0],["\u321c제주드림",107,106,1,0],["(주)뉴현대드림렌트카",100,92,8,0],["345렌트카(주)",76,76,0,0],["(주)가을렌트카",78,78,0,0],["(주)엔터프라이즈글로벌",154,154,0,0],["\u321c영호렌트카 ",101,86,15,0],["(주)프로렌트카",123,112,11,0],["(주)렌트114",94,93,1,0],["제이비렌터카(\ud569)",106,90,16,0],["한국자동차(주)",81,77,4,0],["\u321c행운",103,103,0,0],["(주)위메인렌터카",122,122,0,0],["(유)태평렌트카",111,104,7,0],["(주)세계로렌트카",101,99,2,0],["\u321c우리렌트카2",96,84,12,0],["\u321c에이치렌트카",105,102,3,0],["예스렌터카\u321c",62,62,0,0],["(주)둔산렌트카",110,99,11,0],["(주)카존렌터카",143,138,5,0],["(주)블루렌트카",95,85,10,0],["\u321c공항렌트카",98,88,10,0],["(주)오토렌트카",105,102,3,0],["(주)진렌트카",89,83,6,0],["(주)제일렌트카3",102,85,17,0],["\u321c부경렌트카",105,102,3,0],["\u321c신동아",105,105,0,0],["(주)월드카익스프레스",54,52,2,0],["(주)렌트베네핏",136,136,0,0],["(주)세종렌트카",103,90,13,0],["\u321c우솔렌트카",148,148,0,0],["(주)노블레스렌트카",102,101,1,0],["\u321c조은렌트카",104,101,3,0],["(주)제주스타렌탈",107,107,0,0],["\u321c엠티렌터카",59,59,0,0],["(주)나우렌트카",102,100,2,0],["(주)카란디피티",50,50,0,0],["(주)동아렌트카",109,107,2,0],["\u321c대진",108,99,9,0],["\u321c제이공항",102,100,2,0],["(주)건영렌트카",104,85,19,0],["\u321c타고렌터카",148,148,0,6],["\u321c브이아이피렌터카",110,86,24,0],["알파렌터카\u321c",101,101,0,0],["\u321c공카",317,317,0,0],["\u321c타고",93,93,0,0],["\u321c로보트",107,106,1,0],["소망렌트카(주)",96,93,3,0],["(주)모두렌트카",98,96,2,0],["모젠렌트카(주)",87,84,3,0],["\u321c장풍물류렌트카",100,98,2,0],["제로알엔티\u321c",104,94,10,0],["\u321c장수",100,99,1,0],["\u321c렌트파크",100,99,1,0],["\u321c씨카",100,98,2,0],["\u321c스마일",100,99,1,0],["\u321c녹원",100,98,2,0],["\u321c제주보고타",100,92,8,0],["\u321c플러스제주",100,94,6,0],["\u321c제주이브이전기",100,100,0,0],["\u321c국제",100,99,1,0],["\u321c일출",100,100,0,0],["\u321c그린",100,99,1,0],["\u321c우도전기",100,100,0,0],["자보\u321c",100,99,1,0],["지엔카(주)",49,49,0,0],["(주)신한렌터카",98,92,6,0],["(주)뉴삼성렌트카",100,97,3,0],["(주)에스와이렌터카",119,119,0,0],["(유)드림렌트카2",91,77,14,0],["한성특운\u321c",98,95,3,0],["\u321c동아렌트카2",99,94,5,0],["(주)퍼블리렌터카",76,64,12,0],["\u321c부산렌트카 ",96,77,19,0],["하얀렌트카\u321c",117,109,8,0],["(주)에스에이렌터카",119,118,0,0],["(유)프라임렌트카",74,71,3,0],["(주)쓰리케이스컴퍼니",80,80,0,0],["(유)엠제이렌트카",90,85,4,1],["메트로렌탈앤투어서비스\u321c",98,95,3,0],["에이스랜트\u321c",99,96,3,0],["(주)투투이엔지",86,76,10,0],["\u321c삼성렌트카2",90,78,12,0],["아이비렌트카(주)",106,102,4,0],["\u321c글로벌렌트카",94,88,6,0],["(주)저스트렌트카",93,93,0,0],["\u321c엠케어렌트카",144,142,2,0],["\u321c조은렌트카 ",90,78,12,0],["\u321c명가렌트카",75,70,5,0],["(유)뉴드림렌트카\u00a0 ",103,78,25,0],["(유)한국렌트카",122,121,1,0],["(주)렌트카킹",80,77,3,0],["\u321c케이디렌트카",98,92,6,0],["(주)플러스원렌트카",91,91,0,0],["메이트렌터카(주)",91,90,1,0],["(주)에프엔렌트카",89,89,0,0],["프란렌트카(주)",81,78,3,0],["(주)현대렌트카2",82,68,14,0],["(주)리더스렌트카",88,88,0,1],["에이티렌터카(주)",98,98,0,0],["\u321c콜렌트카",83,65,18,0],["(주)제트렌트카",98,97,1,0],["\u321c원스탑렌트카",5,5,0,0],["(주)삼화렌트카",90,90,0,0],["\u321c유카",73,67,6,0],["\u321c에스오토렌탈",77,76,1,0],["(주)블루렌트",86,86,0,0],["한진오토렌트카(주)",62,60,2,0],["(주)솔렌터카",106,105,1,0],["\u321c세영렌트카",98,95,3,0],["\u321c해원렌트카",115,107,8,0],["건아렌트카(주)",91,35,56,0],["인더스(주)",99,97,2,0],["(유)킹덤렌트",76,76,0,0],["\u321c울릉도렌트카",59,49,10,0],["(유)명가렌트카",73,68,5,0],["(주)에스제이모터스",72,68,4,0],["(주)오산렌트카",71,62,9,0],["\u321c제이비",96,96,0,0],["\u321c독도렌트카",48,35,13,0],["(주)한미렌트카",90,89,0,0],["(주)수렌트카",88,88,0,0],["(주)태원렌트카",72,68,4,0],["(주)다원렌트카",69,64,5,0],["비에프모빌리티(주)",114,114,0,0],["뉴삼우렌트카(주)",80,68,12,0],["(주)미래렌트카",90,82,7,1],["(주)렌트로",54,54,0,0],["에스디서비스(주)",61,57,4,0],["(유)아시아렌터카",77,69,8,0],["\u321c두리렌트카 ",81,68,13,0],["(주)현대렌트카3",87,71,16,0],["(주)엔터프라이즈코리아",144,137,6,1],["(주)코끼리렌트카",91,65,26,0],["(주)에이블러스",68,67,1,0],["(주)한강렌터카",91,88,3,0],["\u321c제이에스밴",124,104,20,0],["가나렌트카(주)",79,77,2,0],["\u321c신한렌트카",85,81,4,0],["\u321c알앤에이",91,90,1,0],["(주)스피드킹",79,78,1,0],["(주)남부현대차서비스",81,79,2,0],["(주)내차처럼렌트카",112,102,10,0],["(유)신한렌트카",78,73,5,0],["(주)엠앤씨렌트카",88,85,3,0],["에이투렌트카",87,79,7,0],["\u321c대민렌터카",91,77,14,0],["스타인\u321c",106,104,2,0],["\u321c여행온",83,76,6,1],["\u321c엔젤렌트카",80,78,2,0],["\u321c뉴국제렌트카",77,72,5,0],["\u321c우성렌트카 ",80,73,7,0],["\u321c케이네트웍스",71,70,1,1],["(유)카카오렌트카",72,63,9,0],["\u321c동서남북렌트카",119,117,2,0],["(주)뉴현대렌트카",82,81,1,0],["(주)제이케이비",75,63,12,0],["코오롱모빌리티그룹(주)",131,131,0,0],["\u321c베스트렌트카",84,75,9,0],["\u321c타라고",86,86,0,0],["(주)마이젠카",75,75,0,0],["\u321c국민카 ",77,62,15,0],["\u321c뉴금강산렌트카",65,53,12,0],["(유)피제이렌트카",78,77,1,0],["(주)제일렌트카3",61,56,5,0],["(주)직카",80,79,1,0],["브이아이피렌트카\u321c",79,78,1,0],["월렌트카(주)",50,50,0,0],["(주)신형렌트카",77,70,7,0],["아산렌트카(주)",77,72,5,0],["다카렌터카(주)",80,80,0,0],["\u321c오케이렌트카",80,78,2,0],["(주)렉스렌터카",81,75,6,0],["마음카(주)",134,134,0,0],["(주)삼일렌터카",78,78,0,0],["\u321c부경",73,71,2,0],["강경렌트카(주)",63,53,10,0],["경진카 주식회사",78,78,0,0],["오토비즈파트너스\u321c",62,55,7,0],["\u321c잇다",78,74,4,0],["라온렌트카(주)",78,77,1,0],["(주)렌트카코아",72,69,3,0],["\u321c이에스렌터카",54,51,3,0],["(유)하나렌트카",71,70,1,0],["\u321c모네타렌트카",94,84,10,0],["(주)다원렌트카2",68,61,7,0],["(주)차놀자렌터카",125,120,5,0],["\u321c비에스렌터카",82,79,3,0],["\u321c뉴신화렌트카",62,60,2,0],["자유로운수\u321c",69,62,7,0],["(주)에이스렌터카-안성",75,58,17,0],["(주)하남스마트렌트카",50,48,2,0],["\u321c케이투렌트카",65,62,3,0],["\u321c세명SM렌트카 ",63,50,13,0],["\u321c독도렌트카2",74,59,15,0],["케이투렌트카\u321c",72,68,4,0],["\u321c제이렌트카2",70,69,1,0],["브이아이피렌터카(주)",59,55,4,0],["글로리렌트카",57,48,9,0],["\u321c에코렌터카",69,48,21,0],["\u321c태현렌터카",70,67,3,0],["(유)붕붕 렌트카",50,49,1,0],["조아렌트카(주)",64,56,8,0],["062렌트카",92,92,0,0],["\u321c진해군항렌트카",70,65,5,0],["(주)금미렌트카",66,49,17,0],["\u321c대동렌트카",62,55,7,0],["(주)경기렌트카",77,74,3,0],["(합)보람렌트카",71,68,3,0],["\u321c에스알비렌트카",152,146,6,0],["\u321c금호렌터카",74,71,3,0],["\u321c세종통운",72,65,7,0],["(주)다보마이카",69,49,20,0],["\u321c온누리렌트카",65,64,1,0],["(주)창희렌트카",67,48,19,0],["(주)올더렌트카",63,62,0,0],["(주)지스타렌트카",96,92,4,0],["(주)다우렌트카",61,61,0,0],["(주)우림렌터카",70,46,24,0],["인천공항렌트카(주)",71,45,26,0],["(유)태양렌트카",68,63,5,0],["(주)보배렌트카",74,73,1,0],["(주)국민렌트카",72,71,1,0],["\u321c네스트",70,68,1,1],["(주)엠알렌트카여행사",73,65,7,1],["천일렌트카",64,55,9,0],["세븐렌트카\u321c",70,64,6,0],["\u321c한찬코리아",70,64,6,0],["경남기업렌터카\u321c",62,57,5,0],["(주)에스카테크",68,61,7,0],["(주)오케이렌트카2",62,58,4,0],["피엘아이지렌트카\u321c",62,60,2,0],["이지케이코리아\u321c",0,0,0,0],["\u321c수성렌트카",71,70,1,0],["와이엠네트웍스\u321c",96,96,0,0],["\u321c수성렌트카2",73,66,7,0],["\u321c아산렌트카",62,54,8,0],["(주)블루스카이",64,56,8,0],["(주)와이드",67,65,2,0],["주식회사 건아렌트카",83,75,8,0],["(주)참조은",56,55,1,0],["성원렌트카(주)",61,55,6,0],["(주)전진렌터카",62,62,0,0],["(주)케이렌트카",48,48,0,0],["\u321c세원렌트카",63,63,0,0],["인천모빌리티사업협동조합",63,61,2,0],["(주)세진렌트카-용인",58,57,1,0],["(주)명성렌트카-오산",61,59,2,0],["케이렌트카(주)-광명",62,54,8,0],["(주)라이프렌터카",61,57,4,0],["(주)해태렌트카",85,82,3,0],["(유)다성렌트카",98,92,6,0],["플러스그린렌트카(주)",54,48,6,0],["씨에이치파크(주)",61,50,11,0],["(주)바로렌터카",68,68,0,0],["\u321c렌트카엠",86,71,15,0],["\u321c포항알프스",68,56,12,0],["지원렌터카(주)",61,61,0,0],["카렌트(주)",43,43,0,0],["(주)태산렌트카",62,60,2,0],["(주)모두가치",52,52,0,0],["가자렌트카\u321c",69,63,6,0],["\u321c새가람렌트카",64,47,17,0],["(주)중앙렌트카",67,65,2,0],["(주)조은렌트카-양주",69,66,3,0],["(주)어썸렌터카",81,81,0,0],["(주)아이제이렌트카",59,54,5,0],["(주)루비렌트카",80,78,2,0],["(유)한일렌터카",70,61,9,0],["(주)위카",65,65,0,0],["(주)신화렌트카",54,52,2,0],["(주)듀오렌터카",80,80,0,0],["(주)영렌트카",58,58,0,0],["\u321c가렌트카 ",65,58,7,0],["행운렌트카\u321c",62,60,2,1],["(유)태봉렌트카",95,93,2,0],["(주)금성교역",62,46,16,0],["(주)유일렌트카",60,56,4,0],["(주)희망드림렌트카",59,57,2,0],["(유)에이치엠렌트카",65,62,1,2],["(주)티렌트카",69,63,6,0],["(주)케이제이렌터카",78,77,1,0],["(주)투가이즈렌트카",69,63,6,0],["\u321c제일렌트카",64,58,6,0],["\u321c경동렌트카 ",51,43,8,0],["\u321c현대하이렌트카",102,78,24,0],["(주)더뉴렌터카",72,65,7,0],["동운렌트카(주)",66,61,5,0],["씨에스렌트카(주)",52,42,10,0],["\u321c디에이치렌터카",70,59,11,0],["\u321c대한렌터카",55,55,0,0],["\u321c안전기업",65,61,4,0],["(주)리스본렌트카",59,55,4,0],["(주)지지렌트카",70,70,0,0],["(주)신유렌터카",63,62,1,0],["(주)비에프오토모빌리티",69,69,0,0],["(주)타요렌트카",63,58,5,0],["\u321c중앙렌트카2",69,67,2,0],["\u321c한화렌트카",57,56,1,0],["(유)이지렌트카",62,57,5,0],["\u321c채움씨엔씨",62,61,1,0],["(유)유진",68,57,11,2],["신동아렌트카\u321c",63,63,0,0],["(주)거성렌트카",62,62,0,0],["신협우리들렌트카(주)",61,61,0,0],["\u321c오토렌트카",63,56,7,0],["(주)대원렌트카",56,48,8,0],["\u321c대동렌트카",61,55,6,0],["(주)우리렌트카-의정부",50,38,12,0],["(주)금봉렌트카",72,67,5,0],["(주)원일렌트카-고양",57,57,0,0],["(주)명성렌트카-남양주",68,64,4,1],["\u321c신세계",66,53,13,0],["\u321c신우렌트카",63,58,5,0],["\u321c글로벌렌트카",62,61,1,0],["\u321c킹렌트카",62,60,2,0],["(주)어디가렌트카",61,58,3,0],["(주)몬스터렌터카",69,68,1,0],["\u321c행복오토랜드",60,45,15,0],["\u321c플러스렌트카",69,62,6,1],["\u321c유렌트카",73,73,0,0],["\u321c대현렌트카",61,58,3,0],["\u321c나 라렌트카",61,49,12,0],["목송씨앤씨\u321c",79,79,0,0],["연보라(주)",55,49,6,0],["(주)삼보렌트카-구리",66,60,6,0],["(주)광렌트카",61,57,4,0],["(주)고고렌트카",53,48,5,0],["(주)비케이렌트카",65,64,1,0],["\u321c스마트렌터카",58,56,2,0],["\u321c곰두리렌트카",54,45,9,0],["(합)나우렌트카",64,47,17,0],["오케이렌터카(주)",7,7,0,0],["(주)크라운렌트카",57,50,7,0],["(주)한울렌터카",53,52,1,0],["(주)에이에이렌터카",56,56,0,0],["(주)엠렌트카",56,56,0,0],["(주)와이컴머스",60,39,21,0],["(주)남산렌터카",58,45,13,0],["(주)케이엔렌트카",101,101,0,0],["\u321c새부산렌탈",54,36,18,0],["(주)큐렌트카",61,53,8,0],["글로벌렌트카\u321c",53,53,0,0],["\u321c월드렌트카",50,48,2,0],["(유)에스원렌트카",63,59,4,0],["(유)투어렌트카",52,52,0,0],["\u321c성운렌트카",53,49,4,0],["(주)에스엠프리미엄렌트카",64,62,2,0],["(주)유진렌트카",55,49,6,0],["(주)유카",56,56,0,0],["(주)나나렌트카",57,48,9,0],["(주)알렌트",60,60,0,0],["\u321c렌트투게더",81,80,1,0],["\u321c씨티렌터카",60,58,2,0],["\u321c제이테크인",60,60,0,0],["(주)푸른렌트카",52,42,10,0],["케이비오토렌트매니지먼트(주)",49,45,4,0],["(주)에이비씨렌터카",56,54,2,0],["(주)더라임",56,53,3,0],["(주)서울지에스렌트카",59,51,8,0],["(주)리스컴퍼니",61,61,0,0],["\u321c뉴굿타임렌트카",55,48,7,0],["\u321c한국렌트카",55,38,17,0],["\u321c제이더블유렌트카",54,52,2,0],["(주)리렌트카",54,54,0,0],["(주)몬스터",67,63,4,0],["(주)에스케이렌트카",59,54,5,0],["(주)제이와이엔터",58,58,0,0],["가자렌트카",57,52,5,0],["\u321c남도렌트카",25,24,1,0],["\u321c가람렌트카",62,58,4,0],["빵빵카(주)",73,73,0,0],["(주)렌트투어",59,53,6,0],["(주)하이엔드렌터카",71,71,0,0],["(주)샤이어렌트카",58,57,1,0],["(주)엔씨렌트카",50,48,2,0],["\u321c에스아이렌트카",57,45,12,0],["\u321c오렌지렌트카",57,54,3,0],["누리렌트카(주)",76,62,14,0],["워너비렌트카\u321c ",57,57,0,0],["(주)우수렌트카",55,52,3,0],["(주)와이엔제이컴퍼니",59,59,0,0],["(주)선우렌트카",327,327,0,0],["(합)해피관광렌트카",55,53,2,0],["(유)오렌지렌트카",54,54,0,0],["(주)햇살렌트카",52,51,1,0],["(주)엘에스엠컴퍼니",50,50,0,0],["\u321c가야렌트카",63,62,1,0],["\u321c대경렌트카",56,55,1,0],["영일산업\u321c",55,49,6,0],["\u321c예카",71,70,1,0],["클라우드렌터카\u321c",57,55,2,0],["(유)퍼스트렌트카",50,49,1,0],["(유)준렌트카",54,52,2,0],["(주)피피카",73,72,1,0],["\u321c제일렌트카2",58,58,0,0],["(주)뉴가나다",56,42,14,0],["(주)오렌지렌트카2",72,71,1,0],["(주)신우",57,53,4,0],["(유)드림렌트카3",63,53,10,0],["\u321c누리",65,65,0,0],["\u321c삼성렌트카",20,20,0,0],["(주)가인렌트카",54,49,5,0],["\u321c미스터렌트카",60,52,8,0],["\u321c준",55,36,19,0],["\u321c유렌트카",75,75,0,0],["\u321c오케이렌탈",50,46,4,0],["\u321c오션렌트카",50,48,2,0],["(주)도도렌트카",602,590,12,0],["(주)카이스트",55,55,0,0],["(주)디앤알",64,64,0,0],["(주)한일렌트",52,51,1,0],["\u321c제너스렌트카",55,48,7,0],["\u321c건아렌트카",50,47,3,0],["성오렌트카",56,51,5,0],["(주)가야렌트카",61,59,2,0],["(주)미스터제이케이렌트카",59,59,0,0],["(주)야타차",55,55,0,0],["\u321c삼일렌트카",52,45,7,0],["\u321c렌고",58,50,8,0],["\u321c아세아렌트카 ",58,48,10,0],["\u321c고고렌트카2",55,53,2,0],["대경렌트카(주)",52,52,0,0],["(주)하나로렌트카-수원",55,54,1,0],["(주)알씨렌트카",60,60,0,0],["(주)에버",54,53,1,0],["(주)블루렌트카",50,49,1,0],["케이렌트카(주)-안산",54,46,8,0],["(주)모두렌터카",50,48,2,0],["(주)엔케이",50,49,0,1],["바로이렌트카(주)",55,52,3,0],["(주)칸렌트카",68,41,27,0],["(주)하이카세상",52,49,3,0],["아비스렌트카(주)",52,47,5,0],["(주)인렌트카",55,54,1,0],["(주)이지원카",54,50,4,0],["(주)대박렌트카",54,54,0,0],["\u321c원 츠",61,60,1,0],["\u321c대신렌트카",61,60,1,0],["\u321c시원렌트카",51,49,2,0],["백운렌트카\u321c",55,46,9,0],["(유)차판사렌트카",50,47,3,0],["(주)보아스네트웍",60,51,9,0],["(주)제일렌트카-용인",54,54,0,0],["(주)가온렌트카",54,50,4,0],["(주)캠버렌트카",62,51,11,0],["(주)코리아렌트카",71,68,3,0],["(주)유니온렌터카",59,58,1,0],["\u321c좋은렌트카",50,46,4,0],["(유)가가렌트카",66,58,8,0],["(유)태준렌트카",52,52,0,0],["\u321c행운렌트카",54,47,7,0],["(주)유엔렌트카",61,59,2,0],["(주)애드렌트카",51,45,6,0],["오렌터카(주)",71,71,0,0],["(주)스마트렌트카2",373,342,31,0],["(주)스피드원렌트카",59,56,3,0],["(주)경성오토",56,42,14,0],["\u321c조아렌트카",55,55,0,0],["솔렌트카\u321c",54,44,10,0],["\u321c뉴명차",50,44,4,2],["\u321c삼천리렌트카",52,48,4,0],["\u321c가나다렌트카",51,47,4,0],["\u321c백두산렌트카",51,50,1,0],["(유)빌리지렌트카",51,27,24,0],["(주)삼성통운",50,48,2,0],["(주)경도렌트카",52,47,5,0],["(주)센트로렌트카",59,59,0,0],["(주)데일리렌터카",51,51,0,0],["(주)메가렌트카",60,56,4,0],["(주)오즈렌터카",58,57,1,0],["현대디씨렌트카\u321c",49,41,8,0],["\u321c경기렌트카",53,47,6,0],["(주)더블유렌트카",65,63,2,0],["(유)뉴현대렌트카",47,42,5,0],["\u321c미소렌트카",53,52,1,0],["(주)에버렉스",52,48,4,0],["(유)삼일렌트카",182,141,41,0],["(주)대주렌트카",52,44,8,0],["굿데이렌트카(주)",49,49,0,0],["(주)넘버원렌트카",54,53,1,0],["(주)라이온렌트카",50,47,3,0],["싸다렌트카(주)",51,51,0,0],["(주)디에스오토네트웍스",52,51,1,0],["(주)휠라이프",52,14,38,0],["(유)본렌터카",52,49,3,0],["\u321c부산스타렌터카",50,40,10,0],["(유)팡팡렌트카",51,50,1,0],["(유)탑스렌트카",45,43,2,0],["\u321c씨에이치렌트카",61,61,0,0],["(주)중호렌트카",49,41,8,0],["(주)엔젤렌터카",46,46,0,0],["(주)월드렌트카",51,48,3,0],["(주)퍼스트렌터카",50,50,0,0],["서현렌트카(주)",50,47,3,0],["(주)렌트카케어",55,53,2,0],["(주)헤이모빌리티",51,51,0,0],["(주)지니렌터카",50,48,2,0],["\u321c에이엑스렌트카",47,47,0,0],["케이디알플러스(주)",52,49,3,0],["(유)선우렌트카",45,39,6,0],["(주)에스엔비오토",16,16,0,0],["(주)오뚜기렌트카",50,47,3,0],["(주)터미널렌트카",50,42,8,0],["(주)위너스앤파트너스",51,51,0,0],["(주)엠제이렌터카",99,98,1,0],["(주)백두산렌트카",50,49,1,0],["(주)카렌트카",52,47,5,0],["(주)뉴삼보렌트카",50,48,2,0],["탑오렌지렌터카(주)",51,48,3,0],["(주)피품렌트카",51,44,7,0],["\u321c에이치씨",46,45,1,0],["\u321c정투청렌트카",50,45,5,0],["\u321c건일렌트카",49,47,2,0],["\u321c국도렌트카",57,50,7,0],["(주)강남렌트카",43,43,0,0],["(합)주성렌트카",49,48,1,0],["(주)국화렌트카",47,45,2,0],["(주)더원렌트카",48,39,9,0],["(주)유정렌트카",58,56,2,0],["우리렌트카(주)-구리",67,65,2,0],["(주)하이원렌터카",50,40,10,0],["(주)부일렌트카",50,47,3,0],["(주)새누리렌트카",51,51,0,0],["(주)마이카렌트카",51,48,3,0],["(주)신현대렌트카",52,50,2,0],["(주)모아카",52,50,2,0],["(주)케이에스모빌리티",65,65,0,0],["(주)스타렌트카2",35,35,0,0],["\u321c제주친구",57,57,0,0],["(유)제이에스렌터카",51,43,8,0],["(주)전남렌트카",40,39,1,0],["\u321c더타",52,50,2,0],["\u321c우리렌터카",51,51,0,0],["(주)초원렌트카",50,45,5,0],["콜렌트카(주)",50,47,3,0],["(주)허니문렌트카",0,0,0,0],["(주)렌트온",50,49,1,0],["굿렌트카(주)",51,50,1,0],["케이티앤에스(주)",55,55,0,0],["(주)해동렌트카",50,45,5,0],["(주)하나로렌터카",50,46,4,0],["(주)조아렌트카",52,52,0,0],["(주)바른렌트카",50,44,6,0],["(주)드림렌트카",51,48,3,0],["(주)레츠고렌터카",51,50,1,0],["(주)크레아모터스",50,50,0,0],["(주)카렌디피티",50,50,0,0],["쿠렌트(주)",50,50,0,0],["길렌트카\u321c",50,47,3,0],["\u321c건아렌트카",50,47,3,0],["\u321c신화오토렌탈",49,45,4,0],["\u321c와이드렌트카",32,16,16,0],["\u321c한누리렌트카",49,47,2,0],["드림렌트카\u321c",51,41,10,0],["\u321c금강렌트카",50,49,1,0],["\u321c브이아피피렌트카",50,49,1,0],["\u321c울릉공항렌트카",28,16,12,0],["\u321c빵빵렌트카",50,50,0,0],["우리렌트카\u321c",50,45,5,0],["\u321c뉴세진렌트카",35,35,0,0],["신현대렌트카\u321c",48,48,0,0],["메가렌트카\u321c",50,50,0,0],["(유)빛고을렌트카",50,50,0,0],["\u321c알앤에이컴퍼니",52,52,0,0],["(유)유일렌트카",51,51,0,0],["(주)에스제이렌트카-광명",50,43,7,0],["(주)비엠렌터카",50,41,9,0],["(주)리베렌트카",50,49,1,0],["(주)엠씨렌트카",50,48,2,0],["(주)유니크렌트카",50,50,0,0],["(주)디앤씨렌트카",50,50,0,0],["(주)엔씨렌트카",50,48,2,0],["\u321c모아렌트카",61,61,0,0],["세종렌터카\u321c",50,48,2,0],["\u321c유니크렌트카",50,50,0,0],["\u321c하이렌트카",50,49,1,0],["(주)에이스투어렌트카",51,49,2,0],["\u321c남도투어렌터카",50,45,5,0],["(유)퍼스트렌트카",50,49,1,0],["\u321c성산렌트카",0,0,0,0],["\u321c모모렌트카",50,47,3,0],["\u321c블루렌트카",50,45,5,0],["(주)하나렌트",52,50,2,0],["그린렌트카(주)-안산",45,45,0,0],["경동에이앤씨(주)",49,46,3,0],["(주)조은렌트카",48,43,5,0],["\u321c킹콩렌트카",60,50,10,0],["타슈카협동조합",48,48,0,0],["(주)씨앤피렌터카",53,41,12,0],["(주)타고타",41,40,1,0],["(주)타봄",63,62,1,0],["(주)하이카",58,20,38,0],["(주)우리렌트",49,49,0,0],["휴렌트카",47,46,1,0],["\u321c에스디렌터카",40,38,2,0],["(주)케이비",34,32,2,0],["(주)스타라인",48,44,3,1],["(주)일일사렌트카",45,43,2,0],["정도인터내셔널(\uc96c)",46,46,0,0],["(주)코리도어",48,40,8,0],["뉴드림렌트카(주)",44,44,0,0],["\u321c마블렌트카",28,28,0,0],["\u321c참신렌트카여행사",53,48,46,3],["강남렌트카(주)",43,43,0,0],["(주)키움오토렌탈",43,40,3,0],["라이드(주)",31,31,0,0],["(유)연합렌트카",41,41,0,0],["(유)에이스렌트카",42,42,0,0],["(주)굿카서비스",39,39,0,0],["(주)전임렌터카",109,109,0,0],["(주)에이엠렌트카",45,44,1,0],["아리랑카 주식회사",20,20,0,0],["(유)한강렌트카",24,22,2,0],["\u321c설렌터카",35,35,0,0],["(주)애드플레이",0,0,0,0],["(유)그린렌트카",26,25,1,0],["(주)덕창렌트카",0,0,0,0],["(주)와이엔케이글로벌",35,35,0,0],["(주)에스케이알렌터카서비스",26,17,9,0],["(주)오케이모터스",33,20,9,4],["(합)미래렌트카",22,21,1,0],["\u321c더스윙오퍼레이션",27,26,1,0],["대덕렌터카",38,38,0,0],["\u321c 올댓",58,52,6,0],["\u321c네이처모빌리티(2025\ub144\ub3c4 \ub9c8\uac10)",0,0,0,0],["이카모빌리티(주)",32,32,0,0],["(주)스칼라데이터",30,30,0,0],["\u321c뉴스카이렌트카",31,31,0,0],["\u321c지제이렌트카",35,35,0,0],["히든렌터카",30,29,1,0],["\u321c에프씨엠",30,30,0,0],["\u321c티오피렌트카",29,3,26,0],["\u321c에스제이렌트카",40,40,0,0],["번영렌트카",35,33,2,0],["(유)여수렌트카",25,23,2,0],["원렌터카",27,27,0,0],["\u321c고하린렌트카",86,85,1,0],["(합)청훈렌트카",27,23,4,0],["푸른렌트카",25,23,2,0],["\u321c미소렌트카",22,22,0,0],["\u321c괴산렌트카",34,28,6,0],["\u321c골든레저",20,2,18,0],["(주)방방곡곡렌트카",16,16,0,0],["(주)삼원렌트카",25,24,1,0],["두성렌트카\u321c",22,20,2,0],["\u321c생생렌트카",0,0,0,0],["(주)더뉴카",24,22,2,0],["\u321c씨엔렌터카",0,0,0,0],["(유)태성렌트카",23,21,2,0],["\u321c제이엠렌터카",23,23,0,0],["(유)해남렌트카",24,18,6,0],["\u321c한들렌터카",20,20,0,0],["\u321c세이프",52,52,0,0],["\u321c다음렌트카",20,19,1,0],["\u321c티알씨",20,20,0,0],["\u321c시소",21,21,0,0],["지앤렌트카",21,21,0,0],["\u321c제이모빌리티",0,0,0,0],["\u321c스마트렌트카",24,23,1,0],["\u321c아톰투비트",21,14,7,0],["제이피케이모빌리티\u321c",21,21,0,0],["\u321c뉴지제이렌트",20,19,1,0],["\u321c레저가온",21,20,1,0],["\u321c유오(구,\ud558\uc640\uc774)",21,21,0,0],["(유)에이치렌트카",21,21,0,0],["\u321c현대남포항",20,20,0,0],["\u321c내차처럼렌트카",61,61,0,0],["\u321c알파렌트카",20,20,0,0],["\u321c바른렌터카",20,20,0,0],["이에이치파트너스",20,20,0,0],["(주)엘림글로벌",20,20,0,0],["\u321c엘렌모빌",20,16,4,0],["\u321c스탠스컴퍼니",20,20,0,0],["선진렌트카",0,0,0,0],["\u321c푸른렌터카",20,20,0,0],["\u321c삼성렌트카",20,20,0,0],["팝콘렌트카",20,20,0,0],["\u321c 아이렌터카",16,10,6,0],["\u321c파인렌트카",61,60,1,10],["(유)낭만렌트카",27,26,1,0],["주식회사 엘사컴퍼니",20,19,1,0],["주식회사\u00a0 나우렌트카",15,15,0,0],["넥스트원주식회사 ",15,6,0,9],["진성퍼니스",15,15,0,0],["\u321c카프렌렌트카",23,22,1,0],["주식회사 에코카쉐어링",14,0,0,14],["\u321c야떠나자렌트카",12,12,0,0],["모터홈코리아(주)",10,0,0,10],["(주)울타리컴퍼니",10,8,2,0],["가온플랫폼\u321c",20,20,0,0],["SK네트웍스(주)SK렌터카",0,0,0,0],["\u321c청주제일",0,0,0,0],["\u321c케이참신렌트카",0,0,0,0],["바카르37\ud638",1,1,0,0],["차놀자 G01\ud638",1,0,0,1],["엽종원(\ucea0\ud551\uce74\ud0c0\ub2e401)",1,0,0,1],["엽원백(\ucea0\ud551\uce74\ud0c0\ub2e402)",1,0,0,1],["(주)365렌트카",0,0,0,0],["포시즌서비스",0,0,0,0],["\u321c현모토닉스",0,0,0,0],["\u321c엘사컴퍼니",0,0,0,0]]}};
-const MONTHS = RAW.m;
-const COMPANIES = RAW.c;
+// 데이터 로딩
+let RAW = null;
 const DATA = RAW.d;
 const HARMONY_KEY = '하모니렌트카';
 
-let curMonth = MONTHS[MONTHS.length-1];
+let curMonth = '';
 let expandedDetail = false;
 let compTags = [];
 let charts = {};
@@ -286,18 +267,22 @@ function init() {
   if(!compTags.length) compTags = ['에스케이렌터카(주)','현대캐피탈(주)','하나캐피탈(주)'];
 
   const sel = document.getElementById('monthSel');
-  MONTHS.forEach(m => {
+  getMonths().forEach(m => {
     const opt = document.createElement('option');
     opt.value = m;
     opt.textContent = fmtMonth(m);
     sel.appendChild(opt);
   });
+  curMonth = getMonths()[getMonths().length-1];
   sel.value = curMonth;
 
   renderCompTags();
   onMonthChange();
 }
 
+function getMonths() { return RAW ? RAW.m : []; }
+function getCompanies() { return RAW ? RAW.c : []; }
+function getAllData() { return RAW ? RAW.d : {}; }
 function fmtMonth(m) {
   const [y,mo] = m.split('.');
   return y+'년 '+mo+'월';
@@ -317,11 +302,11 @@ function onMonthChange() {
 }
 
 // --- KPI ---
-function getMonthData(m) { return DATA[m] || []; }
+function getMonthData(m) { return getAllData()[m] || []; }
 
 function updateKPI() {
   const rows = getMonthData(curMonth);
-  const prev = MONTHS[MONTHS.indexOf(curMonth)-1];
+  const prev = getMonths()[getMonths().indexOf(curMonth)-1];
   const prevRows = prev ? getMonthData(prev) : [];
 
   const total = rows.reduce((s,r)=>s+r[1],0);
@@ -340,7 +325,7 @@ function updateKPI() {
     if(sub && prev) {
       const d = val-prev;
       sub.textContent = (d>=0?'▲':'▼')+fmt(Math.abs(d))+' vs 전월';
-      sub.style.color = d>=0 ? '#10b981':'#ef4444';
+      sub.style.color = d>=0 ? '#38e0a0':'#f05a5a';
     }
   };
   setKpi('kTotal',total,ptotal);
@@ -356,7 +341,7 @@ function updateKPI() {
     const prank = phidx>=0 ? phidx+1 : null;
     const curRank = hidx+1;
     document.getElementById('kHarmonySub').textContent = fmt(hrow[1])+'대' + (prank ? (curRank<prank?' ▲'+(prank-curRank)+'위':curRank>prank?' ▼'+(curRank-prank)+'위':' -') : '');
-    document.getElementById('kHarmonySub').style.color = prank && curRank<prank ? 'var(--harmony2)' : prank && curRank>prank ? '#ef4444' : 'var(--text3)';
+    document.getElementById('kHarmonySub').style.color = prank && curRank<prank ? 'var(--harmony)' : prank && curRank>prank ? '#f05a5a' : 'var(--text3)';
   }
 }
 
@@ -365,21 +350,21 @@ function destroyChart(id) {
   if(charts[id]) { charts[id].destroy(); delete charts[id]; }
 }
 
-function chartGridColor() { return 'rgba(148, 163, 184, 0.08)'; }
-function chartTickColor() { return '#64748b'; }
+function chartGridColor() { return 'rgba(50,100,160,0.08)'; }
+function chartTickColor() { return '#7a96b8'; }
 
 function drawTrend() {
   destroyChart('trendChart');
-  const labels = MONTHS.map(fmtMonth);
-  const vals = MONTHS.map(m => getMonthData(m).reduce((s,r)=>s+r[1],0));
-  const curIdx = MONTHS.indexOf(curMonth);
-  const pointColors = MONTHS.map((_,i) => i===curIdx ? '#1e5cb3' : 'rgba(37, 99, 235, 0.6)');
-  const pointRadius = MONTHS.map((_,i) => i===curIdx ? 5 : 3);
+  const labels = getMonths().map(fmtMonth);
+  const vals = getMonths().map(m => getMonthData(m).reduce((s,r)=>s+r[1],0));
+  const curIdx = getMonths().indexOf(curMonth);
+  const pointColors = getMonths().map((_,i) => i===curIdx ? '#1a5cad' : 'rgba(34,114,217,.6)');
+  const pointRadius = getMonths().map((_,i) => i===curIdx ? 5 : 3);
   charts['trendChart'] = new Chart(document.getElementById('trendChart'),{
     type:'line',
     data:{labels,datasets:[{
       label:'총보유대수',data:vals,
-      borderColor:'#2563eb',backgroundColor:'rgba(37, 99, 235, 0.06)',
+      borderColor:'#2272d9',backgroundColor:'rgba(34,114,217,.06)',
       fill:true,tension:.35,pointRadius,pointBackgroundColor:pointColors,
       pointBorderColor:pointColors,borderWidth:2
     }]},
@@ -387,8 +372,8 @@ function drawTrend() {
       responsive:true,maintainAspectRatio:false,
       plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>'  '+fmt(c.raw)+'대'}}},
       scales:{
-        x:{ticks:{color:chartTickColor(),font:{size:10,family:'Pretendard'}},grid:{color:chartGridColor()}},
-        y:{ticks:{color:chartTickColor(),font:{size:10,family:'Pretendard'},callback:v=>(v/10000).toFixed(0)+'만'},grid:{color:chartGridColor()}}
+        x:{ticks:{color:chartTickColor(),font:{size:10}},grid:{color:chartGridColor()}},
+        y:{ticks:{color:chartTickColor(),font:{size:10},callback:v=>(v/10000).toFixed(0)+'만'},grid:{color:chartGridColor()}}
       }
     }
   });
@@ -405,12 +390,12 @@ function drawType() {
     type:'doughnut',
     data:{
       labels:['승용차','승합차','기타'],
-      datasets:[{data:[sedan,van,etc],backgroundColor:['#2563eb','#10b981','#94a3b8'],borderWidth:0,hoverOffset:4}]
+      datasets:[{data:[sedan,van,etc],backgroundColor:['#2272d9','#16a085','#bdc3c7'],borderWidth:0,hoverOffset:4}]
     },
     options:{
       responsive:true,maintainAspectRatio:false,cutout:'65%',
       plugins:{
-        legend:{position:'right',labels:{color:'#334155',font:{size:11,family:'Pretendard'},padding:12,boxWidth:10,boxHeight:10}},
+        legend:{position:'right',labels:{color:'#2c4a6e',font:{size:11},padding:12,boxWidth:10,boxHeight:10}},
         tooltip:{callbacks:{label:c=>' '+fmt(c.raw)+'대 ('+((c.raw/total)*100).toFixed(1)+'%)'}}
       }
     }
@@ -422,8 +407,8 @@ function drawTop10() {
   const rows = getMonthData(curMonth).slice(0,10);
   const labels = rows.map(r=>r[0].length>10?r[0].slice(0,10)+'…':r[0]);
   const vals = rows.map(r=>r[1]);
-  const bg = rows.map(r=>r[0].includes(HARMONY_KEY)?'rgba(16, 185, 129, 0.85)':'rgba(37, 99, 235, 0.75)');
-  const bgh = rows.map(r=>r[0].includes(HARMONY_KEY)?'#059669':'#1d4ed8');
+  const bg = rows.map(r=>r[0].includes(HARMONY_KEY)?'rgba(13,122,78,.75)':'rgba(34,114,217,.7)');
+  const bgh = rows.map(r=>r[0].includes(HARMONY_KEY)?'#0d7a4e':'#2272d9');
   const ht = rows.length * 34 + 40;
   document.getElementById('top10Wrap').style.height = ht+'px';
   charts['top10Chart'] = new Chart(document.getElementById('top10Chart'),{
@@ -433,8 +418,8 @@ function drawTop10() {
       indexAxis:'y',responsive:true,maintainAspectRatio:false,
       plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' '+fmt(c.raw)+'대'}}},
       scales:{
-        x:{ticks:{color:chartTickColor(),font:{size:10,family:'Pretendard'},callback:v=>(v/10000).toFixed(0)+'만'},grid:{color:chartGridColor()}},
-        y:{ticks:{color:'#64748b',font:{size:11,family:'Pretendard'}},grid:{display:false}}
+        x:{ticks:{color:chartTickColor(),font:{size:10},callback:v=>(v/10000).toFixed(0)+'만'},grid:{color:chartGridColor()}},
+        y:{ticks:{color:'#96b0cc',font:{size:11}},grid:{display:false}}
       }
     }
   });
@@ -445,7 +430,7 @@ function drawComp() {
   if(!compTags.length) { document.getElementById('compChart').getContext('2d').clearRect(0,0,9999,9999); return; }
   const datasets = compTags.map((co,i) => ({
     label: co.length>12?co.slice(0,12)+'…':co,
-    data: MONTHS.map(m=>{
+    data: getMonths().map(m=>{
       const sorted = getMonthData(m);
       const idx = sorted.findIndex(r=>r[0]===co);
       return idx>=0?idx+1:null;
@@ -457,13 +442,13 @@ function drawComp() {
   }));
   charts['compChart'] = new Chart(document.getElementById('compChart'),{
     type:'line',
-    data:{labels:MONTHS.map(fmtMonth),datasets},
+    data:{labels:getMonths().map(fmtMonth),datasets},
     options:{
       responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{position:'bottom',labels:{color:'#334155',font:{size:10,family:'Pretendard'},padding:8,boxWidth:16,boxHeight:2,usePointStyle:true}}},
+      plugins:{legend:{position:'bottom',labels:{color:'#2c4a6e',font:{size:10},padding:8,boxWidth:16,boxHeight:2,usePointStyle:true}}},
       scales:{
-        x:{ticks:{color:chartTickColor(),font:{size:10,family:'Pretendard'}},grid:{color:chartGridColor()}},
-        y:{reverse:true,ticks:{color:chartTickColor(),font:{size:10,family:'Pretendard'},stepSize:1,callback:v=>v+'위'},grid:{color:chartGridColor()}}
+        x:{ticks:{color:chartTickColor(),font:{size:10}},grid:{color:chartGridColor()}},
+        y:{reverse:true,ticks:{color:chartTickColor(),font:{size:10},stepSize:1,callback:v=>v+'위'},grid:{color:chartGridColor()}}
       }
     }
   });
@@ -471,21 +456,21 @@ function drawComp() {
 
 function drawHarmony() {
   destroyChart('harmonyChart');
-  const ranks=MONTHS.map(m=>{const sorted=getMonthData(m);const i=sorted.findIndex(r=>r[0].includes(HARMONY_KEY));return i>=0?i+1:null;});
-  const counts=MONTHS.map(m=>{const r=getMonthData(m).find(r=>r[0].includes(HARMONY_KEY));return r?r[1]:null;});
+  const ranks=getMonths().map(m=>{const sorted=getMonthData(m);const i=sorted.findIndex(r=>r[0].includes(HARMONY_KEY));return i>=0?i+1:null;});
+  const counts=getMonths().map(m=>{const r=getMonthData(m).find(r=>r[0].includes(HARMONY_KEY));return r?r[1]:null;});
   charts['harmonyChart'] = new Chart(document.getElementById('harmonyChart'),{
     type:'line',
-    data:{labels:MONTHS.map(fmtMonth),datasets:[
-      {label:'순위',data:ranks,borderColor:'#10b981',pointBackgroundColor:'#10b981',yAxisID:'y1',tension:.35,pointRadius:4,borderWidth:2,backgroundColor:'transparent',spanGaps:true},
-      {label:'보유대수',data:counts,borderColor:'#2563eb',pointBackgroundColor:'#2563eb',yAxisID:'y2',tension:.35,pointRadius:4,borderWidth:2,backgroundColor:'rgba(37, 99, 235, 0.06)',fill:true,spanGaps:true,borderDash:[5,3]}
+    data:{labels:getMonths().map(fmtMonth),datasets:[
+      {label:'순위',data:ranks,borderColor:'#0d7a4e',pointBackgroundColor:'#0d7a4e',yAxisID:'y1',tension:.35,pointRadius:4,borderWidth:2,backgroundColor:'transparent',spanGaps:true},
+      {label:'보유대수',data:counts,borderColor:'#2272d9',pointBackgroundColor:'#2272d9',yAxisID:'y2',tension:.35,pointRadius:4,borderWidth:2,backgroundColor:'rgba(34,114,217,.06)',fill:true,spanGaps:true,borderDash:[5,3]}
     ]},
     options:{
       responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{position:'bottom',labels:{color:'#334155',font:{size:11,family:'Pretendard'},padding:12,boxWidth:16,usePointStyle:true}}},
+      plugins:{legend:{position:'bottom',labels:{color:'#2c4a6e',font:{size:11},padding:12,boxWidth:16,usePointStyle:true}}},
       scales:{
-        y1:{position:'left',reverse:true,ticks:{color:'#059669',font:{size:10,family:'Pretendard'},stepSize:1,callback:v=>v+'위'},grid:{color:chartGridColor()}},
-        y2:{position:'right',ticks:{color:'#1d4ed8',font:{size:10,family:'Pretendard'},callback:v=>fmt(v)+'대'},grid:{display:false}},
-        x:{ticks:{color:chartTickColor(),font:{size:10,family:'Pretendard'}},grid:{color:chartGridColor()}}
+        y1:{position:'left',reverse:true,ticks:{color:'#0d7a4e',font:{size:10},stepSize:1,callback:v=>v+'위'},grid:{color:chartGridColor()}},
+        y2:{position:'right',ticks:{color:'#2272d9',font:{size:10},callback:v=>fmt(v)+'대'},grid:{display:false}},
+        x:{ticks:{color:chartTickColor(),font:{size:10}},grid:{color:chartGridColor()}}
       }
     }
   });
@@ -498,7 +483,7 @@ let detailQuery = '';
 function renderDetailTable(q) {
   detailQuery = q;
   const rows = getMonthData(curMonth);
-  const prev = MONTHS[MONTHS.indexOf(curMonth)-1];
+  const prev = getMonths()[getMonths().indexOf(curMonth)-1];
   const prevRows = prev ? getMonthData(prev) : [];
   const filtered = q ? rows.filter(r=>r[0].includes(q)) : rows;
   const tbody = document.getElementById('detailBody');
@@ -559,24 +544,24 @@ function selectIndiv(name) {
 
 function drawIndiv(name) {
   destroyChart('indivChart');
-  const ranks = MONTHS.map(m=>{const s=getMonthData(m);const i=s.findIndex(r=>r[0]===name);return i>=0?i+1:null;});
-  const counts = MONTHS.map(m=>{const r=getMonthData(m).find(r=>r[0]===name);return r?r[1]:null;});
+  const ranks = getMonths().map(m=>{const s=getMonthData(m);const i=s.findIndex(r=>r[0]===name);return i>=0?i+1:null;});
+  const counts = getMonths().map(m=>{const r=getMonthData(m).find(r=>r[0]===name);return r?r[1]:null;});
   const isHarmony = name.includes(HARMONY_KEY);
-  const c1 = isHarmony?'#059669':'#2563eb';
-  const c2 = isHarmony?'#10b981':'#1d4ed8';
+  const c1 = isHarmony?'#0d7a4e':'#2272d9';
+  const c2 = isHarmony?'#16a085':'#1a5cad';
   charts['indivChart'] = new Chart(document.getElementById('indivChart'),{
     type:'line',
-    data:{labels:MONTHS.map(fmtMonth),datasets:[
+    data:{labels:getMonths().map(fmtMonth),datasets:[
       {label:'순위',data:ranks,borderColor:c1,pointBackgroundColor:c1,yAxisID:'y1',tension:.35,pointRadius:4,borderWidth:2,backgroundColor:'transparent',spanGaps:true},
-      {label:'보유대수',data:counts,borderColor:c2,pointBackgroundColor:c2,yAxisID:'y2',tension:.35,pointRadius:4,borderWidth:2,backgroundColor:isHarmony?'rgba(16, 185, 129, 0.06)':'rgba(37, 99, 235, 0.06)',fill:true,spanGaps:true,borderDash:[5,3]}
-    ] silent},
+      {label:'보유대수',data:counts,borderColor:c2,pointBackgroundColor:c2,yAxisID:'y2',tension:.35,pointRadius:4,borderWidth:2,backgroundColor:isHarmony?'rgba(13,122,78,.06)':'rgba(34,114,217,.06)',fill:true,spanGaps:true,borderDash:[5,3]}
+    ]},
     options:{
       responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{position:'bottom',labels:{color:'#334155',font:{size:11,family:'Pretendard'},padding:12,boxWidth:16,usePointStyle:true}}},
+      plugins:{legend:{position:'bottom',labels:{color:'#2c4a6e',font:{size:11},padding:12,boxWidth:16,usePointStyle:true}}},
       scales:{
-        y1:{position:'left',reverse:true,ticks:{color:c1,font:{size:10,family:'Pretendard'},callback:v=>v+'위'},grid:{color:chartGridColor()}},
-        y2:{position:'right',ticks:{color:c2,font:{size:10,family:'Pretendard'},callback:v=>fmt(v)+'대'},grid:{display:false}},
-        x:{ticks:{color:chartTickColor(),font:{size:10,family:'Pretendard'}},grid:{color:chartGridColor()}}
+        y1:{position:'left',reverse:true,ticks:{color:c1,font:{size:10},callback:v=>v+'위'},grid:{color:chartGridColor()}},
+        y2:{position:'right',ticks:{color:c2,font:{size:10},callback:v=>fmt(v)+'대'},grid:{display:false}},
+        x:{ticks:{color:chartTickColor(),font:{size:10}},grid:{color:chartGridColor()}}
       }
     }
   });
@@ -587,7 +572,7 @@ function showAC(inputId, acId, onSelect) {
   const q = document.getElementById(inputId).value.trim();
   const ac = document.getElementById(acId);
   if(!q) { ac.style.display='none'; return; }
-  const matches = COMPANIES.filter(c=>c.includes(q)).slice(0,12);
+  const matches = getCompanies().filter(c=>c.includes(q)).slice(0,12);
   if(!matches.length) { ac.style.display='none'; return; }
   ac.innerHTML = matches.map(c=>{
     const hi = c.replace(q, '<mark>'+q+'</mark>');
@@ -653,7 +638,15 @@ function saveCompTags() {
   try { localStorage.setItem('harmony_comp_tags', JSON.stringify(compTags)); } catch(e){}
 }
 
-init();
+fetch('data.json')
+  .then(r => r.json())
+  .then(data => {
+    RAW = data;
+    init();
+  })
+  .catch(() => {
+    document.body.innerHTML = '<div style="padding:40px;text-align:center;font-family:sans-serif;color:#c0392b"><h2>⚠️ data.json 파일을 찾을 수 없습니다</h2><p style="margin-top:12px;color:#666">index.html과 같은 폴더에 data.json이 있는지 확인해주세요.</p></div>';
+  });
 </script>
 </body>
 </html>
