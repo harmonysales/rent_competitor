@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>전국 렌트카 대수 현황 | 하모니렌트카</title>
+<title>전국 렌트카업체 대수 현황 | 하모니렌트카</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -55,7 +55,6 @@ body{background:var(--bg);color:var(--tx);font-family:'Inter','Noto Sans KR',san
 .card{background:var(--sur);border:1px solid var(--bd);border-radius:9px;padding:16px 18px}
 .ch{margin-bottom:12px}
 .chr{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:12px;flex-wrap:wrap}
-.ct override{font-size:13px;font-weight:600}
 .ct{font-size:13px;font-weight:600}
 .cs{font-size:11px;color:var(--mu);margin-top:2px}
 .cw{position:relative;height:210px}
@@ -108,16 +107,16 @@ tr:hover td{background:var(--bg)}
 <body>
 <div class="hd">
   <div><h1>전국 렌트카업체 대수 현황</h1><p>하모니렌트카 전용 대시보드 · 업체별 · 월별 · 차종별 보유 대수</p></div>
-  <span class="badge" id="latestBadge">기준: 대기 중</span>
+  <span class="badge" id="latestBadge">기준: 데이터 없음</span>
 </div>
 <div class="upbar">
   <span class="ul">데이터 업데이트</span>
   <label class="ubtn" for="fi">
     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-    렌터카 엑셀 업로드
+    전국 엑셀 파일 업로드
   </label>
   <input type="file" id="fi" accept=".xlsx,.xls">
-  <span class="uh">전국 현황 양식 엑셀을 업로드하면 즉시 연산됩니다.</span>
+  <span class="uh">여기에 엑셀을 한 번만 등록해 두면 새로고침해도 영구 유지됩니다.</span>
   <span id="us" class="us"></span>
 </div>
 <div class="mntab">
@@ -134,7 +133,7 @@ tr:hover td{background:var(--bg)}
   </div>
   <div class="r2">
     <div class="card">
-      <div class="chr"><div><div class="ct">월별 총 보유 대수 추이</div><div class="cs" id="tSub">엑셀을 먼저 업로드하세요</div></div></div>
+      <div class="chr"><div><div class="ct">월별 총 보유 대수 추이</div><div class="cs" id="tSub">엑셀 데이터를 업로드해주세요</div></div></div>
       <div class="cw"><canvas id="tChart"></canvas></div>
       <button class="rtbtn" onclick="tog('tRep',this)"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>간단 리포트 보기</button>
       <div class="rbox" id="tRep"></div>
@@ -191,7 +190,7 @@ tr:hover td{background:var(--bg)}
     <div id="csArea"><div class="nf">업체명을 검색하면 추이 그래프가 나타납니다</div></div>
   </div>
 </div>
-<div class="ft">전국 렌트카업체 대수 현황 대시보드 · 하모니렌트카 전용 · 새 엑셀 업로드 시 자동 갱신</div>
+<div class="ft">전국 렌트카업체 대수 현황 대시보드 · 하모니렌트카 전용 · 로컬 스토리지 자동 영구 저장 버전</div>
 
 <script>
 const f=n=>Number(n).toLocaleString('ko-KR');
@@ -265,7 +264,7 @@ function updHarmony(){
   C.hm=new Chart(document.getElementById('hChart'),{type:'line',data:{labels:lb,datasets:[
     {label:'보유 대수',data:ht.map(r=>r.t),borderColor:CC.hm,backgroundColor:CC.hma,fill:true,tension:0.3,pointRadius:3,pointBackgroundColor:'#fff',pointBorderColor:CC.hm,pointBorderWidth:1.5,borderWidth:1.5,yAxisID:'y'},
     {label:'순위',data:ht.map(r=>r.r),borderColor:CC.am,tension:0.3,pointRadius:3,pointBackgroundColor:'#fff',pointBorderColor:CC.am,pointBorderWidth:1.5,borderWidth:1.5,borderDash:[4,3],yAxisID:'y2'}
-  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{boxWidth:7,padding:11,font:{size:11}}},tooltip:{callbacks:{label:c=>c.dataset.label==='순위'?c.dataset.label+': '+c.raw+'위':c.dataset.label+': '+f(c.raw)+'대'}}},scales:{x:{grid:{color:CC.bd},ticks:{font:{size:10}}},y:{grid:{color:CC.bd},ticks:{callback:v=>fk(v),font:{size:10}}},y2:{position:'right',reverse:true,grid:{display:false},ticks:{stepSize:1,font:{size:10}}}}}});
+  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{boxWidth:7,padding:11,font:{size:11}}},tooltip:{callbacks:{label:c=>c.dataset.label==='순위'?c.dataset.label+': '+c.raw+'位':c.dataset.label+': '+f(c.raw)+'대'}}},scales:{x:{grid:{color:CC.bd},ticks:{font:{size:10}}},y:{grid:{color:CC.bd},ticks:{callback:v=>fk(v),font:{size:10}}},y2:{position:'right',reverse:true,grid:{display:false},ticks:{stepSize:1,font:{size:10}}}}}});
   const fi=ht[0],la=ht[ht.length-1],gr=((la.t-fi.t)/fi.t*100).toFixed(1);
   document.getElementById('hRep').innerHTML=`하모니렌트카 <strong>${fi.m}</strong> <strong>${f(fi.t)}대(${fi.r}위)</strong> → <strong>${la.m}</strong> <strong>${f(la.t)}대(${la.r}위)</strong>. 보유 대수 변화: <strong>${gr}%</strong>`;
 }
@@ -340,6 +339,32 @@ function selAC(inId,lsId,v){
   if(inId==='ci') addComp(); else if(inId==='csi') searchCo(v);
 }
 
+// 로컬 스토리지 저장 및 복구 엔진
+function saveToLocalStorage(data) {
+  try {
+    localStorage.setItem('HARMONY_RENT_DATA', JSON.stringify(data));
+  } catch (e) {
+    console.error('용량 초과 또는 시크릿 모드로 인한 저장 실패', e);
+  }
+}
+
+function loadFromLocalStorage() {
+  const saved = localStorage.getItem('HARMONY_RENT_DATA');
+  if (saved) {
+    try {
+      G = JSON.parse(saved);
+      const st = document.getElementById('us');
+      st.className = 'us ok';
+      st.style.display = 'inline-block';
+      st.textContent = `✓ 자동 로드됨 (${G.months.length}개년월 데이터 연속 가동 중)`;
+      buildTabs();
+      updateAll();
+    } catch (e) {
+      console.error('로컬스토리지 파싱 실패', e);
+    }
+  }
+}
+
 document.getElementById('fi').addEventListener('change',async e=>{
   const file=e.target.files[0]; if(!file) return;
   const st=document.getElementById('us');
@@ -352,7 +377,6 @@ document.getElementById('fi').addEventListener('change',async e=>{
     const raw=XLSX.utils.sheet_to_json(ws,{defval:0});
     if(!raw.length) throw new Error('엑셀 파일에 데이터가 없습니다.');
 
-    // 1. 컬럼명 유연하게 잡기 (대소문자, 띄어쓰기 무시)
     const firstRow = raw[0];
     let colM = Object.keys(firstRow).find(k => k.includes('월') || k.toLowerCase().includes('month') || k.includes('연월') || k.includes('년월'));
     let colN = Object.keys(firstRow).find(k => k.includes('업체') || k.includes('회사') || k.includes('상호') || k.toLowerCase().includes('name') || k.includes('고객명'));
@@ -362,13 +386,12 @@ document.getElementById('fi').addEventListener('change',async e=>{
     let colE = Object.keys(firstRow).find(k => k.includes('기타'));
 
     if(!colM || !colN || !colT) {
-      throw new Error('필수 항목(년월, 업체명, 총대수)에 매칭되는 컬럼을 찾을 수 없습니다. 엑셀 헤더 명칭을 확인해주세요.');
+      throw new Error('필수 항목(년월, 업체명, 총대수)에 매칭되는 컬럼을 찾을 수 없습니다.');
     }
 
-    // 2. 데이터 가공
     const rows = raw.map(r => {
       let mVal = String(r[colM]).replace(/[^0-9.]/g, '').trim();
-      if(mVal.length === 6 && !mVal.includes('.')) mVal = mVal.slice(0,4) + '.' + mVal.slice(4,6); // 202604 -> 2026.04 보정
+      if(mVal.length === 6 && !mVal.includes('.')) mVal = mVal.slice(0,4) + '.' + mVal.slice(4,6);
       return {
         m: mVal,
         n: String(r[colN]).trim(),
@@ -379,9 +402,8 @@ document.getElementById('fi').addEventListener('change',async e=>{
       };
     }).filter(r => r.m && r.n && r.t > 0);
 
-    if(!rows.length) throw new Error('유효한 렌터카 데이터 행이 없습니다.');
+    if(!rows.length) throw new Error('유효한 데이터 행이 없습니다.');
 
-    // 3. 월별 마스터 집계
     const mMap = {};
     rows.forEach(r => {
       if(!mMap[r.m]) mMap[r.m] = {m:r.m, t:0, s:0, v:0, e:0, co:0};
@@ -389,14 +411,12 @@ document.getElementById('fi').addEventListener('change',async e=>{
     });
     const monthly = Object.values(mMap).sort((a,b)=>a.m.localeCompare(b.m));
 
-    // 4. 월별 업체 순위 리스트업
     const pmNew = {};
     monthly.forEach(md => {
       const mr = rows.filter(r => r.m === md.m).sort((a,b) => b.t - a.t);
       pmNew[md.m] = mr.map((r,i) => ({n:r.n, t:r.t, s:r.s, v:r.v, e:r.e, r:i+1}));
     });
 
-    // 5. 전 기간 업체별 히스토리
     const chNew = {};
     monthly.forEach(md => {
       pmNew[md.m].forEach(r => {
@@ -405,14 +425,12 @@ document.getElementById('fi').addEventListener('change',async e=>{
       });
     });
 
-    // 6. 하모니 데이터 추출
     const htNew = [];
     monthly.forEach(md => {
       const h = pmNew[md.m].find(x => x.n.includes('하모니'));
       if(h) htNew.push({m:md.m, r:h.r, t:h.t, s:h.s, v:h.v});
     });
 
-    // 글로벌 데이터 교체
     G = {
       monthly,
       ht: htNew.sort((a,b)=>a.m.localeCompare(b.m)),
@@ -424,10 +442,13 @@ document.getElementById('fi').addEventListener('change',async e=>{
       sk: 't', sa: false, tsq: '', comps: []
     };
 
+    // 로컬스토리지 세이브 처리
+    saveToLocalStorage(G);
+
     buildTabs();
     updateAll();
     st.className = 'us ok';
-    st.textContent = `✓ 로딩 성공 (${monthly.length}개년월 · ${rows.length}개 데이터 반영 완료)`;
+    st.textContent = `✓ 저장 완료 (${monthly.length}개년월 데이터 자동 영구 백업됨)`;
   } catch(err) {
     st.className = 'us er';
     st.textContent = '실패: ' + err.message;
@@ -441,6 +462,9 @@ function tog(id,btn){
   const el=document.getElementById(id); el.classList.toggle('sh'); btn.classList.toggle('op');
 }
 setupAC('ci','cl'); setupAC('csi','csl');
+
+// 앱 켜질 때 자동 복구 작동
+window.addEventListener('DOMContentLoaded', loadFromLocalStorage);
 </script>
 </body>
 </html>
