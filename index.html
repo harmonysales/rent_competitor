@@ -198,14 +198,12 @@ tr:hover td{background:var(--bg)}
 const MONTHLY=[{"m":"2025.01","t":1250206,"s":1227974,"v":22038,"e":194,"co":1184},{"m":"2025.02","t":1253249,"s":1231060,"v":21965,"e":224,"co":1184},{"m":"2025.03","t":1257909,"s":1235687,"v":22009,"e":213,"co":1191},{"m":"2025.04","t":1262929,"s":1240828,"v":21909,"e":192,"co":1193},{"m":"2025.05","t":1267612,"s":1245640,"v":21779,"e":193,"co":1195},{"m":"2025.06","t":1270568,"s":1248839,"v":21573,"e":156,"co":1195},{"m":"2025.07","t":1280322,"s":1258433,"v":21726,"e":163,"co":1200},{"m":"2025.08","t":1286889,"s":1265031,"v":21697,"e":161,"co":1205},{"m":"2025.09","t":1292102,"s":1270514,"v":21415,"e":173,"co":1205},{"m":"2025.10","t":1292044,"s":1270451,"v":21426,"e":167,"co":1218},{"m":"2025.11","t":1297251,"s":1276223,"v":20861,"e":167,"co":1218},{"m":"2025.12","t":1296233,"s":1276135,"v":19932,"e":166,"co":1218},{"m":"2026.01","t":1296232,"s":1276383,"v":19686,"e":163,"co":1220},{"m":"2026.02","t":1301996,"s":1282149,"v":19685,"e":162,"co":1222},{"m":"2026.03","t":1309798,"s":1290052,"v":19596,"e":162,"co":1233},{"m":"2026.04","t":1313975,"s":1294425,"v":19404,"e":146,"co":1234}];
 const HT=[{"m":"2025.01","r":18,"t":11941,"s":11902,"v":39},{"m":"2025.02","r":18,"t":12214,"s":12175,"v":39},{"m":"2025.03","r":18,"t":12472,"s":12433,"v":39},{"m":"2025.04","r":17,"t":13090,"s":13051,"v":39},{"m":"2025.05","r":17,"t":13090,"s":13051,"v":39},{"m":"2025.06","r":17,"t":13437,"s":13399,"v":38},{"m":"2025.07","r":17,"t":13872,"s":13834,"v":38},{"m":"2025.08","r":17,"t":14272,"s":14234,"v":38},{"m":"2025.09","r":17,"t":14315,"s":14259,"v":56},{"m":"2025.10","r":17,"t":14743,"s":14688,"v":55},{"m":"2025.11","r":17,"t":15045,"s":14990,"v":55},{"m":"2025.12","r":17,"t":15245,"s":15190,"v":55},{"m":"2026.01","r":16,"t":15247,"s":15192,"v":55},{"m":"2026.02","r":16,"t":15377,"s":15323,"v":54},{"m":"2026.03","r":16,"t":15679,"s":15625,"v":54},{"m":"2026.04","r":16,"t":15863,"s":15810,"v":53}];
 
-// 로컬 스토리지 또는 내장된 데이터 로드
 let MASTER_RAW = [];
 try {
   const storedData = localStorage.getItem('H_MASTER_RAW_DATA');
   if (storedData) {
     MASTER_RAW = JSON.parse(storedData);
   } else {
-    // 기본 샘플 데이터 유지
     MASTER_RAW = [{"n":"롯데렌탈(주)","t":250614,"s":247808,"v":2806,"e":0,"r":1},{"n":"에스케이렌터카(주)","t":195008,"s":192191,"v":2817,"e":0,"r":2},{"n":"현대캐피탈(주)","t":157790,"s":155229,"v":2561,"e":0,"r":3},{"n":"하나캐피탈(주)","t":91931,"s":91669,"v":262,"e":0,"r":4},{"n":"케이비캐피탈(주)","t":54392,"s":54302,"v":90,"e":0,"r":5},{"n":"우리금융캐피탈(주)","t":53914,"s":53781,"v":133,"e":0,"r":6},{"n":"신한카드(주)","t":44031,"s":43737,"v":294,"e":0,"r":7},{"n":"비엔케이캐피탈(주)","t":35121,"s":35001,"v":120,"e":0,"r":8},{"n":"메리츠캐피탈(주)","t":30302,"s":30254,"v":48,"e":0,"r":9},{"n":"기아(주)","t":25094,"s":25061,"v":33,"e":0,"r":10},{"n":"(주)레드캡투어","t":24371,"s":23916,"v":455,"e":0,"r":11},{"n":"(주)아마존카","t":22807,"s":22806,"v":1,"e":0,"r":12},{"n":"오릭스캐피탈코리아(주)","t":21095,"s":21018,"v":77,"e":0,"r":13},{"n":"(주)아이엠캐피탈","t":20727,"s":20725,"v":2,"e":0,"r":14},{"n":"(주)쏘카","t":20694,"s":20573,"v":121,"e":0,"r":15},{"n":"(주)하모니렌트카","t":15863,"s":15810,"v":53,"e":0,"r":16},{"n":"롯데캐피탈(주)","t":15851,"s":15628,"v":223,"e":0,"r":17},{"n":"엔에이치농협캐피탈(주)","t":15605,"s":15587,"v":18,"e":0,"r":18},{"n":"(주)우리카드","t":12776,"s":12638,"v":138,"e":0,"r":19},{"n":"제이비우리캐피탈(주)","t":10046,"s":9951,"v":95,"e":0,"r":20}];
   }
 } catch(e) { console.error(e); }
@@ -290,7 +288,6 @@ function updKPI(){
   document.getElementById('kV').innerHTML=f(d.v)+'<span class="ku">대</span>';
   document.getElementById('kVs').textContent=(d.v/d.t*100).toFixed(1)+'% 비중';
   
-  // 실제 업로드된 리스트의 개수 혹은 고정값 연동
   const currentCompanyCount = MASTER_RAW.length > 25 ? MASTER_RAW.length : (d.co || '—');
   document.getElementById('kC').innerHTML=f(currentCompanyCount)+'<span class="ku">개사</span>';
   
@@ -345,16 +342,21 @@ function updTable(){
   const mx=Math.max(...rows.map(r=>r.t),1);
   
   let renderTarget = rows;
-  if(rows.length > 20 && !isTableExpanded) {
-    renderTarget = rows.slice(0, 20);
-    moreWrap.style.display = 'block';
-    moreBtn.textContent = `▼ 현황 펼쳐보기 (총 ${rows.length}개사 중 ${rows.length - 20}개 접힘)`;
-  } else if (rows.length > 20 && isTableExpanded) {
+  if (G.tsq) {
     renderTarget = rows;
-    moreWrap.style.display = 'block';
-    moreBtn.textContent = `▲ 현황 접기 (상위 20개만 보기)`;
-  } else {
     moreWrap.style.display = 'none';
+  } else {
+    if(rows.length > 20 && !isTableExpanded) {
+      renderTarget = rows.slice(0, 20);
+      moreWrap.style.display = 'block';
+      moreBtn.textContent = `▼ 현황 펼쳐보기 (총 ${rows.length}개사 중 ${rows.length - 20}개 접힘)`;
+    } else if (rows.length > 20 && isTableExpanded) {
+      renderTarget = rows;
+      moreWrap.style.display = 'block';
+      moreBtn.textContent = `▲ 현황 접기 (상위 20개만 보기)`;
+    } else {
+      moreWrap.style.display = 'none';
+    }
   }
 
   tbody.innerHTML=renderTarget.map(r=>`<tr class="${r.n.includes('하모니')?'tr-hm':''}"><td class="rk">${r.r}</td><td>${r.n}</td><td class="nm">${f(r.t)}</td><td class="br"><div class="bt"><div class="bf" style="width:${(r.t/mx*100).toFixed(1)}%"></div></div></td><td class="nm">${f(r.s)}</td><td class="nm">${f(r.v)}</td><td class="nm">${f(r.e)}</td></tr>`).join('');
@@ -433,7 +435,6 @@ function selAC(inId,lsId,v){
 
 function updateAll(){updKPI();updTrend();updPie();updBar();updHarmony();updTable();updComp();updCompRep();}
 
-// 엑셀 파싱 및 적용 로직
 function importExcel(input) {
   const file = input.files[0];
   if (!file) return;
@@ -479,7 +480,6 @@ function importExcel(input) {
       parsedList.push({ n: name, t: total, s: sedan, v: van, e: etc < 0 ? 0 : etc });
     }
 
-    // 총 대수 기준 내림차순 정렬 후 순위 부여
     parsedList.sort((a, b) => b.t - a.t);
     parsedList.forEach((item, index) => {
       item.r = index + 1;
@@ -501,16 +501,10 @@ function importExcel(input) {
   reader.readAsArrayBuffer(file);
 }
 
-// 현재 대시보드 스냅샷 배포 파일 만들기
 function exportDashboard() {
   const currentHTML = document.documentElement.outerHTML;
-  
-  // 현재 메모리에 있는 MASTER_RAW 데이터를 텍스트 코드로 치환하기 위한 준비
   const dataString = JSON.stringify(MASTER_RAW);
-  const targetScriptRegex = /let MASTER_RAW = \[\s*\];/;
-  
   let newHTML = currentHTML;
-  // 파일 내장용으로 스크립트 수정
   if (newHTML.includes("let MASTER_RAW = [];")) {
     newHTML = newHTML.replace("let MASTER_RAW = [];", `let MASTER_RAW = ${dataString};`);
   }
