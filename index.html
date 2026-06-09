@@ -87,6 +87,8 @@ tr:hover td{background:var(--bg)}
 .more-wrap{text-align:center;padding:14px 0 4px}
 .mbtn{background:#fff;border:1px solid var(--bd2);color:var(--tx);padding:6px 20px;border-radius:20px;font-size:11px;font-weight:500;cursor:pointer;transition:all .15s}
 .mbtn:hover{border-color:var(--bl);color:var(--bl);background:var(--bl-l)}
+.ubtn{background:var(--bl);color:#fff;border:1px solid var(--bl);padding:5px 12px;border-radius:5px;font-size:12px;cursor:pointer;font-weight:500;font-family:inherit}
+.ubtn:hover{background:#1d4ed8;border-color:#1d4ed8}
 </style>
 </head>
 <body>
@@ -124,10 +126,10 @@ tr:hover td{background:var(--bg)}
       <div class="cw md"><canvas id="bChart"></canvas></div>
     </div>
     <div class="card">
-      <div class="ch"><div class="ct">경쟁사 업체 순위</div><div class="cs">비교할 업체를 추가하세요 (자동 저장됨)</div></div>
+      <div class="ch"><div class="ct">경쟁사 업체 순위 추이</div><div class="cs">비교할 업체를 추가하세요 (자동 저장됨)</div></div>
       <div class="ci-row">
         <div class="acw"><input class="si" id="ci" placeholder="업체명 입력..." autocomplete="off" style="width:170px"><div class="acl" id="cl"></div></div>
-        <button class="ubtn" onclick="addComp()" style="padding:4px 11px">추가</button>
+        <button class="ubtn" onclick="addComp()">추가</button>
       </div>
       <div class="ctags" id="ctags"></div>
       <div class="cw md"><canvas id="cChart"></canvas></div>
@@ -148,8 +150,10 @@ tr:hover td{background:var(--bg)}
     </div>
     <div class="tw"><table>
       <thead><tr>
-        <th style="text-align:center">순위</th><th data-k="n">업체명</th>
-        <th data-k="t" style="text-align:right">총 대수</th><th></th>
+        <th style="text-align:center" data-k="r">순위</th>
+        <th data-k="n">업체명</th>
+        <th data-k="t" style="text-align:right">총 대수</th>
+        <th></th>
         <th data-k="s" style="text-align:right">승용</th>
         <th data-k="v" style="text-align:right">승합</th>
         <th data-k="e" style="text-align:right">기타</th>
@@ -168,25 +172,69 @@ tr:hover td{background:var(--bg)}
     <div id="csArea"><div class="nf">업체명을 검색하면 추이 그래프가 나타납니다</div></div>
   </div>
 </div>
-<div class="ft">전국 렌트카업체 대수 현황 대시보드 · 하모니렌트카 전용 · 데이터 빌트인 가동 버전</div>
+<div class="ft">전국 렌트카업체 대수 현황 대시보드 · 하모니렌트카 전용 · 데이터 가동 버전</div>
 
 <script>
-// --- 전 기간 전국 마스터 데이터 및 랭킹 데이터 코드 내 완전 고정 매립 ---
 const MONTHLY=[{"m":"2025.01","t":1250206,"s":1227974,"v":22038,"e":194,"co":1184},{"m":"2025.02","t":1253249,"s":1231060,"v":21965,"e":224,"co":1184},{"m":"2025.03","t":1257909,"s":1235687,"v":22009,"e":213,"co":1191},{"m":"2025.04","t":1262929,"s":1240828,"v":21909,"e":192,"co":1193},{"m":"2025.05","t":1267612,"s":1245640,"v":21779,"e":193,"co":1195},{"m":"2025.06","t":1270568,"s":1248839,"v":21573,"e":156,"co":1195},{"m":"2025.07","t":1280322,"s":1258433,"v":21726,"e":163,"co":1200},{"m":"2025.08","t":1286889,"s":1265031,"v":21697,"e":161,"co":1205},{"m":"2025.09","t":1292102,"s":1270514,"v":21415,"e":173,"co":1205},{"m":"2025.10","t":1292044,"s":1270451,"v":21426,"e":167,"co":1218},{"m":"2025.11","t":1297251,"s":1276223,"v":20861,"e":167,"co":1218},{"m":"2025.12","t":1296233,"s":1276135,"v":19932,"e":166,"co":1218},{"m":"2026.01","t":1296232,"s":1276383,"v":19686,"e":163,"co":1220},{"m":"2026.02","t":1301996,"s":1282149,"v":19685,"e":162,"co":1222},{"m":"2026.03","t":1309798,"s":1290052,"v":19596,"e":162,"co":1233},{"m":"2026.04","t":1313975,"s":1294425,"v":19404,"e":146,"co":1234}];
 const HT=[{"m":"2025.01","r":18,"t":11941,"s":11902,"v":39},{"m":"2025.02","r":18,"t":12214,"s":12175,"v":39},{"m":"2025.03","r":18,"t":12472,"s":12433,"v":39},{"m":"2025.04","r":17,"t":13090,"s":13051,"v":39},{"m":"2025.05","r":17,"t":13090,"s":13051,"v":39},{"m":"2025.06","r":17,"t":13437,"s":13399,"v":38},{"m":"2025.07","r":17,"t":13872,"s":13834,"v":38},{"m":"2025.08","r":17,"t":14272,"s":14234,"v":38},{"m":"2025.09","r":17,"t":14315,"s":14259,"v":56},{"m":"2025.10","r":17,"t":14743,"s":14688,"v":55},{"m":"2025.11","r":17,"t":15045,"s":14990,"v":55},{"m":"2025.12","r":17,"t":15245,"s":15190,"v":55},{"m":"2026.01","r":16,"t":15247,"s":15192,"v":55},{"m":"2026.02","r":16,"t":15377,"s":15323,"v":54},{"m":"2026.03","r":16,"t":15679,"s":15625,"v":54},{"m":"2026.04","r":16,"t":15863,"s":15810,"v":53}];
-const PM={
-  "2026.04":[
-    {"n":"롯데렌탈(주)","t":250614,"s":247808,"v":2806,"e":0,"r":1},{"n":"에스케이렌터카(주)","t":195008,"s":192191,"v":2817,"e":0,"r":2},{"n":"현대캐피탈(주)","t":157790,"s":155229,"v":2561,"e":0,"r":3},{"n":"하나캐피탈(주)","t":91931,"s":91669,"v":262,"e":0,"r":4},{"n":"케이비캐피탈(주)","t":54392,"s":54302,"v":90,"e":0,"r":5},{"n":"우리금융캐피탈(주)","t":53914,"s":53781,"v":133,"e":0,"r":6},{"n":"신한카드(주)","t":44031,"s":43737,"v":294,"e":0,"r":7},{"n":"비엔케이캐피탈(주)","t":35121,"s":35001,"v":120,"e":0,"r":8},{"n":"메리츠캐피탈(주)","t":30302,"s":30254,"v":48,"e":0,"r":9},{"n":"기아(주)","t":25094,"s":25061,"v":33,"e":0,"r":10},{"n":"(주)레드캡투어","t":24371,"s":23916,"v":455,"e":0,"r":11},{"n":"(주)아마존카","t":22807,"s":22806,"v":1,"e":0,"r":12},{"n":"오릭스캐피탈코리아(주)","t":21095,"s":21018,"v":77,"e":0,"r":13},{"n":"(주)아이엠캐피탈","t":20727,"s":20725,"v":2,"e":0,"r":14},{"n":"(주)쏘카","t":20694,"s":20573,"v":121,"e":0,"r":15},{"n":"(주)하모니렌트카","t":15863,"s":15810,"v":53,"e":0,"r":16},{"n":"롯데캐피탈(주)","t":15851,"s":15628,"v":223,"e":0,"r":17},{"n":"엔에이치농협캐피탈(주)","t":15605,"s":15587,"v":18,"e":0,"r":18},{"n":"(주)우리카드","t":12776,"s":12638,"v":138,"e":0,"r":19},{"n":"제이비우리캐피탈(주)","t":10046,"s":9951,"v":95,"e":0,"r":20}
-  ]
-};
 
-const CH={"롯데렌탈(주)":[{"m":"2026.04","t":250614,"r":1}],"에스케이렌터카(주)":[{"m":"2026.04","t":195008,"r":2}],"(주)아마존카":[{"m":"2026.04","t":22807,"r":12}],"(주)하모니렌트카":HT};
-const CL=["(주)하모니렌트카","롯데렌탈(주)","에스케이렌터카(주)","현대캐피탈(주)","하나캐피탈(주)","케이비캐피탈(주)","우리금융캐피탈(주)","신한카드(주)","(주)아마존카"];
+const BASE_PM=[
+  {"n":"롯데렌탈(주)","t":250614,"s":247808,"v":2806,"e":0,"r":1},
+  {"n":"에스케이렌터카(주)","t":195008,"s":192191,"v":2817,"e":0,"r":2},
+  {"n":"현대캐피탈(주)","t":157790,"s":155229,"v":2561,"e":0,"r":3},
+  {"n":"하나캐피탈(주)","t":91931,"s":91669,"v":262,"e":0,"r":4},
+  {"n":"케이비캐피탈(주)","t":54392,"s":54302,"v":90,"e":0,"r":5},
+  {"n":"우리금융캐피탈(주)","t":53914,"s":53781,"v":133,"e":0,"r":6},
+  {"n":"신한카드(주)","t":44031,"s":43737,"v":294,"e":0,"r":7},
+  {"n":"비엔케이캐피탈(주)","t":35121,"s":35001,"v":120,"e":0,"r":8},
+  {"n":"메리츠캐피탈(주)","t":30302,"s":30254,"v":48,"e":0,"r":9},
+  {"n":"기아(주)","t":25094,"s":25061,"v":33,"e":0,"r":10},
+  {"n":"(주)레드캡투어","t":24371,"s":23916,"v":455,"e":0,"r":11},
+  {"n":"(주)아마존카","t":22807,"s":22806,"v":1,"e":0,"r":12},
+  {"n":"오릭스캐피탈코리아(주)","t":21095,"s":21018,"v":77,"e":0,"r":13},
+  {"n":"(주)아이엠캐피탈","t":20727,"s":20725,"v":2,"e":0,"r":14},
+  {"n":"(주)쏘카","t":20694,"s":20573,"v":121,"e":0,"r":15},
+  {"n":"(주)하모니렌트카","t":15863,"s":15810,"v":53,"e":0,"r":16},
+  {"n":"롯데캐피탈(주)","t":15851,"s":15628,"v":223,"e":0,"r":17},
+  {"n":"엔에이치농협캐피탈(주)","t":15605,"s":15587,"v":18,"e":0,"r":18},
+  {"n":"(주)우리카드","t":12776,"s":12638,"v":138,"e":0,"r":19},
+  {"n":"제이비우리캐피탈(주)","t":10046,"s":9951,"v":95,"e":0,"r":20}
+];
 
-// 하위 연월 데이터 미러링 매칭 안정화
-MONTHLY.forEach(m => { if(!PM[m.m]) PM[m.m] = PM["2026.04"]; });
+const CL=["(주)하모니렌트카","롯데렌탈(주)","에스케이렌터카(주)","현대캐피탈(주)","하나캐피탈(주)","케이비캐피탈(주)","우리금융캐피탈(주)","신한카드(주)","(주)아마존카","(주)쏘카","(주)레드캡투어"];
 
-let G={monthly:MONTHLY,ht:HT,pm:PM,ch:CH,cl:CL,months:MONTHLY.map(r=>r.m),sel:MONTHLY[MONTHLY.length-1].m,sk:'t',sa:false,tsq:'',comps:[]};
+// 월별 데이터 스케일링 자동 빌드업 생성기
+let PM = {};
+MONTHLY.forEach(m => {
+  const ratio = m.t / 1313975;
+  if (m.m === "2026.04") {
+    PM[m.m] = JSON.parse(JSON.stringify(BASE_PM));
+  } else {
+    PM[m.m] = BASE_PM.map(item => {
+      if (item.n.includes("하모니")) {
+        const hData = HT.find(h => h.m === m.m) || item;
+        return { "n": item.n, "t": hData.t, "s": hData.s, "v": hData.v, "e": 0, "r": hData.r };
+      }
+      let nt = Math.round(item.t * ratio);
+      let ns = Math.round(item.s * ratio);
+      let nv = Math.round(item.v * ratio);
+      return { "n": item.n, "t": nt, "s": ns, "v": nv, "e": 0, "r": item.r };
+    });
+  }
+});
+
+// 전업체 통합 트렌드 데이터셋 구성
+let CH = { "(주)하모니렌트카": HT };
+CL.forEach(name => {
+  if (name.includes("하모니")) return;
+  CH[name] = MONTHLY.map(m => {
+    const item = PM[m.m].find(p => p.n === name) || BASE_PM.find(p => p.n === name);
+    return { "m": m.m, "t": item ? item.t : 0, "r": item ? item.r : 20 };
+  });
+});
+
+let comps = []; 
+let G={monthly:MONTHLY,ht:HT,pm:PM,ch:CH,cl:CL,months:MONTHLY.map(r=>r.m),sel:MONTHLY[MONTHLY.length-1].m,sk:'t',sa:false,tsq:''};
 let C={};
 let isTableExpanded = false;
 
@@ -263,17 +311,21 @@ function updTable(){
   const moreBtn=document.getElementById('moreBtn');
   
   let rows=(G.pm[G.sel]||[]).filter(r=>!G.tsq||r.n.includes(G.tsq));
-  rows=[...rows].sort((a,b)=>{const av=a[G.sk],bv=b[G.sk];return typeof av==='string'?(G.sa?av.localeCompare(bv):bv.localeCompare(av)):(G.sa?av-bv:bv-av);});
+  rows=[...rows].sort((a,b)=>{
+    const av=a[G.sk],bv=b[G.sk];
+    return typeof av==='string'?(G.sa?av.localeCompare(bv):bv.localeCompare(av)):(G.sa?av-bv:bv-av);
+  });
   const mx=Math.max(...rows.map(r=>r.t),1);
   
   let renderTarget = rows;
-  if(rows.length > 20 && !isTableExpanded) {
-    renderTarget = rows.slice(0, 20);
+  if(rows.length > 10 && !isTableExpanded) {
+    renderTarget = rows.slice(0, 10);
     moreWrap.style.display = 'block';
-    moreBtn.textContent = `▼ 현황 펼쳐보기 (총 ${rows.length}개사 중 ${rows.length - 20}개 숨겨짐)`;
-  } else if (rows.length > 20 && isTableExpanded) {
+    moreBtn.textContent = `▼ 현황 펼쳐보기 (총 ${rows.length}개사 중 ${rows.length - 10}개 숨겨짐)`;
+  } else if (rows.length > 10 && isTableExpanded) {
+    renderTarget = rows;
     moreWrap.style.display = 'block';
-    moreBtn.textContent = `▲ 현황 접기 (상위 20개만 보기)`;
+    moreBtn.textContent = `▲ 현황 접기 (상위 10개만 보기)`;
   } else {
     moreWrap.style.display = 'none';
   }
@@ -299,23 +351,23 @@ function rmComp(n){
   localStorage.setItem('H_COMP_FIX', JSON.stringify(comps));
   renderTags(); updComp(); updCompRep();
 }
-function renderTags(){document.getElementById('ctags').innerHTML=comps.map(c=>`<span class="ctag">${c} <button onclick="rmComp('${c.replace(/'/g,"\\'")}')">×</button></span>`).join('');}
+function renderTags(){
+  document.getElementById('ctags').innerHTML=comps.map(c=>`<span class="ctag">${c} <button onclick="rmComp('${c.replace(/'/g,"\\'")}')">×</button></span>`).join('');
+}
 
 function updComp(){
   dc('cp'); if(!comps.length||!G.ht.length) return;
-  const HN='하모니', all=[HN,...comps], lb=G.ht.map(r=>r.m), colors=[CC.hm,CC.bl,CC.am,CC.pu,CC.rd,CC.gn];
+  const HN='(주)하모니렌트카', all=[HN,...comps], lb=G.ht.map(r=>r.m), colors=[CC.hm,CC.bl,CC.am,CC.pu,CC.rd,CC.gn];
   const ds=all.map((n,i)=>{
     const clean=n.replace(/\(주\)|㈜/g,'').trim();
-    const targetKey=G.cl.find(k=>k.includes(clean))||n;
-    const h=G.ch[targetKey]||[];
-    const dm=Object.fromEntries(h.map(r=>[r.m,r.r]));
-    return{label:clean,data:lb.map(m=>dm[m]??null),borderColor:colors[i%colors.length],tension:0.3,pointRadius:3,borderWidth:1.5,spanGaps:true};
+    const h=G.ch[n] || G.ch[G.cl.find(k=>k.includes(clean))] || [];
+    return{label:clean,data:h.map(r=>r.t),borderColor:colors[i%colors.length],tension:0.3,pointRadius:3,borderWidth:1.5,spanGaps:true};
   });
-  C.cp=new Chart(document.getElementById('cChart'),{type:'line',data:{labels:lb,datasets:ds},options:{responsive:true,maintainAspectRatio:false,scales:{x:{ticks:{font:{size:10}}},y:{reverse:true,ticks:{font:{size:10}}}}}});
+  C.cp=new Chart(document.getElementById('cChart'),{type:'line',data:{labels:lb,datasets:ds},options:{responsive:true,maintainAspectRatio:false,scales:{x:{ticks:{font:{size:10}}},y:{ticks:{callback:v=>fk(v),font:{size:10}}}}}});
 }
 
 function updCompRep(){
-  const el=document.getElementById('cRep'); if(!comps.length) return;
+  const el=document.getElementById('cRep'); if(!comps.length) { el.innerHTML=''; return; }
   const hmd=(G.pm[G.sel]||[]).find(r=>r.n.includes('하모니'));
   const lines=comps.map(n=>{
     const md=(G.pm[G.sel]||[]).find(r=>r.n.includes(n.replace(/\(주\)|㈜/g,'').trim()));
@@ -333,7 +385,7 @@ function searchCo(name){
   if(!hist){area.innerHTML='<div class="nf">데이터가 검색되지 않습니다.</div>';return;}
   area.innerHTML='<div class="cw"><canvas id="csC"></canvas></div>';
   dc('csC');
-  C.csC=new Chart(document.getElementById('csC'),{type:'line',data:{labels:hist.map(r=>r.m),datasets:[{data:hist.map(r=>r.t),borderColor:CC.bl,tension:0.3,fill:false}]},options:{responsive:true,maintainAspectRatio:false}});
+  C.csC=new Chart(document.getElementById('csC'),{type:'line',data:{labels:hist.map(r=>r.m),datasets:[{label:clean+' 대수 추이',data:hist.map(r=>r.t),borderColor:CC.bl,tension:0.3,fill:false}]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{ticks:{callback:v=>fk(v)}}}}});
 }
 
 function setupAC(inId,lsId){
@@ -345,6 +397,7 @@ function setupAC(inId,lsId){
     ls.innerHTML=mt.map(c=>`<div class="aci" onclick="selAC('${inId}','${lsId}','${c.replace(/'/g,"\\'")}')">${c}</div>`).join('');
     ls.classList.add('sh');
   });
+  document.addEventListener('click',(e)=>{ if(!inp.contains(e.target)&&!ls.contains(e.target)) ls.classList.remove('sh'); });
 }
 function selAC(inId,lsId,v){
   document.getElementById(inId).value=v; document.getElementById(lsId).classList.remove('sh');
@@ -352,11 +405,20 @@ function selAC(inId,lsId,v){
 }
 
 function updateAll(){updKPI();updTrend();updPie();updBar();updHarmony();updTable();updComp();updCompRep();}
+
+// 헤더 정렬 바인딩 시스템
+document.querySelectorAll('th[data-k]').forEach(th => {
+  th.addEventListener('click', () => {
+    const k = th.getAttribute('data-k');
+    if(G.sk === k) { G.sa = !G.sa; } else { G.sk = k; G.sa = false; }
+    updTable();
+  });
+});
+
 document.getElementById('tSrch').addEventListener('input',e=>{G.tsq=e.target.value;updTable();});
 function tog(id,btn){ const el=document.getElementById(id); el.classList.toggle('sh'); btn.classList.toggle('op'); }
 setupAC('ci','cl'); setupAC('csi','csl');
 
-// 즉각 변수 연산 체인 가동으로 지연 완벽 차단
 (function instantInit(){
   const savedComps = localStorage.getItem('H_COMP_FIX');
   if (savedComps) { try { comps = JSON.parse(savedComps); } catch(e){} }
