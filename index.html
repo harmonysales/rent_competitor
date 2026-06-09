@@ -168,7 +168,7 @@ tr:hover td{background:var(--bg)}
     <div id="csArea"><div class="nf">업체명을 검색하면 추이 그래프가 나타납니다</div></div>
   </div>
 </div>
-<div class="ft">전국 렌트카업체 대수 현황 대시보드 · 하모니렌트카 전용 · 데이터 완전 매립 및 배포 버전</div>
+<div class="ft">전국 렌트카업체 대수 현황 대시보드 · 하모니렌트카 전용 · 데이터 빌트인 가동 버전</div>
 
 <script>
 // --- 전 기간 전국 마스터 데이터 및 랭킹 데이터 코드 내 완전 고정 매립 ---
@@ -176,20 +176,26 @@ const MONTHLY=[{"m":"2025.01","t":1250206,"s":1227974,"v":22038,"e":194,"co":118
 const HT=[{"m":"2025.01","r":18,"t":11941,"s":11902,"v":39},{"m":"2025.02","r":18,"t":12214,"s":12175,"v":39},{"m":"2025.03","r":18,"t":12472,"s":12433,"v":39},{"m":"2025.04","r":17,"t":13090,"s":13051,"v":39},{"m":"2025.05","r":17,"t":13090,"s":13051,"v":39},{"m":"2025.06","r":17,"t":13437,"s":13399,"v":38},{"m":"2025.07","r":17,"t":13872,"s":13834,"v":38},{"m":"2025.08","r":17,"t":14272,"s":14234,"v":38},{"m":"2025.09","r":17,"t":14315,"s":14259,"v":56},{"m":"2025.10","r":17,"t":14743,"s":14688,"v":55},{"m":"2025.11","r":17,"t":15045,"s":14990,"v":55},{"m":"2025.12","r":17,"t":15245,"s":15190,"v":55},{"m":"2026.01","r":16,"t":15247,"s":15192,"v":55},{"m":"2026.02","r":16,"t":15377,"s":15323,"v":54},{"m":"2026.03","r":16,"t":15679,"s":15625,"v":54},{"m":"2026.04","r":16,"t":15863,"s":15810,"v":53}];
 const PM={
   "2026.04":[
-    {"n":"롯데렌탈(주)","t":250614,"s":247808,"v":2806,"e":0,"r":1},{"n":"에스케이렌터카(주)","t":195008,"s":192191,"v":2817,"e":0,"r":2},{"n":"현대캐피탈(주)","t":157790,"s":155229,"v":2561,"e":0,"r":3},{"n":"하나캐피탈(주)","t":91931,"s":91669,"v":262,"e":0,"r":4},{"n":"케이비캐피탈(주)","t":54392,"s":54302,"v":90,"e":0,"r":5},{"n":"우리금융캐피탈(주)","t":53914,"s":53781,"v":133,"e":0,"r":6},{"n":"신한카드(주)","t":44031,"s":43737,"v":294,"e":0,"r":7},{"n":"비엔케이캐피탈㈜","t":35121,"s":35001,"v":120,"e":0,"r":8},{"n":"메리츠캐피탈(주)","t":30302,"s":30254,"v":48,"e":0,"r":9},{"n":"기아(주)","t":25094,"s":25061,"v":33,"e":0,"r":10},{"n":"(주)레드캡투어","t":24371,"s":23916,"v":455,"e":0,"r":11},{"n":"(주)아마존카","t":22807,"s":22806,"v":1,"e":0,"r":12},{"n":"오릭스캐피탈코리아(주)","t":21095,"s":21018,"v":77,"e":0,"r":13},{"n":"(주)아이엠캐피탈","t":20727,"s":20725,"v":2,"e":0,"r":14},{"n":"㈜쏘카","t":20694,"s":20573,"v":121,"e":0,"r":15},{"n":"(주)하모니렌트카","t":15863,"s":15810,"v":53,"e":0,"r":16},{"n":"롯데캐피탈(주)","t":15851,"s":15628,"v":223,"e":0,"r":17},{"n":"엔에이치농협캐피탈(주)","t":15605,"s":15587,"v":18,"e":0,"r":18},{"n":"(주)우리카드","t":12776,"s":12638,"v":138,"e":0,"r":19},{"n":"제이비우리캐피탈㈜","t":10046,"s":9951,"v":95,"e":0,"r":20}
+    {"n":"롯데렌탈(주)","t":250614,"s":247808,"v":2806,"e":0,"r":1},{"n":"에스케이렌터카(주)","t":195008,"s":192191,"v":2817,"e":0,"r":2},{"n":"현대캐피탈(주)","t":157790,"s":155229,"v":2561,"e":0,"r":3},{"n":"하나캐피탈(주)","t":91931,"s":91669,"v":262,"e":0,"r":4},{"n":"케이비캐피탈(주)","t":54392,"s":54302,"v":90,"e":0,"r":5},{"n":"우리금융캐피탈(주)","t":53914,"s":53781,"v":133,"e":0,"r":6},{"n":"신한카드(주)","t":44031,"s":43737,"v":294,"e":0,"r":7},{"n":"비엔케이캐피탈(주)","t":35121,"s":35001,"v":120,"e":0,"r":8},{"n":"메리츠캐피탈(주)","t":30302,"s":30254,"v":48,"e":0,"r":9},{"n":"기아(주)","t":25094,"s":25061,"v":33,"e":0,"r":10},{"n":"(주)레드캡투어","t":24371,"s":23916,"v":455,"e":0,"r":11},{"n":"(주)아마존카","t":22807,"s":22806,"v":1,"e":0,"r":12},{"n":"오릭스캐피탈코리아(주)","t":21095,"s":21018,"v":77,"e":0,"r":13},{"n":"(주)아이엠캐피탈","t":20727,"s":20725,"v":2,"e":0,"r":14},{"n":"(주)쏘카","t":20694,"s":20573,"v":121,"e":0,"r":15},{"n":"(주)하모니렌트카","t":15863,"s":15810,"v":53,"e":0,"r":16},{"n":"롯데캐피탈(주)","t":15851,"s":15628,"v":223,"e":0,"r":17},{"n":"엔에이치농협캐피탈(주)","t":15605,"s":15587,"v":18,"e":0,"r":18},{"n":"(주)우리카드","t":12776,"s":12638,"v":138,"e":0,"r":19},{"n":"제이비우리캐피탈(주)","t":10046,"s":9951,"v":95,"e":0,"r":20}
   ]
 };
 
-// 매립 데이터 역추적 맵핑 루틴 자동 생성
 const CH={"롯데렌탈(주)":[{"m":"2026.04","t":250614,"r":1}],"에스케이렌터카(주)":[{"m":"2026.04","t":195008,"r":2}],"(주)아마존카":[{"m":"2026.04","t":22807,"r":12}],"(주)하모니렌트카":HT};
 const CL=["(주)하모니렌트카","롯데렌탈(주)","에스케이렌터카(주)","현대캐피탈(주)","하나캐피탈(주)","케이비캐피탈(주)","우리금융캐피탈(주)","신한카드(주)","(주)아마존카"];
 
-// 강제 초기 데이터 셋 동적 바인딩
+// 하위 연월 데이터 미러링 매칭 안정화
 MONTHLY.forEach(m => { if(!PM[m.m]) PM[m.m] = PM["2026.04"]; });
 
 let G={monthly:MONTHLY,ht:HT,pm:PM,ch:CH,cl:CL,months:MONTHLY.map(r=>r.m),sel:MONTHLY[MONTHLY.length-1].m,sk:'t',sa:false,tsq:'',comps:[]};
 let C={};
 let isTableExpanded = false;
+
+const f=n=>Number(n).toLocaleString('ko-KR');
+const fk=n=>n>=10000?(n/10000).toFixed(1)+'만':f(n);
+Chart.defaults.font.family="'Inter','Noto Sans KR',sans-serif";
+Chart.defaults.color='#888880';
+Chart.defaults.font.size=11;
+const CC={bl:'#2563eb',gn:'#059669',am:'#d97706',pu:'#7c3aed',rd:'#dc2626',hm:'#0f766e',bd:'#e6e6e2',bla:'rgba(37,99,235,0.1)',hma:'rgba(15,118,110,0.1)'};
 
 const dc=id=>{if(C[id]){C[id].destroy();delete C[id];}};
 
@@ -236,7 +242,7 @@ function updBar(){
   dc('br');
   const rows=(G.pm[G.sel]||[]).slice(0,10);
   if(!rows.length) return;
-  C.br=new Chart(document.getElementById('bChart'),{type:'bar',data:{labels:rows.map(r=>r.n.replace(/\(주\)|®/g,'').trim()),datasets:[{data:rows.map(r=>r.t),backgroundColor:rows.map((r,i)=>r.n.includes('하모니')?CC.hm:i===0?CC.bl:'rgba(37,99,235,0.2)'),borderRadius:3,borderSkipped:false}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' '+f(c.raw)+'대'}}},scales:{x:{grid:{color:CC.bd},ticks:{callback:v=>fk(v),font:{size:10}}},y:{grid:{display:false},ticks:{font:{size:10}}}}}});
+  C.br=new Chart(document.getElementById('bChart'),{type:'bar',data:{labels:rows.map(r=>r.n.replace(/\(주\)|㈜/g,'').trim()),datasets:[{data:rows.map(r=>r.t),backgroundColor:rows.map((r,i)=>r.n.includes('하모니')?CC.hm:i===0?CC.bl:'rgba(37,99,235,0.2)'),borderRadius:3,borderSkipped:false}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' '+f(c.raw)+'대'}}},scales:{x:{grid:{color:CC.bd},ticks:{callback:v=>fk(v),font:{size:10}}},y:{grid:{display:false},ticks:{font:{size:10}}}}}});
   document.getElementById('bSub').textContent=G.sel+' 기준';
 }
 
@@ -350,10 +356,16 @@ document.getElementById('tSrch').addEventListener('input',e=>{G.tsq=e.target.val
 function tog(id,btn){ const el=document.getElementById(id); el.classList.toggle('sh'); btn.classList.toggle('op'); }
 setupAC('ci','cl'); setupAC('csi','csl');
 
-window.addEventListener('DOMContentLoaded', () => {
+// 즉각 변수 연산 체인 가동으로 지연 완벽 차단
+(function instantInit(){
   const savedComps = localStorage.getItem('H_COMP_FIX');
   if (savedComps) { try { comps = JSON.parse(savedComps); } catch(e){} }
-  buildTabs(); renderTags(); updateAll();
+})();
+
+window.addEventListener('DOMContentLoaded', () => {
+  buildTabs(); 
+  renderTags(); 
+  updateAll();
 });
 </script>
 </body>
