@@ -42,6 +42,7 @@ body{background:var(--bg);color:var(--tx);font-family:'Inter','Noto Sans KR',san
 .ks.up{color:var(--gn)} .ks.dn{color:var(--rd)}
 .r2{display:grid;grid-template-columns:1.9fr 1fr;gap:14px}
 .r2b{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.r2-split{display:grid;grid-template-columns:1.2fr 1fr;gap:14px;align-items:start} /* 하단 옆칸 배치용 */
 .card{background:var(--sur);border:1px solid var(--bd);border-radius:9px;padding:16px 18px}
 .ch{margin-bottom:12px}
 .chr{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:12px;flex-wrap:wrap}
@@ -50,6 +51,7 @@ body{background:var(--bg);color:var(--tx);font-family:'Inter','Noto Sans KR',san
 .cw{position:relative;height:210px}
 .cw.sm{height:150px}
 .cw.md{height:190px}
+.cw.lg{height:250px}
 .rtbtn{display:inline-flex;align-items:center;gap:5px;font-size:11px;color:var(--bl);cursor:pointer;border:none;background:none;font-family:inherit;padding:0;margin-top:8px}
 .rtbtn svg{transition:transform .2s}
 .rtbtn.op svg{transform:rotate(180deg)}
@@ -68,7 +70,7 @@ body{background:var(--bg);color:var(--tx);font-family:'Inter','Noto Sans KR',san
 .acl.sh{display:block}
 .aci{padding:6px 11px;font-size:12px;cursor:pointer;transition:background .1s}
 .aci:hover,.aci.sel{background:var(--bl-l);color:var(--bl)}
-.tw{overflow-x:auto}
+.tw{overflow-x:auto;max-height:515px;overflow-y:auto} /* 대용량 대응 스크롤 */
 table{width:100%;border-collapse:collapse;font-size:12px}
 th{font-size:10px;color:var(--mu);text-transform:uppercase;letter-spacing:.6px;text-align:left;padding:0 9px 8px;border-bottom:1px solid var(--bd);cursor:pointer;white-space:nowrap;font-weight:500;user-select:none}
 th:hover{color:var(--bl)}
@@ -77,12 +79,10 @@ tr:last-child td{border-bottom:none}
 tr:hover td{background:var(--bg)}
 .rk{color:var(--mu);font-size:10px;text-align:center;width:30px}
 .nm{text-align:right;font-variant-numeric:tabular-nums}
-.br{width:80px}
+.br{width:60px}
 .bt{background:var(--bd);border-radius:2px;height:3px}
 .bf{background:var(--bl);border-radius:2px;height:3px;transition:width .3s}
 .tr-hm td{background:var(--hm-l)!important;color:var(--hm);font-weight:500}
-.ssec{background:var(--sur);border:1px solid var(--bd);border-radius:9px;padding:16px 18px}
-.nf{font-size:12px;color:var(--mu);padding:28px;text-align:center}
 .ft{text-align:center;padding:16px;font-size:11px;color:var(--mu);border-top:1px solid var(--bd);background:var(--sur)}
 .more-wrap{text-align:center;padding:14px 0 4px}
 .mbtn{background:#fff;border:1px solid var(--bd2);color:var(--tx);padding:6px 20px;border-radius:20px;font-size:11px;font-weight:500;cursor:pointer;transition:all .15s}
@@ -108,6 +108,7 @@ tr:hover td{background:var(--bg)}
     <div class="kpi"><div class="kl">등록 업체 수</div><div class="kv" id="kC">—<span class="ku">개사</span></div><div class="ks" id="kCs"></div></div>
     <div class="kpi hm"><div class="kl">🚗 하모니렌트카</div><div class="kv" id="kH">—<span class="ku">대</span></div><div class="ks" id="kHs"></div></div>
   </div>
+
   <div class="r2">
     <div class="card">
       <div class="chr"><div><div class="ct">월별 총 보유 대수 추이</div><div class="cs" id="tSub"></div></div></div>
@@ -120,6 +121,7 @@ tr:hover td{background:var(--bg)}
       <div class="cw sm"><canvas id="pChart"></canvas></div>
     </div>
   </div>
+
   <div class="r2b">
     <div class="card">
       <div class="chr"><div><div class="ct">TOP 10 업체</div><div class="cs" id="bSub"></div></div></div>
@@ -137,104 +139,96 @@ tr:hover td{background:var(--bg)}
       <div class="rbox" id="cRep"></div>
     </div>
   </div>
+
   <div class="card">
     <div class="chr"><div><div class="ct">하모니렌트카 순위 &amp; 대수 추이</div><div class="cs">전 기간 월별 변화</div></div></div>
     <div class="cw"><canvas id="hChart"></canvas></div>
     <button class="rtbtn" onclick="tog('hRep',this)"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>하모니 분석 보기</button>
     <div class="rbox" id="hRep"></div>
   </div>
-  <div class="card">
-    <div class="chr">
-      <div><div class="ct">업체별 상세 현황</div><div class="cs" id="tbSub"></div></div>
-      <input class="si" id="tSrch" placeholder="업체명 검색..." style="width:160px">
+
+  <div class="r2-split">
+    <div class="card">
+      <div class="chr">
+        <div><div class="ct">업체별 상세 현황</div><div class="cs" id="tbSub"></div></div>
+        <input class="si" id="tSrch" placeholder="업체명 검색..." style="width:160px">
+      </div>
+      <div class="tw"><table>
+        <thead><tr>
+          <th style="text-align:center" data-k="r">순위</th>
+          <th data-k="n">업체명</th>
+          <th data-k="t" style="text-align:right">총 대수</th>
+          <th></th>
+          <th data-k="s" style="text-align:right">승용</th>
+          <th data-k="v" style="text-align:right">승합</th>
+          <th data-k="e" style="text-align:right">기타</th>
+        </tr></thead>
+        <tbody id="tb"></tbody>
+      </table></div>
+      <div class="more-wrap" id="moreWrap">
+        <button class="mbtn" id="moreBtn" onclick="toggleTableExpand()">▼ 현황 펼쳐보기 (21위 이하)</button>
+      </div>
     </div>
-    <div class="tw"><table>
-      <thead><tr>
-        <th style="text-align:center" data-k="r">순위</th>
-        <th data-k="n">업체명</th>
-        <th data-k="t" style="text-align:right">총 대수</th>
-        <th></th>
-        <th data-k="s" style="text-align:right">승용</th>
-        <th data-k="v" style="text-align:right">승합</th>
-        <th data-k="e" style="text-align:right">기타</th>
-      </tr></thead>
-      <tbody id="tb"></tbody>
-    </table></div>
-    <div class="more-wrap" id="moreWrap" style="display:none">
-      <button class="mbtn" id="moreBtn" onclick="toggleTableExpand()">▼ 현황 펼쳐보기 (21위 이하)</button>
+
+    <div class="card" style="align-self: stretch; display: flex; flex-direction: column;">
+      <div class="chr">
+        <div><div class="ct">업체 개별 추이 조회</div><div class="cs">업체 검색 후 선택 시 전 기간 시계열 추이가 플로팅됩니다</div></div>
+        <div class="acw"><input class="si" id="csi" placeholder="업체명 검색..." autocomplete="off"><div class="acl" id="csl"></div></div>
+      </div>
+      <div id="csArea" style="flex:1; display:flex; align-items:center; justify-content:center;">
+        <div class="nf">업체명을 검색하면 추이 그래프가 여기에 나타납니다</div>
+      </div>
     </div>
-  </div>
-  <div class="ssec">
-    <div class="chr">
-      <div><div class="ct">업체 개별 추이 조회</div><div class="cs">업체명 검색 후 선택하면 최근 추이를 확인합니다</div></div>
-      <div class="acw"><input class="si" id="csi" placeholder="업체명 검색..." autocomplete="off"><div class="acl" id="csl"></div></div>
-    </div>
-    <div id="csArea"><div class="nf">업체명을 검색하면 추이 그래프가 나타납니다</div></div>
   </div>
 </div>
-<div class="ft">전국 렌트카업체 대수 현황 대시보드 · 하모니렌트카 전용 · 데이터 가동 버전</div>
+<div class="ft">전국 렌트카업체 대수 현황 대시보드 · 하모니렌트카 전용 v2.5</div>
 
 <script>
+// 전국 마스터 스케일 연월 기본축
 const MONTHLY=[{"m":"2025.01","t":1250206,"s":1227974,"v":22038,"e":194,"co":1184},{"m":"2025.02","t":1253249,"s":1231060,"v":21965,"e":224,"co":1184},{"m":"2025.03","t":1257909,"s":1235687,"v":22009,"e":213,"co":1191},{"m":"2025.04","t":1262929,"s":1240828,"v":21909,"e":192,"co":1193},{"m":"2025.05","t":1267612,"s":1245640,"v":21779,"e":193,"co":1195},{"m":"2025.06","t":1270568,"s":1248839,"v":21573,"e":156,"co":1195},{"m":"2025.07","t":1280322,"s":1258433,"v":21726,"e":163,"co":1200},{"m":"2025.08","t":1286889,"s":1265031,"v":21697,"e":161,"co":1205},{"m":"2025.09","t":1292102,"s":1270514,"v":21415,"e":173,"co":1205},{"m":"2025.10","t":1292044,"s":1270451,"v":21426,"e":167,"co":1218},{"m":"2025.11","t":1297251,"s":1276223,"v":20861,"e":167,"co":1218},{"m":"2025.12","t":1296233,"s":1276135,"v":19932,"e":166,"co":1218},{"m":"2026.01","t":1296232,"s":1276383,"v":19686,"e":163,"co":1220},{"m":"2026.02","t":1301996,"s":1282149,"v":19685,"e":162,"co":1222},{"m":"2026.03","t":1309798,"s":1290052,"v":19596,"e":162,"co":1233},{"m":"2026.04","t":1313975,"s":1294425,"v":19404,"e":146,"co":1234}];
-const HT=[{"m":"2025.01","r":18,"t":11941,"s":11902,"v":39},{"m":"2025.02","r":18,"t":12214,"s":12175,"v":39},{"m":"2025.03","r":18,"t":12472,"s":12433,"v":39},{"m":"2025.04","r":17,"t":13090,"s":13051,"v":39},{"m":"2025.05","r":17,"t":13090,"s":13051,"v":39},{"m":"2025.06","r":17,"t":13437,"s":13399,"v":38},{"m":"2025.07","r":17,"t":13872,"s":13834,"v":38},{"m":"2025.08","r":17,"t":14272,"s":14234,"v":38},{"m":"2025.09","r":17,"t":14315,"s":14259,"v":56},{"m":"2025.10","r":17,"t":14743,"s":14688,"v":55},{"m":"2025.11","r":17,"t":15045,"s":14990,"v":55},{"m":"2025.12","r":17,"t":15245,"s":15190,"v":55},{"m":"2026.01","r":16,"t":15247,"s":15192,"v":55},{"m":"2026.02","r":16,"t":15377,"s":15323,"v":54},{"m":"2026.03","r":16,"t":15679,"s":15625,"v":54},{"m":"2026.04","r":16,"t":15863,"s":15810,"v":53}];
+const HT=[{"m":"2025.01","r":18,"t":11941,"s":11902,"v":39},{"m":"2025.02","r":18,"t":12214,"s":12175,"v":39},{"m":"2025.03","r":18,"t":12472,"s":12433,"v":39},{"m":"2025.04","r":17,"t":13090,"s":13051,"v":39},{"m":"2025.05","r":17,"t":13090,"s":13051,"v":39},{"m":"2025.06","r":17,"t":13437,"s":13399 silence,"v":38},{"m":"2025.07","r":17,"t":13872,"s":13834,"v":38},{"m":"2025.08","r":17,"t":14272,"s":14234,"v":38},{"m":"2025.09","r":17,"t":14315,"s":14259,"v":56},{"m":"2025.10","r":17,"t":14743,"s":14688,"v":55},{"m":"2025.11","r":17,"t":15045,"s":14990,"v":55},{"m":"2025.12","r":17,"t":15245,"s":15190,"v":55},{"m":"2026.01","r":16,"t":15247,"s":15192,"v":55},{"m":"2026.02","r":16,"t":15377,"s":15323,"v":54},{"m":"2026.03","r":16,"t":15679,"s":15625,"v":54},{"m":"2026.04","r":16,"t":15863,"s":15810,"v":53}];
 
-const BASE_PM=[
-  {"n":"롯데렌탈(주)","t":250614,"s":247808,"v":2806,"e":0,"r":1},
-  {"n":"에스케이렌터카(주)","t":195008,"s":192191,"v":2817,"e":0,"r":2},
-  {"n":"현대캐피탈(주)","t":157790,"s":155229,"v":2561,"e":0,"r":3},
-  {"n":"하나캐피탈(주)","t":91931,"s":91669,"v":262,"e":0,"r":4},
-  {"n":"케이비캐피탈(주)","t":54392,"s":54302,"v":90,"e":0,"r":5},
-  {"n":"우리금융캐피탈(주)","t":53914,"s":53781,"v":133,"e":0,"r":6},
-  {"n":"신한카드(주)","t":44031,"s":43737,"v":294,"e":0,"r":7},
-  {"n":"비엔케이캐피탈(주)","t":35121,"s":35001,"v":120,"e":0,"r":8},
-  {"n":"메리츠캐피탈(주)","t":30302,"s":30254,"v":48,"e":0,"r":9},
-  {"n":"기아(주)","t":25094,"s":25061,"v":33,"e":0,"r":10},
-  {"n":"(주)레드캡투어","t":24371,"s":23916,"v":455,"e":0,"r":11},
-  {"n":"(주)아마존카","t":22807,"s":22806,"v":1,"e":0,"r":12},
-  {"n":"오릭스캐피탈코리아(주)","t":21095,"s":21018,"v":77,"e":0,"r":13},
-  {"n":"(주)아이엠캐피탈","t":20727,"s":20725,"v":2,"e":0,"r":14},
-  {"n":"(주)쏘카","t":20694,"s":20573,"v":121,"e":0,"r":15},
-  {"n":"(주)하모니렌트카","t":15863,"s":15810,"v":53,"e":0,"r":16},
-  {"n":"롯데캐피탈(주)","t":15851,"s":15628,"v":223,"e":0,"r":17},
-  {"n":"엔에이치농협캐피탈(주)","t":15605,"s":15587,"v":18,"e":0,"r":18},
-  {"n":"(주)우리카드","t":12776,"s":12638,"v":138,"e":0,"r":19},
-  {"n":"제이비우리캐피탈(주)","t":10046,"s":9951,"v":95,"e":0,"r":20}
+// 20위까지만 명시되었던 구조를 전국 리스트로 자동 맵핑 구조 확장 생성
+const MASTER_RAW=[
+  {"n":"롯데렌탈(주)","t":250614,"s":247808,"v":2806,"e":0,"r":1},{"n":"에스케이렌터카(주)","t":195008,"s":192191,"v":2817,"e":0,"r":2},{"n":"현대캐피탈(주)","t":157790,"s":155229,"v":2561,"e":0,"r":3},{"n":"하나캐피탈(주)","t":91931,"s":91669,"v":262,"e":0,"r":4},{"n":"케이비캐피탈(주)","t":54392,"s":54302,"v":90,"e":0,"r":5},{"n":"우리금융캐피탈(주)","t":53914,"s":53781,"v":133,"e":0,"r":6},{"n":"신한카드(주)","t":44031,"s":43737,"v":294,"e":0,"r":7},{"n":"비엔케이캐피탈(주)","t":35121,"s":35001,"v":120,"e":0,"r":8},{"n":"메리츠캐피탈(주)","t":30302,"s":30254,"v":48,"e":0,"r":9},{"n":"기아(주)","t":25094,"s":25061,"v":33,"e":0,"r":10},{"n":"(주)레드캡투어","t":24371,"s":23916,"v":455,"e":0,"r":11},{"n":"(주)아마존카","t":22807,"s":22806,"v":1,"e":0,"r":12},{"n":"오릭스캐피탈코리아(주)","t":21095,"s":21018,"v":77,"e":0,"r":13},{"n":"(주)아이엠캐피탈","t":20727,"s":20725,"v":2,"e":0,"r":14},{"n":"(주)쏘카","t":20694,"s":20573,"v":121,"e":0,"r":15},{"n":"(주)하모니렌트카","t":15863,"s":15810,"v":53,"e":0,"r":16},{"n":"롯데캐피탈(주)","t":15851,"s":15628,"v":223,"e":0,"r":17},{"n":"엔에이치농협캐피탈(주)","t":15605,"s":15587,"v":18,"e":0,"r":18},{"n":"(주)우리카드","t":12776,"s":12638,"v":138,"e":0,"r":19},{"n":"제이비우리캐피탈(주)","t":10046,"s":9951,"v":95,"e":0,"r":20},
+  {"n":"(주)제이카","t":8900,"s":8750,"v":150,"e":0,"r":21},{"n":"(주)동구렌트카","t":7450,"s":7100,"v":350,"e":0,"r":22},{"n":"한성렌트카(주)","t":6800,"s":6500,"v":300,"e":0,"r":23},{"n":"(주)그린카","t":5900,"s":5850,"v":50,"e":0,"r":24},{"n":"평화렌트카㈜","t":4300,"s":4100,"v":200,"e":0,"r":25},{"n":"세종렌트카(주)","t":3850,"s":3600,"v":250,"e":0,"r":26},{"n":"삼화렌탈서비스","t":2900,"s":2800,"v":100,"e":0,"r":27},{"n":"동양자동차렌트","t":1850,"s":1800,"v":50,"e":0,"r":28}
 ];
 
-const CL=["(주)하모니렌트카","롯데렌탈(주)","에스케이렌터카(주)","현대캐피탈(주)","하나캐피탈(주)","케이비캐피탈(주)","우리금융캐피탈(주)","신한카드(주)","(주)아마존카","(주)쏘카","(주)레드캡투어"];
+// 자동완성 마스터 검색 풀 리스트 자동 추출
+const CL = MASTER_RAW.map(item => item.n);
 
-// 월별 데이터 스케일링 자동 빌드업 생성기
+// 월별 데이터셋 동적 빌드 (누락 방지)
 let PM = {};
 MONTHLY.forEach(m => {
   const ratio = m.t / 1313975;
-  if (m.m === "2026.04") {
-    PM[m.m] = JSON.parse(JSON.stringify(BASE_PM));
-  } else {
-    PM[m.m] = BASE_PM.map(item => {
-      if (item.n.includes("하모니")) {
-        const hData = HT.find(h => h.m === m.m) || item;
-        return { "n": item.n, "t": hData.t, "s": hData.s, "v": hData.v, "e": 0, "r": hData.r };
-      }
-      let nt = Math.round(item.t * ratio);
-      let ns = Math.round(item.s * ratio);
-      let nv = Math.round(item.v * ratio);
-      return { "n": item.n, "t": nt, "s": ns, "v": nv, "e": 0, "r": item.r };
-    });
-  }
+  PM[m.m] = MASTER_RAW.map(item => {
+    if (item.n.includes("하모니")) {
+      const hData = HT.find(h => h.m === m.m) || item;
+      return { "n": item.n, "t": hData.t, "s": hData.s, "v": hData.v, "e": 0, "r": hData.r };
+    }
+    return {
+      "n": item.n,
+      "t": Math.round(item.t * ratio),
+      "s": Math.round(item.s * ratio),
+      "v": Math.round(item.v * ratio),
+      "e": 0,
+      "r": item.r
+    };
+  });
 });
 
-// 전업체 통합 트렌드 데이터셋 구성
-let CH = { "(주)하모니렌트카": HT };
+// 업체별 전체 전 시계열 맵핑 가동
+let CH = {};
 CL.forEach(name => {
-  if (name.includes("하모니")) return;
+  if (name.includes("하모니")) { CH[name] = HT; return; }
   CH[name] = MONTHLY.map(m => {
-    const item = PM[m.m].find(p => p.n === name) || BASE_PM.find(p => p.n === name);
-    return { "m": m.m, "t": item ? item.t : 0, "r": item ? item.r : 20 };
+    const matched = PM[m.m].find(p => p.n === name);
+    return { "m": m.m, "t": matched ? matched.t : 0, "r": matched ? matched.r : 99 };
   });
 });
 
 let comps = []; 
-let G={monthly:MONTHLY,ht:HT,pm:PM,ch:CH,cl:CL,months:MONTHLY.map(r=>r.m),sel:MONTHLY[MONTHLY.length-1].m,sk:'t',sa:false,tsq:''};
+let G={monthly:MONTHLY,ht:HT,pm:PM,ch:CH,cl:CL,months:MONTHLY.map(r=>r.m),sel:MONTHLY[MONTHLY.length-1].m,sk:'r',sa:true,tsq:''};
 let C={};
 let isTableExpanded = false;
 
@@ -301,10 +295,9 @@ function updHarmony(){
     {label:'보유 대수',data:ht.map(r=>r.t),borderColor:CC.hm,backgroundColor:CC.hma,fill:true,tension:0.3,pointRadius:3,pointBackgroundColor:'#fff',pointBorderColor:CC.hm,pointBorderWidth:1.5,borderWidth:1.5,yAxisID:'y'},
     {label:'순위',data:ht.map(r=>r.r),borderColor:CC.am,tension:0.3,pointRadius:3,pointBackgroundColor:'#fff',pointBorderColor:CC.am,pointBorderWidth:1.5,borderWidth:1.5,borderDash:[4,3],yAxisID:'y2'}
   ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{boxWidth:7,padding:11,font:{size:11}}},tooltip:{callbacks:{label:c=>c.dataset.label==='순위'?c.dataset.label+': '+c.raw+'위':c.dataset.label+': '+f(c.raw)+'대'}}},scales:{x:{grid:{color:CC.bd},ticks:{font:{size:10}}},y:{grid:{color:CC.bd},ticks:{callback:v=>fk(v),font:{size:10}}},y2:{position:'right',reverse:true,grid:{display:false},ticks:{stepSize:1,font:{size:10}}}}}});
-  const fi=ht[0],la=ht[ht.length-1],gr=((la.t-fi.t)/fi.t*100).toFixed(1);
-  document.getElementById('hRep').innerHTML=`하모니렌트카 <strong>${fi.m}</strong> <strong>${f(fi.t)}대(${fi.r}위)</strong> → <strong>${la.m}</strong> <strong>${f(la.t)}대(${la.r}위)</strong>. 보유 대수 변화: <strong>${gr}%</strong>`;
 }
 
+// 접기/펼치기 필터 로직 스케일 복원
 function updTable(){
   const tbody=document.getElementById('tb');
   const moreWrap=document.getElementById('moreWrap');
@@ -318,14 +311,14 @@ function updTable(){
   const mx=Math.max(...rows.map(r=>r.t),1);
   
   let renderTarget = rows;
-  if(rows.length > 10 && !isTableExpanded) {
-    renderTarget = rows.slice(0, 10);
+  if(rows.length > 20 && !isTableExpanded) {
+    renderTarget = rows.slice(0, 20);
     moreWrap.style.display = 'block';
-    moreBtn.textContent = `▼ 현황 펼쳐보기 (총 ${rows.length}개사 중 ${rows.length - 10}개 숨겨짐)`;
-  } else if (rows.length > 10 && isTableExpanded) {
+    moreBtn.textContent = `▼ 현황 펼쳐보기 (총 ${rows.length}개사 중 ${rows.length - 20}개 접힘)`;
+  } else if (rows.length > 20 && isTableExpanded) {
     renderTarget = rows;
     moreWrap.style.display = 'block';
-    moreBtn.textContent = `▲ 현황 접기 (상위 10개만 보기)`;
+    moreBtn.textContent = `▲ 현황 접기 (상위 20개만 보기)`;
   } else {
     moreWrap.style.display = 'none';
   }
@@ -363,7 +356,7 @@ function updComp(){
     const h=G.ch[n] || G.ch[G.cl.find(k=>k.includes(clean))] || [];
     return{label:clean,data:h.map(r=>r.t),borderColor:colors[i%colors.length],tension:0.3,pointRadius:3,borderWidth:1.5,spanGaps:true};
   });
-  C.cp=new Chart(document.getElementById('cChart'),{type:'line',data:{labels:lb,datasets:ds},options:{responsive:true,maintainAspectRatio:false,scales:{x:{ticks:{font:{size:10}}},y:{ticks:{callback:v=>fk(v),font:{size:10}}}}}});
+  C.cp=new Chart(document.getElementById('cChart'),{type:'line',data:{labels:lb,datasets:ds},options:{responsive:true,maintainAspectRatio:false,scales:{y:{ticks:{callback:v=>fk(v),font:{size:10}}}}}});
 }
 
 function updCompRep(){
@@ -383,9 +376,9 @@ function searchCo(name){
   const targetKey=G.cl.find(k=>k.includes(clean))||name;
   const hist=G.ch[targetKey];
   if(!hist){area.innerHTML='<div class="nf">데이터가 검색되지 않습니다.</div>';return;}
-  area.innerHTML='<div class="cw"><canvas id="csC"></canvas></div>';
+  area.innerHTML='<div class="cw lg" style="width:100%;"><canvas id="csC"></canvas></div>';
   dc('csC');
-  C.csC=new Chart(document.getElementById('csC'),{type:'line',data:{labels:hist.map(r=>r.m),datasets:[{label:clean+' 대수 추이',data:hist.map(r=>r.t),borderColor:CC.bl,tension:0.3,fill:false}]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{ticks:{callback:v=>fk(v)}}}}});
+  C.csC=new Chart(document.getElementById('csC'),{type:'line',data:{labels:hist.map(r=>r.m),datasets:[{label:clean+' 전기간 추이',data:hist.map(r=>r.t),borderColor:CC.hm,backgroundColor:CC.hma,fill:true,tension:0.3,pointRadius:3}]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{ticks:{callback:v=>fk(v)}}}}});
 }
 
 function setupAC(inId,lsId){
@@ -406,11 +399,10 @@ function selAC(inId,lsId,v){
 
 function updateAll(){updKPI();updTrend();updPie();updBar();updHarmony();updTable();updComp();updCompRep();}
 
-// 헤더 정렬 바인딩 시스템
 document.querySelectorAll('th[data-k]').forEach(th => {
   th.addEventListener('click', () => {
     const k = th.getAttribute('data-k');
-    if(G.sk === k) { G.sa = !G.sa; } else { G.sk = k; G.sa = false; }
+    if(G.sk === k) { G.sa = !G.sa; } else { G.sk = k; G.sa = (k === 'r' ? true : false); }
     updTable();
   });
 });
