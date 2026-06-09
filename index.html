@@ -97,7 +97,6 @@ tr:hover td{background:var(--bg)}
 .ssec{background:var(--sur);border:1px solid var(--bd);border-radius:9px;padding:16px 18px}
 .nf{font-size:12px;color:var(--mu);padding:28px;text-align:center}
 .ft{text-align:center;padding:16px;font-size:11px;color:var(--mu);border-top:1px solid var(--bd);background:var(--sur)}
-/* 더보기 버튼 스타일 */
 .more-wrap{text-align:center;padding:14px 0 4px}
 .mbtn{background:#fff;border:1px solid var(--bd2);color:var(--tx);padding:6px 20px;border-radius:20px;font-size:11px;font-weight:500;cursor:pointer;transition:all .15s}
 .mbtn:hover{border-color:var(--bl);color:var(--bl);background:var(--bl-l)}
@@ -106,16 +105,16 @@ tr:hover td{background:var(--bg)}
 <body>
 <div class="hd">
   <div><h1>전국 렌트카업체 대수 현황</h1><p>하모니렌트카 전용 대시보드 · 업체별 · 월별 · 차종별 보유 대수</p></div>
-  <span class="badge" id="latestBadge">기준: 데이터 없음</span>
+  <span class="badge" id="latestBadge">기준: 데이터 로드 중</span>
 </div>
 <div class="upbar">
   <span class="ul">데이터 업데이트</span>
   <label class="ubtn" for="fi">
     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-    전국 엑셀 파일 업로드
+    최신 엑셀 업데이트
   </label>
   <input type="file" id="fi" accept=".xlsx,.xls">
-  <span class="uh">엑셀 및 설정한 경쟁사 목록이 브라우저에 영구 보존됩니다.</span>
+  <span class="uh">기본 데이터가 내장되어 있어 파일 전송 시 다른 직원도 바로 볼 수 있습니다.</span>
   <span id="us" class="us"></span>
 </div>
 <div class="mntab">
@@ -132,7 +131,7 @@ tr:hover td{background:var(--bg)}
   </div>
   <div class="r2">
     <div class="card">
-      <div class="chr"><div><div class="ct">월별 총 보유 대수 추이</div><div class="cs" id="tSub">엑셀 데이터를 업로드해주세요</div></div></div>
+      <div class="chr"><div><div class="ct">월별 총 보유 대수 추이</div><div class="cs" id="tSub"></div></div></div>
       <div class="cw"><canvas id="tChart"></canvas></div>
       <button class="rtbtn" onclick="tog('tRep',this)"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>간단 리포트 보기</button>
       <div class="rbox" id="tRep"></div>
@@ -181,7 +180,7 @@ tr:hover td{background:var(--bg)}
       <tbody id="tb"></tbody>
     </table></div>
     <div class="more-wrap" id="moreWrap" style="display:none">
-      <button class="mbtn" id="moreBtn" onclick="toggleTableExpand()">▼ 현황 더보기 (21위 이하)</button>
+      <button class="mbtn" id="moreBtn" onclick="toggleTableExpand()">▼ 현황 펼쳐보기 (21위 이하)</button>
     </div>
   </div>
   <div class="ssec">
@@ -192,9 +191,14 @@ tr:hover td{background:var(--bg)}
     <div id="csArea"><div class="nf">업체명을 검색하면 추이 그래프가 나타납니다</div></div>
   </div>
 </div>
-<div class="ft">전국 렌트카업체 대수 현황 대시보드 · 하모니렌트카 전용 · 로컬 스토리지 최적화 세이브 버전</div>
+<div class="ft">전국 렌트카업체 대수 현황 대시보드 · 하모니렌트카 전용 · 데이터 내장형 공유 버전</div>
 
 <script>
+// --- 하모니렌트카 마스터 데이터 코드 내부 고정 매립 ---
+const BUILTIN_M=[{"m":"2025.01","t":1250206,"s":1227974,"v":22038,"e":194,"co":1184},{"m":"2025.02","t":1253249,"s":1231060,"v":21965,"e":224,"co":1184},{"m":"2025.03","t":1257909,"s":1235687,"v":22009,"e":213,"co":1191},{"m":"2025.04","t":1262929,"s":1240828,"v":21909,"e":192,"co":1193},{"m":"2025.05","t":1267612,"s":1245640,"v":21779,"e":193,"co":1195},{"m":"2025.06","t":1270568,"s":1248839,"v":21573,"e":156,"co":1195},{"m":"2025.07","t":1280322,"s":1258433,"v":21726,"e":163,"co":1200},{"m":"2025.08","t":1286889,"s":1265031,"v":21697,"e":161,"co":1205},{"m":"2025.09","t":1292102,"s":1270514,"v":21415,"e":173,"co":1205},{"m":"2025.10","t":1292044,"s":1270451,"v":21426,"e":167,"co":1218},{"m":"2025.11","t":1297251,"s":1276223,"v":20861,"e":167,"co":1218},{"m":"2025.12","t":1296233,"s":1276135,"v":19932,"e":166,"co":1218},{"m":"2026.01","t":1296232,"s":1276383,"v":19686,"e":163,"co":1220},{"m":"2026.02","t":1301996,"s":1282149,"v":19685,"e":162,"co":1222},{"m":"2026.03","t":1309798,"s":1290052,"v":19596,"e":162,"co":1233},{"m":"2026.04","t":1313975,"s":1294425,"v":19404,"e":146,"co":1234}];
+const BUILTIN_H=[{"m":"2025.01","r":18,"t":11941,"s":11902,"v":39},{"m":"2025.02","r":18,"t":12214,"s":12175,"v":39},{"m":"2025.03","r":18,"t":12472,"s":12433,"v":39},{"m":"2025.04","r":17,"t":13090,"s":13051,"v":39},{"m":"2025.05","r":17,"t":13090,"s":13051,"v":39},{"m":"2025.06","r":17,"t":13437,"s":13399,"v":38},{"m":"2025.07","r":17,"t":13872,"s":13834,"v":38},{"m":"2025.08","r":17 attach:"t",14272,"s":14234,"v":38},{"m":"2025.08","r":17,"t":14272,"s":14234,"v":38},{"m":"2025.09","r":17,"t":14315,"s":14259,"v":56},{"m":"2025.10","r":17,"t":14743,"s":14688,"v":55},{"m":"2025.11","r":17,"t":15045,"s":14990,"v":55},{"m":"2025.12","r":17,"t":15245,"s":15190,"v":55},{"m":"2026.01","r":16,"t":15247,"s":15192,"v":55},{"m":"2026.02","r":16,"t":15377,"s":15323,"v":54},{"m":"2026.03","r":16,"t":15679,"s":15625,"v":54},{"m":"2026.04","r":16,"t":15863,"s":15810,"v":53}];
+const BUILTIN_P={"2026.04":[{"n":"롯데렌탈(주)","t":250614,"s":247808,"v":2806,"e":0,"r":1},{"n":"에스케이렌터카(주)","t":195008,"s":192191,"v":2817,"e":0,"r":2},{"n":"현대캐피탈(주)","t":157790,"s":155229,"v":2561,"e":0,"r":3},{"n":"하나캐피탈(주)","t":91931,"s":91669,"v":262,"e":0,"r":4},{"n":"케이비캐피탈(주)","t":54392,"s":54302,"v":90,"e":0,"r":5},{"n":"우리금융캐피탈(주)","t":53914,"s":53781,"v":133,"e":0,"r":6},{"n":"신한카드(주)","t":44031,"s":43737,"v":294,"e":0,"r":7},{"n":"(주)하모니렌트카","t":15863,"s":15810,"v":53,"e":0,"r":16}]};
+
 const f=n=>Number(n).toLocaleString('ko-KR');
 const fk=n=>n>=10000?(n/10000).toFixed(1)+'만':f(n);
 Chart.defaults.font.family="'Inter','Noto Sans KR',sans-serif";
@@ -202,9 +206,9 @@ Chart.defaults.color='#888880';
 Chart.defaults.font.size=11;
 const CC={bl:'#2563eb',gn:'#059669',am:'#d97706',pu:'#7c3aed',rd:'#dc2626',hm:'#0f766e',bd:'#e6e6e2',bla:'rgba(37,99,235,0.1)',hma:'rgba(15,118,110,0.1)'};
 
-let G={monthly:[],ht:[],pm:{},ch:{},cl:[],months:[],sel:'',sk:'t',sa:false,tsq:'',comps:[]};
+let G={monthly:BUILTIN_M,ht:BUILTIN_H,pm:BUILTIN_P,ch:{},cl:[],months:BUILTIN_M.map(r=>r.m),sel:BUILTIN_M[BUILTIN_M.length-1].m,sk:'t',sa:false,tsq:'',comps:[]};
 let C={};
-let isTableExpanded = false; // 테이블 전개 상태 플래그
+let isTableExpanded = false;
 
 const dc=id=>{if(C[id]){C[id].destroy();delete C[id];}};
 
@@ -273,7 +277,6 @@ function updHarmony(){
   document.getElementById('hRep').innerHTML=`하모니렌트카 <strong>${fi.m}</strong> <strong>${f(fi.t)}대(${fi.r}위)</strong> → <strong>${la.m}</strong> <strong>${f(la.t)}대(${la.r}위)</strong>. 보유 대수 변화: <strong>${gr}%</strong>`;
 }
 
-// 렉 방지 처리된 업그레이드형 테이블 출력 기능
 function updTable(){
   const tbody=document.getElementById('tb');
   const moreWrap=document.getElementById('moreWrap');
@@ -281,7 +284,7 @@ function updTable(){
   
   let rows=(G.pm[G.sel]||[]).filter(r=>!G.tsq||r.n.includes(G.tsq));
   if(!rows.length){
-    tbody.innerHTML='<tr><td colspan="7" class="nf">검색 결과가 없거나 데이터가 비어있습니다.</td></tr>';
+    tbody.innerHTML='<tr><td colspan="7" class="nf">해당 년월 데이터 셋이 없거나 가공되지 않았습니다.</td></tr>';
     moreWrap.style.display = 'none';
     return;
   }
@@ -289,7 +292,6 @@ function updTable(){
   rows=[...rows].sort((a,b)=>{const av=a[G.sk],bv=b[G.sk];return typeof av==='string'?(G.sa?av.localeCompare(bv):bv.localeCompare(av)):(G.sa?av-bv:bv-av);});
   const mx=Math.max(...rows.map(r=>r.t),1);
   
-  // 전체 데이터가 20개보다 많을 때 접기/펼치기 활성화
   let renderTarget = rows;
   if(rows.length > 20 && !isTableExpanded) {
     renderTarget = rows.slice(0, 20);
@@ -316,10 +318,7 @@ function addComp(){
   const v=document.getElementById('ci').value.trim();
   if(!v||comps.includes(v)) return;
   comps.push(v); document.getElementById('ci').value='';
-  
-  // 경쟁사 리스트 로컬스토리지 백업
   localStorage.setItem('HARMONY_COMP_LIST', JSON.stringify(comps));
-  
   renderTags(); updComp(); updCompRep();
 }
 function rmComp(n){
@@ -380,21 +379,14 @@ function selAC(inId,lsId,v){
 }
 
 function saveToLocalStorage(data) {
-  try {
-    localStorage.setItem('HARMONY_RENT_DATA', JSON.stringify(data));
-  } catch (e) {
-    console.error('용량 초과 또는 시크릿 모드로 인한 저장 실패', e);
-  }
+  try { localStorage.setItem('HARMONY_RENT_DATA', JSON.stringify(data)); } catch (e) {}
 }
 
-// 초기화 시 엑셀과 함께 저장해둔 경쟁사 리스트도 동시 복구
 function loadFromLocalStorage() {
   const saved = localStorage.getItem('HARMONY_RENT_DATA');
   const savedComps = localStorage.getItem('HARMONY_COMP_LIST');
   
-  if (savedComps) {
-    try { comps = JSON.parse(savedComps); } catch(e){}
-  }
+  if (savedComps) { try { comps = JSON.parse(savedComps); } catch(e){} }
   
   if (saved) {
     try {
@@ -402,14 +394,12 @@ function loadFromLocalStorage() {
       const st = document.getElementById('us');
       st.className = 'us ok';
       st.style.display = 'inline-block';
-      st.textContent = `✓ 자동 로드됨 (${G.months.length}개년월 연속 가동 중)`;
-      buildTabs();
-      renderTags();
-      updateAll();
-    } catch (e) {
-      console.error(e);
-    }
+      st.textContent = `✓ 최신 사용자 엑셀 구동 중`;
+    } catch (e) {}
   }
+  buildTabs();
+  renderTags();
+  updateAll();
 }
 
 document.getElementById('fi').addEventListener('change',async e=>{
@@ -432,24 +422,19 @@ document.getElementById('fi').addEventListener('change',async e=>{
     let colV = Object.keys(firstRow).find(k => k.includes('승합'));
     let colE = Object.keys(firstRow).find(k => k.includes('기타'));
 
-    if(!colM || !colN || !colT) {
-      throw new Error('필수 항목(년월, 업체명, 총대수)에 매칭되는 컬럼을 찾을 수 없습니다.');
-    }
+    if(!colM || !colN || !colT) throw new Error('필수 항목 매칭 실패.');
 
     const rows = raw.map(r => {
       let mVal = String(r[colM]).replace(/[^0-9.]/g, '').trim();
       if(mVal.length === 6 && !mVal.includes('.')) mVal = mVal.slice(0,4) + '.' + mVal.slice(4,6);
       return {
-        m: mVal,
-        n: String(r[colN]).trim(),
+        m: mVal, n: String(r[colN]).trim(),
         t: parseInt(String(r[colT]).replace(/[^0-9]/g,'')) || 0,
         s: colS ? (parseInt(String(r[colS]).replace(/[^0-9]/g,'')) || 0) : 0,
         v: colV ? (parseInt(String(r[colV]).replace(/[^0-9]/g,'')) || 0) : 0,
         e: colE ? (parseInt(String(r[colE]).replace(/[^0-9]/g,'')) || 0) : 0
       };
     }).filter(r => r.m && r.n && r.t > 0);
-
-    if(!rows.length) throw new Error('유효한 데이터 행이 없습니다.');
 
     const mMap = {};
     rows.forEach(r => {
@@ -478,36 +463,22 @@ document.getElementById('fi').addEventListener('change',async e=>{
       if(h) htNew.push({m:md.m, r:h.r, t:h.t, s:h.s, v:h.v});
     });
 
-    G = {
-      monthly,
-      ht: htNew.sort((a,b)=>a.m.localeCompare(b.m)),
-      pm: pmNew,
-      ch: chNew,
-      cl: Object.keys(chNew).sort(),
-      months: monthly.map(r=>r.m),
-      sel: monthly[monthly.length-1].m,
-      sk: 't', sa: false, tsq: '', comps: []
-    };
+    G = { monthly, ht: htNew.sort((a,b)=>a.m.localeCompare(b.m)), pm: pmNew, ch: chNew, cl: Object.keys(chNew).sort(), months: monthly.map(r=>r.m), sel: monthly[monthly.length-1].m, sk: 't', sa: false, tsq: '', comps: [] };
 
     saveToLocalStorage(G);
-    isTableExpanded = false; // 새 파일 로드 시 테이블 뷰 초기화
-
+    isTableExpanded = false;
     buildTabs();
     updateAll();
     st.className = 'us ok';
-    st.textContent = `✓ 저장 완료 (${monthly.length}개년월 데이터 자동 영구 백업됨)`;
+    st.textContent = `✓ 새 데이터 반영 및 백업 완료`;
   } catch(err) {
-    st.className = 'us er';
-    st.textContent = '실패: ' + err.message;
-    console.error(err);
+    st.className = 'us er'; st.textContent = '실패: ' + err.message;
   }
 });
 
 function updateAll(){updKPI();updTrend();updPie();updBar();updHarmony();updTable();updComp();updCompRep();}
 document.getElementById('tSrch').addEventListener('input',e=>{G.tsq=e.target.value;updTable();});
-function tog(id,btn){
-  const el=document.getElementById(id); el.classList.toggle('sh'); btn.classList.toggle('op');
-}
+function tog(id,btn){ const el=document.getElementById(id); el.classList.toggle('sh'); btn.classList.toggle('op'); }
 setupAC('ci','cl'); setupAC('csi','csl');
 
 window.addEventListener('DOMContentLoaded', loadFromLocalStorage);
