@@ -36,8 +36,6 @@ body{background:var(--bg0);color:var(--text1);font-family:'Inter','Pretendard','
 ::-webkit-scrollbar{width:5px;height:5px}
 ::-webkit-scrollbar-track{background:var(--bg1)}
 ::-webkit-scrollbar-thumb{background:#c8d8ee;border-radius:3px}
-
-/* LAYOUT */
 .wrap{max-width:1400px;margin:0 auto;padding:16px}
 .topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid var(--border)}
 .logo{display:flex;align-items:center;gap:10px}
@@ -47,8 +45,6 @@ body{background:var(--bg0);color:var(--text1);font-family:'Inter','Pretendard','
 .month-wrap{display:flex;align-items:center;gap:8px}
 .month-wrap label{font-size:12px;color:var(--text3)}
 .month-wrap select{background:#fff;color:var(--text1);border:1px solid var(--border2);border-radius:6px;padding:6px 28px 6px 10px;font-size:13px;cursor:pointer;outline:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%237a96b8'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center}
-
-/* KPI */
 .kpi-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:16px}
 .kpi{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:14px 16px;position:relative;overflow:hidden;box-shadow:0 2px 12px rgba(34,114,217,.07)}
 .kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--blue2)}
@@ -58,18 +54,11 @@ body{background:var(--bg0);color:var(--text1);font-family:'Inter','Pretendard','
 .kpi .sub{font-size:11px;color:var(--text3);margin-top:4px}
 .kpi.harmony-card .val{color:#0d7a4e}
 .kpi-icon{position:absolute;right:12px;top:12px;font-size:20px;opacity:.15}
-
-/* GRID ROWS */
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
-.row-split{display:grid;grid-template-columns:3fr 2fr;gap:12px;margin-bottom:12px}
-
-/* PANEL */
 .panel{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:16px 18px;box-shadow:0 2px 16px rgba(34,114,217,.07),0 1px 4px rgba(0,0,0,.04)}
 .panel-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
 .panel-title{font-size:12px;font-weight:600;color:var(--text2);letter-spacing:.6px;text-transform:uppercase;display:flex;align-items:center;gap:6px}
 .panel-title::before{content:'';display:inline-block;width:3px;height:12px;background:var(--blue3);border-radius:2px}
-
-/* SEARCH AUTOCOMPLETE */
 .search-wrap{position:relative;margin-bottom:10px}
 .search-wrap input{width:100%;background:#fff;border:1px solid var(--border2);border-radius:6px;color:var(--text1);padding:7px 10px 7px 30px;font-size:12px;outline:none}
 .search-wrap input:focus{border-color:var(--blue3)}
@@ -82,8 +71,6 @@ body{background:var(--bg0);color:var(--text1);font-family:'Inter','Pretendard','
 .tag{display:flex;align-items:center;gap:4px;background:#e8f0fc;border:1px solid #2272d9;border-radius:20px;padding:3px 8px 3px 10px;font-size:11px;color:#1a5cad}
 .tag button{background:none;border:none;color:var(--text3);cursor:pointer;font-size:12px;line-height:1;padding:0}
 .tag button:hover{color:var(--text1)}
-
-/* TABLE */
 .tbl-wrap{overflow-y:auto;max-height:320px}
 table{width:100%;border-collapse:collapse;font-size:12px}
 th{font-size:10px;font-weight:600;color:var(--text3);letter-spacing:.4px;padding:7px 8px;text-align:left;border-bottom:1px solid var(--border2);position:sticky;top:0;background:#fff;white-space:nowrap}
@@ -100,19 +87,9 @@ tr.harmony-row:hover td{background:rgba(13,122,78,.06)}
 .diff-eq{color:var(--text3);font-size:11px}
 .expand-row{text-align:center;padding:8px;cursor:pointer;color:var(--text3);font-size:12px;border-top:1px solid var(--border2)}
 .expand-row:hover{color:#2272d9}
-
-/* CHARTS */
 .chart-box{position:relative}
-
-/* SIDE BY SIDE for detail + indiv */
 .detail-indiv-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
-
-/* EMPTY STATE */
 .empty{padding:24px;text-align:center;color:var(--text3);font-size:12px}
-
-/* Selected chips for comp */
-.comp-selected{font-size:11px;color:var(--text3);margin-bottom:6px}
-
 .accordion{border-top:1px solid var(--border);margin-top:12px}
 .accordion-btn{width:100%;text-align:left;background:none;border:none;color:var(--text3);font-size:11px;padding:7px 2px;cursor:pointer;display:flex;align-items:center;gap:5px;font-family:inherit}
 .accordion-btn:hover{color:var(--blue2)}
@@ -121,11 +98,33 @@ tr.harmony-row:hover td{background:rgba(13,122,78,.06)}
 .accordion-body{max-height:0;overflow:hidden;transition:max-height .35s ease;font-size:12px;color:var(--text2);line-height:1.75}
 .accordion-body.open{max-height:200px}
 .accordion-body p{padding:6px 4px 10px;color:var(--text2)}
+
+/* 연간 현황 표 */
+.annual-panel{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:16px 18px;box-shadow:0 2px 16px rgba(34,114,217,.07),0 1px 4px rgba(0,0,0,.04);margin-bottom:12px}
+.annual-tbl-outer{overflow-x:auto;transition:max-height .4s ease;max-height:none}
+.annual-tbl-outer.collapsed{max-height:340px;overflow-y:hidden}
+#annualTable{width:max-content;min-width:100%;border-collapse:collapse;font-size:12px}
+#annualTable th{font-size:10px;font-weight:600;color:var(--text3);letter-spacing:.4px;padding:7px 10px;text-align:right;border-bottom:1px solid var(--border2);position:sticky;top:0;background:#fff;white-space:nowrap}
+#annualTable th:first-child{text-align:left;position:sticky;left:0;z-index:2;background:#fff}
+#annualTable td{padding:6px 10px;border-bottom:1px solid rgba(50,100,160,.1);color:var(--text2);white-space:nowrap;text-align:right}
+#annualTable td:first-child{text-align:left;position:sticky;left:0;background:#fff;z-index:1;color:var(--text1);font-weight:500}
+#annualTable tr:hover td{background:#f0f5ff;color:var(--text1)}
+#annualTable tr.harmony-row td{color:#0d7a4e;font-weight:600;background:rgba(13,122,78,.04)}
+#annualTable tr.harmony-row:hover td{background:rgba(13,122,78,.09)}
+#annualTable tr.harmony-row td:first-child{background:rgba(13,122,78,.04)}
+#annualTable th.cur-month{color:var(--blue4);background:#eef4ff}
+#annualTable td.cur-month{background:#f4f8ff;color:var(--text1);font-weight:600}
+#annualTable tr.harmony-row td.cur-month{background:rgba(13,122,78,.10);color:#0a6040}
+.annual-toggle-btn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:9px;margin-top:10px;border:none;background:none;cursor:pointer;font-size:12px;color:var(--text3);border-top:1px solid var(--border);font-family:inherit}
+.annual-toggle-btn:hover{color:var(--blue2)}
+.annual-search-row{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.annual-search-row .search-wrap{flex:1;margin-bottom:0}
+.annual-range-wrap{display:flex;align-items:center;gap:6px;white-space:nowrap;font-size:12px;color:var(--text3)}
+.annual-range-wrap select{background:#fff;color:var(--text1);border:1px solid var(--border2);border-radius:6px;padding:5px 24px 5px 8px;font-size:12px;cursor:pointer;outline:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%237a96b8'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 6px center}
 </style>
 </head>
 <body>
 <div class="wrap">
-
   <div class="topbar">
     <div class="logo">
       <div class="logo-icon">🚗</div>
@@ -154,33 +153,33 @@ tr.harmony-row:hover td{background:rgba(13,122,78,.06)}
     <div class="panel">
       <div class="panel-head"><div class="panel-title">월별 총 보유대수 추이</div></div>
       <div class="chart-box" style="height:200px"><canvas id="trendChart"></canvas></div>
-    <div class="accordion">
-      <button class="accordion-btn" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">💡 차트 해석 가이드 <span class="arrow">▼</span></button>
-      <div class="accordion-body"><p>전국 렌트카 총 보유대수의 월별 흐름입니다. 상승 추세는 업계 전반의 성장을 의미하며, 특정 월에 급변이 있다면 계절성 혹은 정책 변화를 확인해보세요.</p></div>
-    </div>
+      <div class="accordion">
+        <button class="accordion-btn" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">💡 차트 해석 가이드 <span class="arrow">▼</span></button>
+        <div class="accordion-body"><p>전국 렌트카 총 보유대수의 월별 흐름입니다. 상승 추세는 업계 전반의 성장을 의미하며, 특정 월에 급변이 있다면 계절성 혹은 정책 변화를 확인해보세요.</p></div>
+      </div>
     </div>
     <div class="panel">
       <div class="panel-head"><div class="panel-title">차종별 구성</div></div>
       <div class="chart-box" style="height:200px"><canvas id="typeChart"></canvas></div>
-    <div class="accordion">
-      <button class="accordion-btn" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">💡 차트 해석 가이드 <span class="arrow">▼</span></button>
-      <div class="accordion-body"><p>기준년월 기준 차종별 비중입니다. 승용차 비율이 압도적으로 높은 것이 일반적이며, 승합차 비중이 높은 업체는 법인·관광 수요 중심인 경우가 많습니다.</p></div>
-    </div>
+      <div class="accordion">
+        <button class="accordion-btn" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">💡 차트 해석 가이드 <span class="arrow">▼</span></button>
+        <div class="accordion-body"><p>기준년월 기준 차종별 비중입니다. 승용차 비율이 압도적으로 높은 것이 일반적이며, 승합차 비중이 높은 업체는 법인·관광 수요 중심인 경우가 많습니다.</p></div>
+      </div>
     </div>
   </div>
 
-  <!-- ROW2: TOP10 / 경쟁사 순위 추이 -->
+  <!-- ROW2: TOP10 / 경쟁사 대수 추이 (순위→대수로 변경) -->
   <div class="row2">
     <div class="panel">
       <div class="panel-head"><div class="panel-title">TOP 10 업체 보유대수</div></div>
       <div class="chart-box" id="top10Wrap" style="height:300px"><canvas id="top10Chart"></canvas></div>
-    <div class="accordion">
-      <button class="accordion-btn" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">💡 차트 해석 가이드 <span class="arrow">▼</span></button>
-      <div class="accordion-body"><p>기준년월 보유대수 상위 10개 업체입니다. 하모니렌트카(초록)의 위치와 상위 업체와의 격차를 확인하세요. 월을 바꿔가며 순위 변동을 비교할 수 있습니다.</p></div>
-    </div>
+      <div class="accordion">
+        <button class="accordion-btn" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">💡 차트 해석 가이드 <span class="arrow">▼</span></button>
+        <div class="accordion-body"><p>기준년월 보유대수 상위 10개 업체입니다. 하모니렌트카(초록)의 위치와 상위 업체와의 격차를 확인하세요. 월을 바꿔가며 순위 변동을 비교할 수 있습니다.</p></div>
+      </div>
     </div>
     <div class="panel">
-      <div class="panel-head"><div class="panel-title">경쟁사 순위 추이</div></div>
+      <div class="panel-head"><div class="panel-title">경쟁사 대수 추이</div></div>
       <div class="search-wrap" id="compSearchWrap">
         <span class="search-icon">🔍</span>
         <input type="text" id="compInput" placeholder="업체명 검색하여 추가..." autocomplete="off"
@@ -189,10 +188,10 @@ tr.harmony-row:hover td{background:rgba(13,122,78,.06)}
       </div>
       <div class="tag-list" id="compTags"></div>
       <div class="chart-box" style="height:220px"><canvas id="compChart"></canvas></div>
-    <div class="accordion">
-      <button class="accordion-btn" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">💡 차트 해석 가이드 <span class="arrow">▼</span></button>
-      <div class="accordion-body"><p>선택한 업체들의 순위 변화 추이입니다. Y축은 역순(위로 갈수록 상위권)이며, 꺾임이 큰 구간은 경쟁 변동이 있었던 시기입니다. 업체를 검색해 비교 대상을 자유롭게 추가하세요.</p></div>
-    </div>
+      <div class="accordion">
+        <button class="accordion-btn" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">💡 차트 해석 가이드 <span class="arrow">▼</span></button>
+        <div class="accordion-body"><p>선택한 업체들의 보유대수 변화 추이입니다. 대수가 빠르게 증가하는 업체가 있다면 경쟁이 심화되고 있는 신호입니다. 업체를 검색해 비교 대상을 자유롭게 추가하세요.</p></div>
+      </div>
     </div>
   </div>
 
@@ -200,7 +199,7 @@ tr.harmony-row:hover td{background:rgba(13,122,78,.06)}
   <div class="panel" style="margin-bottom:12px">
     <div class="panel-head"><div class="panel-title">하모니렌트카 순위 · 대수 추이</div></div>
     <div class="chart-box" style="height:180px"><canvas id="harmonyChart"></canvas></div>
-  <div class="accordion">
+    <div class="accordion">
       <button class="accordion-btn" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">💡 차트 해석 가이드 <span class="arrow">▼</span></button>
       <div class="accordion-body"><p>하모니렌트카의 순위(초록 실선)와 보유대수(파란 점선)를 동시에 확인합니다. 대수가 늘어도 순위가 제자리라면 경쟁사 성장이 더 빠른 것입니다. 순위가 올라가는 구간에 주목하세요.</p></div>
     </div>
@@ -223,7 +222,6 @@ tr.harmony-row:hover td{background:rgba(13,122,78,.06)}
       </div>
       <div class="expand-row" id="expandBtn" onclick="toggleExpand()">▼ 나머지 업체 펼치기</div>
     </div>
-
     <div class="panel">
       <div class="panel-head"><div class="panel-title">업체 개별 추이</div></div>
       <div class="search-wrap" id="indivSearchWrap">
@@ -237,87 +235,95 @@ tr.harmony-row:hover td{background:rgba(13,122,78,.06)}
     </div>
   </div>
 
-</div>
+  <!-- ★ 업체별 연간 총대수 현황 표 (신규) -->
+  <div class="annual-panel">
+    <div class="panel-head">
+      <div class="panel-title">업체별 기간별 총대수 현황</div>
+    </div>
+    <div class="annual-search-row">
+      <div class="search-wrap" id="annualSearchWrap">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="annualInput" placeholder="업체명 검색..." autocomplete="off"
+          oninput="filterAnnual();showAC('annualInput','annualAC',selectAnnualSearch)"
+          onkeydown="acKey(event,'annualAC',selectAnnualSearch,'annualInput')">
+        <div class="autocomplete" id="annualAC"></div>
+      </div>
+      <div class="annual-range-wrap">
+        <label>표시기간</label>
+        <select id="annualRange" onchange="renderAnnualTable()">
+          <option value="12">최근 12개월</option>
+          <option value="24">최근 24개월</option>
+          <option value="all">전체</option>
+        </select>
+      </div>
+    </div>
+    <div class="annual-tbl-outer collapsed" id="annualTblOuter">
+      <table id="annualTable">
+        <thead id="annualThead"></thead>
+        <tbody id="annualTbody"></tbody>
+      </table>
+    </div>
+    <button class="annual-toggle-btn" id="annualToggleBtn" onclick="toggleAnnual()">
+      <span id="annualToggleLabel">▼ 나머지 업체 펼치기</span>
+    </button>
+  </div>
 
+</div>
 <script>
-// 데이터 로딩
 let RAW = null;
 const HARMONY_KEY = '하모니렌트카';
-
 let curMonth = '';
-let expandedDetail = false;
 let compTags = [];
 let charts = {};
-
 const COLORS = ['#2272d9','#0d7a4e','#e67e22','#8e44ad','#e74c3c','#16a085','#2980b9','#d35400','#27ae60','#c0392b'];
-const CHART_DEFAULTS = {
-  color: '#96b0cc',
-  borderColor: 'rgba(50,100,160,0.2)',
-  plugins:{legend:{display:false}},
-};
 
-// --- INIT ---
+// 연간표 상태
+let annualExpanded = false;
+let annualQuery = '';
+
 function init() {
-  // Load saved comp tags from localStorage
-  try {
-    const saved = localStorage.getItem('harmony_comp_tags');
-    if(saved) compTags = JSON.parse(saved);
-  } catch(e) {}
+  try { const saved = localStorage.getItem('harmony_comp_tags'); if(saved) compTags = JSON.parse(saved); } catch(e) {}
   if(!compTags.length) compTags = ['에스케이렌터카(주)','현대캐피탈(주)','하나캐피탈(주)'];
-
   const sel = document.getElementById('monthSel');
   getMonths().forEach(m => {
     const opt = document.createElement('option');
-    opt.value = m;
-    opt.textContent = fmtMonth(m);
+    opt.value = m; opt.textContent = fmtMonth(m);
     sel.appendChild(opt);
   });
   curMonth = getMonths()[getMonths().length-1];
   sel.value = curMonth;
-
   renderCompTags();
   onMonthChange();
+  renderAnnualTable();
 }
 
 function getMonths() { return RAW ? RAW.m : []; }
 function getCompanies() { return RAW ? RAW.c : []; }
 function getAllData() { return RAW ? RAW.d : {}; }
-function fmtMonth(m) {
-  const [y,mo] = m.split('.');
-  return y+'년 '+mo+'월';
-}
-
+function fmtMonth(m) { const [y,mo] = m.split('.'); return y+'년 '+mo+'월'; }
 function fmt(n) { return Number(n).toLocaleString(); }
 
 function onMonthChange() {
   curMonth = document.getElementById('monthSel').value;
-  updateKPI();
-  drawTrend();
-  drawType();
-  drawTop10();
-  drawComp();
-  drawHarmony();
+  updateKPI(); drawTrend(); drawType(); drawTop10(); drawComp(); drawHarmony();
   renderDetailTable('');
+  renderAnnualTable();
 }
 
-// --- KPI ---
 function getMonthData(m) { return getAllData()[m] || []; }
 
 function updateKPI() {
   const rows = getMonthData(curMonth);
   const prev = getMonths()[getMonths().indexOf(curMonth)-1];
   const prevRows = prev ? getMonthData(prev) : [];
-
   const total = rows.reduce((s,r)=>s+r[1],0);
   const sedan = rows.reduce((s,r)=>s+r[2],0);
   const van = rows.reduce((s,r)=>s+r[3],0);
   const cos = rows.length;
-
   const ptotal = prevRows.reduce((s,r)=>s+r[1],0);
   const psedan = prevRows.reduce((s,r)=>s+r[2],0);
   const pvan = prevRows.reduce((s,r)=>s+r[3],0);
   const pcos = prevRows.length;
-
   const setKpi = (id,val,prev,unit='대') => {
     document.getElementById(id).textContent = fmt(val)+unit;
     const sub = document.getElementById(id+'Sub');
@@ -327,11 +333,8 @@ function updateKPI() {
       sub.style.color = d>=0 ? '#38e0a0':'#f05a5a';
     }
   };
-  setKpi('kTotal',total,ptotal);
-  setKpi('kSedan',sedan,psedan);
-  setKpi('kVan',van,pvan);
-  setKpi('kCo',cos,pcos,'개');
-
+  setKpi('kTotal',total,ptotal); setKpi('kSedan',sedan,psedan);
+  setKpi('kVan',van,pvan); setKpi('kCo',cos,pcos,'개');
   const hidx = rows.findIndex(r=>r[0].includes(HARMONY_KEY));
   const hrow = hidx>=0 ? rows[hidx] : null;
   document.getElementById('kHarmony').textContent = hidx>=0 ? (hidx+1)+'위' : '-';
@@ -344,11 +347,7 @@ function updateKPI() {
   }
 }
 
-// --- CHARTS ---
-function destroyChart(id) {
-  if(charts[id]) { charts[id].destroy(); delete charts[id]; }
-}
-
+function destroyChart(id) { if(charts[id]) { charts[id].destroy(); delete charts[id]; } }
 function chartGridColor() { return 'rgba(50,100,160,0.08)'; }
 function chartTickColor() { return '#7a96b8'; }
 
@@ -361,20 +360,8 @@ function drawTrend() {
   const pointRadius = getMonths().map((_,i) => i===curIdx ? 5 : 3);
   charts['trendChart'] = new Chart(document.getElementById('trendChart'),{
     type:'line',
-    data:{labels,datasets:[{
-      label:'총보유대수',data:vals,
-      borderColor:'#2272d9',backgroundColor:'rgba(34,114,217,.06)',
-      fill:true,tension:.35,pointRadius,pointBackgroundColor:pointColors,
-      pointBorderColor:pointColors,borderWidth:2
-    }]},
-    options:{
-      responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>'  '+fmt(c.raw)+'대'}}},
-      scales:{
-        x:{ticks:{color:chartTickColor(),font:{size:10}},grid:{color:chartGridColor()}},
-        y:{ticks:{color:chartTickColor(),font:{size:10},callback:v=>(v/10000).toFixed(0)+'만'},grid:{color:chartGridColor()}}
-      }
-    }
+    data:{labels,datasets:[{label:'총보유대수',data:vals,borderColor:'#2272d9',backgroundColor:'rgba(34,114,217,.06)',fill:true,tension:.35,pointRadius,pointBackgroundColor:pointColors,pointBorderColor:pointColors,borderWidth:2}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>'  '+fmt(c.raw)+'대'}}},scales:{x:{ticks:{color:chartTickColor(),font:{size:10}},grid:{color:chartGridColor()}},y:{ticks:{color:chartTickColor(),font:{size:10},callback:v=>(v/10000).toFixed(0)+'만'},grid:{color:chartGridColor()}}}}
   });
 }
 
@@ -387,17 +374,8 @@ function drawType() {
   const total = rows.reduce((s,r)=>s+r[1],0);
   charts['typeChart'] = new Chart(document.getElementById('typeChart'),{
     type:'doughnut',
-    data:{
-      labels:['승용차','승합차','기타'],
-      datasets:[{data:[sedan,van,etc],backgroundColor:['#2272d9','#16a085','#bdc3c7'],borderWidth:0,hoverOffset:4}]
-    },
-    options:{
-      responsive:true,maintainAspectRatio:false,cutout:'65%',
-      plugins:{
-        legend:{position:'right',labels:{color:'#2c4a6e',font:{size:11},padding:12,boxWidth:10,boxHeight:10}},
-        tooltip:{callbacks:{label:c=>' '+fmt(c.raw)+'대 ('+((c.raw/total)*100).toFixed(1)+'%)'}}
-      }
-    }
+    data:{labels:['승용차','승합차','기타'],datasets:[{data:[sedan,van,etc],backgroundColor:['#2272d9','#16a085','#bdc3c7'],borderWidth:0,hoverOffset:4}]},
+    options:{responsive:true,maintainAspectRatio:false,cutout:'65%',plugins:{legend:{position:'right',labels:{color:'#2c4a6e',font:{size:11},padding:12,boxWidth:10,boxHeight:10}},tooltip:{callbacks:{label:c=>' '+fmt(c.raw)+'대 ('+((c.raw/total)*100).toFixed(1)+'%)'}}}}
   });
 }
 
@@ -413,26 +391,19 @@ function drawTop10() {
   charts['top10Chart'] = new Chart(document.getElementById('top10Chart'),{
     type:'bar',
     data:{labels,datasets:[{label:'보유대수',data:vals,backgroundColor:bg,hoverBackgroundColor:bgh,borderRadius:4,borderSkipped:false}]},
-    options:{
-      indexAxis:'y',responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' '+fmt(c.raw)+'대'}}},
-      scales:{
-        x:{ticks:{color:chartTickColor(),font:{size:10},callback:v=>(v/10000).toFixed(0)+'만'},grid:{color:chartGridColor()}},
-        y:{ticks:{color:'#96b0cc',font:{size:11}},grid:{display:false}}
-      }
-    }
+    options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' '+fmt(c.raw)+'대'}}},scales:{x:{ticks:{color:chartTickColor(),font:{size:10},callback:v=>(v/10000).toFixed(0)+'만'},grid:{color:chartGridColor()}},y:{ticks:{color:'#96b0cc',font:{size:11}},grid:{display:false}}}}
   });
 }
 
+// ★ 경쟁사 대수 추이 (순위→대수로 변경)
 function drawComp() {
   destroyChart('compChart');
-  if(!compTags.length) { document.getElementById('compChart').getContext('2d').clearRect(0,0,9999,9999); return; }
+  if(!compTags.length) return;
   const datasets = compTags.map((co,i) => ({
     label: co.length>12?co.slice(0,12)+'…':co,
     data: getMonths().map(m=>{
-      const sorted = getMonthData(m);
-      const idx = sorted.findIndex(r=>r[0]===co);
-      return idx>=0?idx+1:null;
+      const row = getMonthData(m).find(r=>r[0]===co);
+      return row ? row[1] : null;
     }),
     borderColor: COLORS[i%COLORS.length],
     backgroundColor:'transparent',
@@ -447,7 +418,7 @@ function drawComp() {
       plugins:{legend:{position:'bottom',labels:{color:'#2c4a6e',font:{size:10},padding:8,boxWidth:16,boxHeight:2,usePointStyle:true}}},
       scales:{
         x:{ticks:{color:chartTickColor(),font:{size:10}},grid:{color:chartGridColor()}},
-        y:{reverse:true,ticks:{color:chartTickColor(),font:{size:10},stepSize:1,callback:v=>v+'위'},grid:{color:chartGridColor()}}
+        y:{ticks:{color:chartTickColor(),font:{size:10},callback:v=>(v/10000).toFixed(0)+'만대'},grid:{color:chartGridColor()}}
       }
     }
   });
@@ -455,7 +426,7 @@ function drawComp() {
 
 function drawHarmony() {
   destroyChart('harmonyChart');
-  const ranks=getMonths().map(m=>{const sorted=getMonthData(m);const i=sorted.findIndex(r=>r[0].includes(HARMONY_KEY));return i>=0?i+1:null;});
+  const ranks=getMonths().map(m=>{const s=getMonthData(m);const i=s.findIndex(r=>r[0].includes(HARMONY_KEY));return i>=0?i+1:null;});
   const counts=getMonths().map(m=>{const r=getMonthData(m).find(r=>r[0].includes(HARMONY_KEY));return r?r[1]:null;});
   charts['harmonyChart'] = new Chart(document.getElementById('harmonyChart'),{
     type:'line',
@@ -463,22 +434,13 @@ function drawHarmony() {
       {label:'순위',data:ranks,borderColor:'#0d7a4e',pointBackgroundColor:'#0d7a4e',yAxisID:'y1',tension:.35,pointRadius:4,borderWidth:2,backgroundColor:'transparent',spanGaps:true},
       {label:'보유대수',data:counts,borderColor:'#2272d9',pointBackgroundColor:'#2272d9',yAxisID:'y2',tension:.35,pointRadius:4,borderWidth:2,backgroundColor:'rgba(34,114,217,.06)',fill:true,spanGaps:true,borderDash:[5,3]}
     ]},
-    options:{
-      responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{position:'bottom',labels:{color:'#2c4a6e',font:{size:11},padding:12,boxWidth:16,usePointStyle:true}}},
-      scales:{
-        y1:{position:'left',reverse:true,ticks:{color:'#0d7a4e',font:{size:10},stepSize:1,callback:v=>v+'위'},grid:{color:chartGridColor()}},
-        y2:{position:'right',ticks:{color:'#2272d9',font:{size:10},callback:v=>fmt(v)+'대'},grid:{display:false}},
-        x:{ticks:{color:chartTickColor(),font:{size:10}},grid:{color:chartGridColor()}}
-      }
-    }
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:'#2c4a6e',font:{size:11},padding:12,boxWidth:16,usePointStyle:true}}},scales:{y1:{position:'left',reverse:true,ticks:{color:'#0d7a4e',font:{size:10},stepSize:1,callback:v=>v+'위'},grid:{color:chartGridColor()}},y2:{position:'right',ticks:{color:'#2272d9',font:{size:10},callback:v=>fmt(v)+'대'},grid:{display:false}},x:{ticks:{color:chartTickColor(),font:{size:10}},grid:{color:chartGridColor()}}}}
   });
 }
 
-// --- DETAIL TABLE ---
+// --- 업체별 상세 현황 ---
 let detailExpanded = false;
 let detailQuery = '';
-
 function renderDetailTable(q) {
   detailQuery = q;
   const rows = getMonthData(curMonth);
@@ -487,7 +449,6 @@ function renderDetailTable(q) {
   const filtered = q ? rows.filter(r=>r[0].includes(q)) : rows;
   const tbody = document.getElementById('detailBody');
   tbody.innerHTML = '';
-
   filtered.forEach((r,i) => {
     const isHarmony = r[0].includes(HARMONY_KEY);
     const prevIdx = prevRows.findIndex(pr=>pr[0]===r[0]);
@@ -497,41 +458,32 @@ function renderDetailTable(q) {
     if(!q && !detailExpanded && i>=20) { tr.className='hidden-row'; tr.style.display='none'; }
     if(isHarmony) tr.className=(tr.className?tr.className+' ':'')+'harmony-row';
     tr.innerHTML = `<td><span class="rank ${rankClass}">${i+1}</span></td>
-      <td>${r[0]}</td>
-      <td>${fmt(r[1])}</td>
-      <td>${fmt(r[2])}</td>
-      <td>${fmt(r[3])}</td>
-      <td>${diff===null?'<span class="diff-eq">-</span>':diff>0?`<span class="diff-up">▲${fmt(diff)}</span>`:diff<0?`<span class="diff-dn">▼${fmt(Math.abs(diff))}</span>`:'<span class="diff-eq">-</span>'}
-      </td>`;
+      <td>${r[0]}</td><td>${fmt(r[1])}</td><td>${fmt(r[2])}</td><td>${fmt(r[3])}</td>
+      <td>${diff===null?'<span class="diff-eq">-</span>':diff>0?`<span class="diff-up">▲${fmt(diff)}</span>`:diff<0?`<span class="diff-dn">▼${fmt(Math.abs(diff))}</span>`:'<span class="diff-eq">-</span>'}</td>`;
     tbody.appendChild(tr);
   });
-
   const btn = document.getElementById('expandBtn');
   if(!q && filtered.length>20) {
     btn.style.display='block';
     btn.textContent = detailExpanded ? '▲ 접기' : '▼ 나머지 '+(filtered.length-20)+'개 업체 펼치기';
   } else { btn.style.display='none'; }
 }
-
 function toggleExpand() {
   detailExpanded = !detailExpanded;
   document.querySelectorAll('.hidden-row').forEach(tr=>tr.style.display=detailExpanded?'':'none');
   document.getElementById('expandBtn').textContent = detailExpanded?'▲ 접기':'▼ 나머지 업체 펼치기';
 }
-
 function filterDetail() {
   const q = document.getElementById('detailInput').value.trim();
   detailExpanded = true;
   renderDetailTable(q);
 }
-
 function selectDetailSearch(name) {
   document.getElementById('detailInput').value = name;
-  filterDetail();
-  hideAC('detailAC');
+  filterDetail(); hideAC('detailAC');
 }
 
-// --- INDIV CHART ---
+// --- 업체 개별 추이 ---
 let indivCompany = '';
 function selectIndiv(name) {
   indivCompany = name;
@@ -540,7 +492,6 @@ function selectIndiv(name) {
   hideAC('indivAC');
   drawIndiv(name);
 }
-
 function drawIndiv(name) {
   destroyChart('indivChart');
   const ranks = getMonths().map(m=>{const s=getMonthData(m);const i=s.findIndex(r=>r[0]===name);return i>=0?i+1:null;});
@@ -554,16 +505,105 @@ function drawIndiv(name) {
       {label:'순위',data:ranks,borderColor:c1,pointBackgroundColor:c1,yAxisID:'y1',tension:.35,pointRadius:4,borderWidth:2,backgroundColor:'transparent',spanGaps:true},
       {label:'보유대수',data:counts,borderColor:c2,pointBackgroundColor:c2,yAxisID:'y2',tension:.35,pointRadius:4,borderWidth:2,backgroundColor:isHarmony?'rgba(13,122,78,.06)':'rgba(34,114,217,.06)',fill:true,spanGaps:true,borderDash:[5,3]}
     ]},
-    options:{
-      responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{position:'bottom',labels:{color:'#2c4a6e',font:{size:11},padding:12,boxWidth:16,usePointStyle:true}}},
-      scales:{
-        y1:{position:'left',reverse:true,ticks:{color:c1,font:{size:10},callback:v=>v+'위'},grid:{color:chartGridColor()}},
-        y2:{position:'right',ticks:{color:c2,font:{size:10},callback:v=>fmt(v)+'대'},grid:{display:false}},
-        x:{ticks:{color:chartTickColor(),font:{size:10}},grid:{color:chartGridColor()}}
-      }
-    }
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:'#2c4a6e',font:{size:11},padding:12,boxWidth:16,usePointStyle:true}}},scales:{y1:{position:'left',reverse:true,ticks:{color:c1,font:{size:10},callback:v=>v+'위'},grid:{color:chartGridColor()}},y2:{position:'right',ticks:{color:c2,font:{size:10},callback:v=>fmt(v)+'대'},grid:{display:false}},x:{ticks:{color:chartTickColor(),font:{size:10}},grid:{color:chartGridColor()}}}}
   });
+}
+
+// ★ 업체별 연간 총대수 현황 표
+function getAnnualMonths() {
+  const all = getMonths();
+  const rangeEl = document.getElementById('annualRange');
+  const val = rangeEl ? rangeEl.value : '12';
+  if(val==='all') return all;
+  const n = parseInt(val);
+  return all.slice(-n);
+}
+
+function renderAnnualTable() {
+  const months = getAnnualMonths();
+  const q = annualQuery;
+  const companies = getCompanies();
+  const filtered = q ? companies.filter(c=>c.includes(q)) : companies;
+
+  // thead
+  const thead = document.getElementById('annualThead');
+  thead.innerHTML = '';
+  const trHead = document.createElement('tr');
+  const th0 = document.createElement('th');
+  th0.textContent = '업체명';
+  th0.style.minWidth = '140px';
+  trHead.appendChild(th0);
+  months.forEach(m => {
+    const th = document.createElement('th');
+    th.textContent = fmtMonth(m);
+    if(m === curMonth) th.className = 'cur-month';
+    trHead.appendChild(th);
+  });
+  thead.appendChild(trHead);
+
+  // tbody
+  const tbody = document.getElementById('annualTbody');
+  tbody.innerHTML = '';
+
+  // 기준월 기준으로 정렬 (기준월 총보유대수 내림차순)
+  const curData = getMonthData(curMonth);
+  const sorted = filtered.slice().sort((a, b) => {
+    const ra = curData.find(r=>r[0]===a);
+    const rb = curData.find(r=>r[0]===b);
+    return (rb?rb[1]:0) - (ra?ra[1]:0);
+  });
+
+  sorted.forEach((co, rowIdx) => {
+    const isHarmony = co.includes(HARMONY_KEY);
+    const tr = document.createElement('tr');
+    if(isHarmony) tr.className = 'harmony-row';
+    if(!q && !annualExpanded && rowIdx >= 20) {
+      tr.className = (tr.className ? tr.className+' ' : '') + 'annual-hidden';
+      tr.style.display = 'none';
+    }
+    const tdName = document.createElement('td');
+    tdName.textContent = co;
+    tr.appendChild(tdName);
+
+    months.forEach(m => {
+      const td = document.createElement('td');
+      const row = getMonthData(m).find(r=>r[0]===co);
+      td.textContent = row ? fmt(row[1]) : '-';
+      if(m === curMonth) td.className = 'cur-month';
+      tr.appendChild(td);
+    });
+    tbody.appendChild(tr);
+  });
+
+  // 접기/펼치기 버튼 업데이트
+  const btn = document.getElementById('annualToggleBtn');
+  const lbl = document.getElementById('annualToggleLabel');
+  if(!q && sorted.length > 20) {
+    btn.style.display = 'flex';
+    lbl.textContent = annualExpanded ? '▲ 접기' : '▼ 나머지 '+(sorted.length-20)+'개 업체 펼치기';
+  } else {
+    btn.style.display = 'none';
+  }
+}
+
+function toggleAnnual() {
+  annualExpanded = !annualExpanded;
+  document.querySelectorAll('.annual-hidden').forEach(tr => tr.style.display = annualExpanded ? '' : 'none');
+  document.getElementById('annualToggleLabel').textContent = annualExpanded ? '▲ 접기' : '▼ 나머지 업체 펼치기';
+  // 펼쳤을 때 y 스크롤 해제
+  const outer = document.getElementById('annualTblOuter');
+  if(annualExpanded) { outer.classList.remove('collapsed'); outer.style.maxHeight = 'none'; outer.style.overflowY = 'auto'; }
+  else { outer.classList.add('collapsed'); outer.style.maxHeight = ''; outer.style.overflowY = 'hidden'; }
+}
+
+function filterAnnual() {
+  annualQuery = document.getElementById('annualInput').value.trim();
+  annualExpanded = true;
+  renderAnnualTable();
+}
+function selectAnnualSearch(name) {
+  document.getElementById('annualInput').value = name;
+  filterAnnual(); hideAC('annualAC');
 }
 
 // --- AUTOCOMPLETE ---
@@ -581,30 +621,18 @@ function showAC(inputId, acId, onSelect) {
   }).join('');
   ac.style.display='block';
 }
-
 function hideAC(acId) { document.getElementById(acId).style.display='none'; }
-
 function acKey(e, acId, onSelect, inputId) {
   const ac = document.getElementById(acId);
   const items = ac.querySelectorAll('.ac-item');
   let cur = ac.querySelector('.ac-item.active');
-  if(e.key==='ArrowDown'){
-    e.preventDefault();
-    if(cur){cur.classList.remove('active');const n=cur.nextElementSibling;if(n)n.classList.add('active');}
-    else if(items.length)items[0].classList.add('active');
-  } else if(e.key==='ArrowUp'){
-    e.preventDefault();
-    if(cur){cur.classList.remove('active');const p=cur.previousElementSibling;if(p)p.classList.add('active');}
-  } else if(e.key==='Enter'){
-    e.preventDefault();
-    if(cur) onSelect(cur.textContent.trim());
-  } else if(e.key==='Escape'){
-    hideAC(acId);
-  }
+  if(e.key==='ArrowDown'){e.preventDefault();if(cur){cur.classList.remove('active');const n=cur.nextElementSibling;if(n)n.classList.add('active');}else if(items.length)items[0].classList.add('active');}
+  else if(e.key==='ArrowUp'){e.preventDefault();if(cur){cur.classList.remove('active');const p=cur.previousElementSibling;if(p)p.classList.add('active');}}
+  else if(e.key==='Enter'){e.preventDefault();if(cur)onSelect(cur.textContent.trim());}
+  else if(e.key==='Escape'){hideAC(acId);}
 }
-
 document.addEventListener('click', e => {
-  ['compAC','detailAC','indivAC'].forEach(id=>{
+  ['compAC','detailAC','indivAC','annualAC'].forEach(id=>{
     const ac=document.getElementById(id);
     if(ac && !ac.contains(e.target) && e.target.id!==id.replace('AC','Input')) ac.style.display='none';
   });
@@ -612,37 +640,21 @@ document.addEventListener('click', e => {
 
 // --- COMP TAGS ---
 function addCompTag(name) {
-  document.getElementById('compInput').value='';
-  hideAC('compAC');
+  document.getElementById('compInput').value=''; hideAC('compAC');
   if(compTags.includes(name)||compTags.length>=8) return;
-  compTags.push(name);
-  saveCompTags();
-  renderCompTags();
-  drawComp();
+  compTags.push(name); saveCompTags(); renderCompTags(); drawComp();
 }
-
 function removeCompTag(name) {
-  compTags = compTags.filter(t=>t!==name);
-  saveCompTags();
-  renderCompTags();
-  drawComp();
+  compTags = compTags.filter(t=>t!==name); saveCompTags(); renderCompTags(); drawComp();
 }
-
 function renderCompTags() {
-  const el = document.getElementById('compTags');
-  el.innerHTML = compTags.map(t=>`<span class="tag">${t.length>12?t.slice(0,12)+'…':t}<button onclick="removeCompTag('${t.replace(/'/g,"\\'")}')">✕</button></span>`).join('');
+  document.getElementById('compTags').innerHTML = compTags.map(t=>`<span class="tag">${t.length>12?t.slice(0,12)+'…':t}<button onclick="removeCompTag('${t.replace(/'/g,"\\'")}')">✕</button></span>`).join('');
 }
-
-function saveCompTags() {
-  try { localStorage.setItem('harmony_comp_tags', JSON.stringify(compTags)); } catch(e){}
-}
+function saveCompTags() { try { localStorage.setItem('harmony_comp_tags', JSON.stringify(compTags)); } catch(e){} }
 
 fetch('data.json')
   .then(r => r.json())
-  .then(data => {
-    RAW = data;
-    init();
-  })
+  .then(data => { RAW = data; init(); })
   .catch(() => {
     document.body.innerHTML = '<div style="padding:40px;text-align:center;font-family:sans-serif;color:#c0392b"><h2>⚠️ data.json 파일을 찾을 수 없습니다</h2><p style="margin-top:12px;color:#666">index.html과 같은 폴더에 data.json이 있는지 확인해주세요.</p></div>';
   });
