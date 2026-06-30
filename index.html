@@ -345,6 +345,10 @@ table.qt tr.qins td{background:#eef2fd;font-size:11px;color:#4a5578;}
         <label>이전비용</label>
         <div class="pf-input-wrap"><input type="text" id="pi-transfer" placeholder="0" oninput="fmtNum(this)"/><span>원</span></div>
       </div>
+      <div class="pf-input-row">
+        <label>조달기준 비율</label>
+        <div class="pf-input-wrap"><input type="text" id="pi-fundratio" placeholder="100"/><span>%</span></div>
+      </div>
     </div>
     <button onclick="submitProfitInput()" style="margin-top:14px;">수익분석 계산</button>
   </div>
@@ -679,6 +683,7 @@ async function submitProfitInput() {
   const agencyInput = getNum("pi-agency");
   const feeInput = getNum("pi-fee");
   const transferInput = getNum("pi-transfer");
+  const fundRatioInput = getNum("pi-fundratio");
 
   const price = parseInt((document.getElementById("i-price")._raw || document.getElementById("i-price").value).replace(/,/g,"")) || selV.기본가격 || 0;
 
@@ -690,6 +695,7 @@ async function submitProfitInput() {
     agencyRate: agencyInput !== null ? agencyInput/100 : null,
     feeAmount: feeInput,
     transferCost: transferInput,
+    fundRatio: fundRatioInput !== null ? fundRatioInput/100 : null,
   };
 
   try {
@@ -754,7 +760,8 @@ function renderProfit(r) {
 
           <tr class="pf2sec"><td colspan="3">수익 / 차감비용</td></tr>
           <tr><td class="pfl">이자비용(원비용 PMT, 원금제외)</td><td class="pfv">${W(c.interestCost48)}</td><td class="pfv">${W(c.interestCost60)}</td></tr>
-          <tr><td class="pfl">조달이자(7%, 원비용 PMT)</td><td class="pfv">${W(c.fundInterest48)}</td><td class="pfv">${W(c.fundInterest60)}</td></tr>
+          <tr><td class="pfl">조달기준액(원비용×${(r.input.fundRatio*100).toFixed(0)}%)</td><td class="pfv">${W(c.fundBase48)}</td><td class="pfv">${W(c.fundBase60)}</td></tr>
+          <tr><td class="pfl">조달이자(7%, PMT)</td><td class="pfv">${W(c.fundInterest48)}</td><td class="pfv">${W(c.fundInterest60)}</td></tr>
           <tr><td class="pfl">GPS비용</td><td class="pfv">${W(c.gps48)}</td><td class="pfv">${W(c.gps60)}</td></tr>
           <tr><td class="pfl">수수료</td><td class="pfv">${W(c.fee)}</td><td class="pfv">${W(c.fee)}</td></tr>
           ${transferRow}
