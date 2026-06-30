@@ -287,25 +287,20 @@ table.qt tr.qins td{background:#eef2fd;font-size:11px;color:#4a5578;}
           <div class="summary-col">
             <div class="summary-period">48개월 계약 시</div>
             <div class="summary-row"><span>지금 내는 돈</span><strong id="sum-init48">-</strong></div>
-            <div class="summary-pct" id="sum-initpct48">-</div>
             <div class="summary-row"><span>매달 내는 돈</span><strong id="sum-monthly48">-</strong></div>
             <div class="summary-row"><span>계약 끝나고 차 사려면</span><strong id="sum-res48">-</strong></div>
-            <div class="summary-pct" id="sum-respct48">-</div>
           </div>
           <div class="summary-col">
             <div class="summary-period">60개월 계약 시</div>
             <div class="summary-row"><span>지금 내는 돈</span><strong id="sum-init60">-</strong></div>
-            <div class="summary-pct" id="sum-initpct60">-</div>
             <div class="summary-row"><span>매달 내는 돈</span><strong id="sum-monthly60">-</strong></div>
             <div class="summary-row"><span>계약 끝나고 차 사려면</span><strong id="sum-res60">-</strong></div>
-            <div class="summary-pct" id="sum-respct60">-</div>
           </div>
         </div>
-        <div class="summary-note">※ "지금 내는 돈"은 보증금+선수금 합계, "계약 끝나고 차 사려면"은 만기인수금(차량가의 20%)입니다.</div>
+        <div class="summary-note">※ "지금 내는 돈"은 보증금+선수금 합계, "계약 끝나고 차 사려면"은 보증금이 만기인수금(차량가의 20%)보다 부족할 때 그 차액입니다. 보증금을 20% 이상 내셨다면 0원입니다.</div>
       </div>
       <div class="cmp-outer">
         <div class="cmp-header">【하모니】 구입형 리스 견적</div>
-        <div class="cmp-desc">차량가격 + 연간 부대비용(자동차세·채권·대행료) 만큼만 매달 나눠서 내는 구조입니다.</div>
         <table class="ct">
           <thead><tr><th class="thm">구분</th><th>48개월</th><th>60개월</th></tr></thead>
           <tbody>
@@ -320,11 +315,13 @@ table.qt tr.qins td{background:#eef2fd;font-size:11px;color:#4a5578;}
             <tr><td class="sb">자동차세</td><td class="vr" id="l-ctx48">-</td><td class="vr" id="l-ctx60">-</td></tr>
             <tr><td class="sb">채권</td><td class="vr" id="l-bond">-</td><td class="vr" id="l-bond2">-</td></tr>
             <tr><td class="sb">대행료</td><td class="vr" id="l-agc">-</td><td class="vr" id="l-agc2">-</td></tr>
+            <tr class="hl"><td class="sb">연간 부대비용 합계</td><td class="vr" id="l-annual48">-</td><td class="vr" id="l-annual60">-</td></tr>
             <tr class="sec"><td colspan="3">월 대여료</td></tr>
             <tr><td class="sb">월 대여료</td><td class="vr" id="l-base48">-</td><td class="vr" id="l-base60">-</td></tr>
+            <tr><td class="sb">선수금차감</td><td class="vr" id="l-ded48">-</td><td class="vr" id="l-ded60">-</td></tr>
             <tr class="red"><td class="lb">실납입 대여료</td><td class="vr" id="l-fin48">-</td><td class="vr" id="l-fin60">-</td></tr>
             <tr class="sec"><td colspan="3">만기 시</td></tr>
-            <tr><td class="sb">만기인수금</td><td class="vr" id="l-res48">-</td><td class="vr" id="l-res60">-</td></tr>
+            <tr><td class="sb" id="l-res-label">만기인수금</td><td class="vr" id="l-res48">-</td><td class="vr" id="l-res60">-</td></tr>
           </tbody>
         </table>
       </div>
@@ -581,16 +578,23 @@ function showResult(r) {
   s("l-ctx48",W(l.carTax48)); s("l-ctx60",W(l.carTax60));
   s("l-bond",W(l.bond));     s("l-bond2",W(l.bond));
   s("l-agc",W(l.agency));    s("l-agc2",W(l.agency));
+  s("l-annual48",W(l.annualCost48)); s("l-annual60",W(l.annualCost60));
   s("l-base48",W(l.monthlyLease48)); s("l-base60",W(l.monthlyLease60));
+  s("l-ded48",N(l.deduct48)+"원"); s("l-ded60",N(l.deduct60)+"원");
   s("l-fin48",W(l.final48)); s("l-fin60",W(l.final60));
-  s("l-res48",W(l.residual)); s("l-res60",W(l.residual));
+
+  // 만기인수금: 보증금이 만기인수금(20%) 이상이면 0원, 아니면 부족분만 표시
+  const resLabel = document.getElementById("l-res-label");
+  if (l.residualGap === 0) {
+    resLabel.textContent = "만기인수금 (보증금으로 충당)";
+  } else {
+    resLabel.textContent = "만기인수금 (부족분)";
+  }
+  s("l-res48", W(l.residualGap)); s("l-res60", W(l.residualGap));
+
   s("sum-init48",W(l.initL));  s("sum-init60",W(l.initL));
   s("sum-monthly48",W(l.final48)); s("sum-monthly60",W(l.final60));
-  s("sum-res48",W(l.residual)); s("sum-res60",W(l.residual));
-  const initPct = (l.initL / l.price * 100).toFixed(1);
-  const resPct = (l.residual / l.price * 100).toFixed(1);
-  s("sum-initpct48", `(차량가의 ${initPct}%)`); s("sum-initpct60", `(차량가의 ${initPct}%)`);
-  s("sum-respct48", `(차량가의 ${resPct}%)`);   s("sum-respct60", `(차량가의 ${resPct}%)`);
+  s("sum-res48",W(l.residualGap)); s("sum-res60",W(l.residualGap));
   window.scrollTo({top:document.getElementById("result").offsetTop-70,behavior:"smooth"});
 }
 function openModal() {
