@@ -106,7 +106,18 @@ table.pft2 tr.pf2sec td{background:#eef2fd;font-weight:700;color:var(--primary);
 table.pft2 tr.pf2hl td{background:var(--yellow);font-weight:700;}
 table.pft2 tr.pf2profit td{background:var(--blue-light);font-weight:800;color:var(--primary);font-size:13px;}
 .cmp-outer{background:#fff;border:1px solid var(--border2);border-radius:12px;box-shadow:var(--shadow);overflow:hidden;}
+.summary-card{background:linear-gradient(135deg,#1a4fd6,#0ea5e9);border-radius:12px;padding:18px 22px;margin-bottom:16px;color:#fff;}
+.summary-title{font-size:14px;font-weight:800;margin-bottom:14px;}
+.summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.summary-col{background:rgba(255,255,255,.12);border-radius:10px;padding:14px 16px;}
+.summary-period{font-size:12px;font-weight:700;margin-bottom:10px;opacity:.9;}
+.summary-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;font-size:13px;}
+.summary-row span{opacity:.85;}
+.summary-row strong{font-size:15px;font-weight:800;}
+.summary-pct{text-align:right;font-size:11px;opacity:.8;margin-top:-3px;margin-bottom:2px;}
+.summary-note{font-size:11px;opacity:.75;margin-top:12px;line-height:1.5;}
 .cmp-header{background:var(--primary);color:#fff;padding:10px 0;text-align:center;font-size:14px;font-weight:800;}
+.cmp-desc{background:#f4f7ff;color:var(--text2);padding:10px 18px;text-align:center;font-size:12px;line-height:1.5;border-bottom:1px solid var(--border2);}
 .cmp-body{display:grid;grid-template-columns:1fr 1px 1fr;align-items:start;}
 .cmp-div{background:var(--border2);}
 .cmp-side,.cmp-left,.cmp-right{height:100%;}
@@ -270,29 +281,50 @@ table.qt tr.qins td{background:#eef2fd;font-size:11px;color:#4a5578;}
           견적서 뽑기
         </button>
       </div>
+      <div class="summary-card">
+        <div class="summary-title">💡 이 견적, 쉽게 말하면</div>
+        <div class="summary-grid">
+          <div class="summary-col">
+            <div class="summary-period">48개월 계약 시</div>
+            <div class="summary-row"><span>지금 내는 돈</span><strong id="sum-init48">-</strong></div>
+            <div class="summary-pct" id="sum-initpct48">-</div>
+            <div class="summary-row"><span>매달 내는 돈</span><strong id="sum-monthly48">-</strong></div>
+            <div class="summary-row"><span>계약 끝나고 차 사려면</span><strong id="sum-res48">-</strong></div>
+            <div class="summary-pct" id="sum-respct48">-</div>
+          </div>
+          <div class="summary-col">
+            <div class="summary-period">60개월 계약 시</div>
+            <div class="summary-row"><span>지금 내는 돈</span><strong id="sum-init60">-</strong></div>
+            <div class="summary-pct" id="sum-initpct60">-</div>
+            <div class="summary-row"><span>매달 내는 돈</span><strong id="sum-monthly60">-</strong></div>
+            <div class="summary-row"><span>계약 끝나고 차 사려면</span><strong id="sum-res60">-</strong></div>
+            <div class="summary-pct" id="sum-respct60">-</div>
+          </div>
+        </div>
+        <div class="summary-note">※ "지금 내는 돈"은 보증금+선수금 합계, "계약 끝나고 차 사려면"은 만기인수금(차량가의 20%)입니다.</div>
+      </div>
       <div class="cmp-outer">
         <div class="cmp-header">【하모니】 구입형 리스 견적</div>
-        <table class="ct" style="max-width:600px;margin:0 auto;">
+        <div class="cmp-desc">차량가격 + 연간 부대비용(자동차세·채권·대행료) 만큼만 매달 나눠서 내는 구조입니다. 추가로 발생하는 숨은 비용은 없습니다.</div>
+        <table class="ct">
           <thead><tr><th class="thm">구분</th><th>48개월</th><th>60개월</th></tr></thead>
           <tbody>
-            <tr class="bl"><td class="lb">4년 / 5년 총 투입비</td><td class="vr" id="l-tot48">-</td><td class="vr" id="l-tot60">-</td></tr>
-            <tr class="hl"><td class="lb">월 평균비용</td><td class="vr" id="l-avg48">-</td><td class="vr" id="l-avg60">-</td></tr>
             <tr class="sec"><td colspan="3">차량가격</td></tr>
             <tr><td class="sb">차량가격</td><td class="vr" id="l-price48">-</td><td class="vr" id="l-price60">-</td></tr>
             <tr><td class="sb">대여기간</td><td class="vc">48개월</td><td class="vc">60개월</td></tr>
             <tr class="sec"><td colspan="3">초기비용</td></tr>
             <tr><td class="sb">보증금</td><td class="vr" id="l-dep48">-</td><td class="vr" id="l-dep60">-</td></tr>
             <tr><td class="sb">선수금</td><td class="vr" id="l-pre48">-</td><td class="vr" id="l-pre60">-</td></tr>
-            <tr class="hl"><td class="sb">합계</td><td class="vr" id="l-init48">-</td><td class="vr" id="l-init60">-</td></tr>
-            <tr><td class="sb">차량형식</td><td class="vc">구입형 리스</td><td class="vc">구입형 리스</td></tr>
-            <tr><td class="sb">만기처리방식</td><td class="vc">구입형(인수형)</td><td class="vc">구입형(인수형)</td></tr>
-            <tr><td class="sb">만기인수금</td><td class="vr" id="l-res48">-</td><td class="vr" id="l-res60">-</td></tr>
+            <tr class="hl"><td class="sb">초기비용 합계</td><td class="vr" id="l-init48">-</td><td class="vr" id="l-init60">-</td></tr>
+            <tr class="sec"><td colspan="3">연간 부대비용</td></tr>
+            <tr><td class="sb">자동차세</td><td class="vr" id="l-ctx48">-</td><td class="vr" id="l-ctx60">-</td></tr>
+            <tr><td class="sb">채권</td><td class="vr" id="l-bond">-</td><td class="vr" id="l-bond2">-</td></tr>
+            <tr><td class="sb">대행료</td><td class="vr" id="l-agc">-</td><td class="vr" id="l-agc2">-</td></tr>
+            <tr class="sec"><td colspan="3">월 대여료</td></tr>
             <tr><td class="sb">월 대여료</td><td class="vr" id="l-base48">-</td><td class="vr" id="l-base60">-</td></tr>
-            <tr><td class="sb">선수금차감</td><td class="vr" id="l-ded48">-</td><td class="vr" id="l-ded60">-</td></tr>
             <tr class="red"><td class="lb">실납입 대여료</td><td class="vr" id="l-fin48">-</td><td class="vr" id="l-fin60">-</td></tr>
-            <tr class="tot"><td>총 납입대여료</td><td id="l-tl48">-</td><td id="l-tl60">-</td></tr>
-            <tr class="bl"><td class="lb">4년 / 5년 총 투입비</td><td class="vr" id="l-tot48b">-</td><td class="vr" id="l-tot60b">-</td></tr>
-            <tr class="hl"><td class="lb">월 평균비용</td><td class="vr" id="l-avg48b">-</td><td class="vr" id="l-avg60b">-</td></tr>
+            <tr class="sec"><td colspan="3">만기 시</td></tr>
+            <tr><td class="sb">만기인수금</td><td class="vr" id="l-res48">-</td><td class="vr" id="l-res60">-</td></tr>
           </tbody>
         </table>
       </div>
@@ -542,19 +574,23 @@ async function doCalc() {
 function showResult(r) {
   const l = r.l;
   document.getElementById("result").style.display = "block";
-  s("l-tot48",W(l.total48)); s("l-tot60",W(l.total60));
-  s("l-avg48",W(l.avg48));   s("l-avg60",W(l.avg60));
   s("l-price48",W(l.price)); s("l-price60",W(l.price));
   s("l-dep48",W(l.deposit)); s("l-dep60",W(l.deposit));
   s("l-pre48",W(l.prepay));  s("l-pre60",W(l.prepay));
   s("l-init48",W(l.initL));  s("l-init60",W(l.initL));
-  s("l-res48",W(l.residual)); s("l-res60",W(l.residual));
+  s("l-ctx48",W(l.carTax48)); s("l-ctx60",W(l.carTax60));
+  s("l-bond",W(l.bond));     s("l-bond2",W(l.bond));
+  s("l-agc",W(l.agency));    s("l-agc2",W(l.agency));
   s("l-base48",W(l.monthlyLease48)); s("l-base60",W(l.monthlyLease60));
-  s("l-ded48",N(l.deduct48)+"원");   s("l-ded60",N(l.deduct60)+"원");
-  s("l-fin48",W(l.final48));         s("l-fin60",W(l.final60));
-  s("l-tl48",N(l.totalLease48)+"원"); s("l-tl60",N(l.totalLease60)+"원");
-  s("l-tot48b",W(l.total48)); s("l-tot60b",W(l.total60));
-  s("l-avg48b",W(l.avg48));   s("l-avg60b",W(l.avg60));
+  s("l-fin48",W(l.final48)); s("l-fin60",W(l.final60));
+  s("l-res48",W(l.residual)); s("l-res60",W(l.residual));
+  s("sum-init48",W(l.initL));  s("sum-init60",W(l.initL));
+  s("sum-monthly48",W(l.final48)); s("sum-monthly60",W(l.final60));
+  s("sum-res48",W(l.residual)); s("sum-res60",W(l.residual));
+  const initPct = (l.initL / l.price * 100).toFixed(1);
+  const resPct = (l.residual / l.price * 100).toFixed(1);
+  s("sum-initpct48", `(차량가의 ${initPct}%)`); s("sum-initpct60", `(차량가의 ${initPct}%)`);
+  s("sum-respct48", `(차량가의 ${resPct}%)`);   s("sum-respct60", `(차량가의 ${resPct}%)`);
   window.scrollTo({top:document.getElementById("result").offsetTop-70,behavior:"smooth"});
 }
 function openModal() {
@@ -767,7 +803,8 @@ function renderProfit(r) {
           ${transferRow}
 
           <tr class="pf2hl"><td class="pfl">최종렌트료</td><td class="pfv">${W(c.finalRent48)}</td><td class="pfv">${W(c.finalRent60)}</td></tr>
-          <tr class="pf2profit"><td class="pfl">순 이익</td><td class="pfv">${W(pf.netProfit48)}</td><td class="pfv">${W(pf.netProfit60)}</td></tr>
+          <tr class="pf2profit"><td class="pfl">순 이익 (총)</td><td class="pfv">${W(pf.netProfit48)}</td><td class="pfv">${W(pf.netProfit60)}</td></tr>
+          <tr class="pf2profit"><td class="pfl">순 이익 (월)</td><td class="pfv">${W(pf.netProfit48/48)}</td><td class="pfv">${W(pf.netProfit60/60)}</td></tr>
           <tr class="pf2profit"><td class="pfl">수익율</td><td class="pfv">${pct(pf.profitRate48)}</td><td class="pfv">${pct(pf.profitRate60)}</td></tr>
         </tbody>
       </table>
