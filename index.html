@@ -90,6 +90,15 @@ table.pft td.pfl{color:var(--text2);}
 table.pft td.pfv{text-align:right;font-weight:600;}
 table.pft tr.pfhl td{background:var(--yellow);font-weight:700;}
 table.pft tr.pfprofit td{background:var(--blue-light);font-weight:800;color:var(--primary);}
+table.pft2{width:100%;border-collapse:collapse;font-size:12px;}
+table.pft2 th.pf2h{background:#e8eef9;color:var(--text2);padding:7px 10px;text-align:center;font-weight:600;border-bottom:1px solid var(--border);}
+table.pft2 th.pf2h:first-child{text-align:left;}
+table.pft2 td{padding:6px 10px;border-bottom:1px solid var(--border2);}
+table.pft2 td.pfl{color:var(--text2);}
+table.pft2 td.pfv{text-align:right;font-weight:600;width:130px;}
+table.pft2 tr.pf2sec td{background:#eef2fd;font-weight:700;color:var(--primary);font-size:11px;padding:5px 10px;}
+table.pft2 tr.pf2hl td{background:var(--yellow);font-weight:700;}
+table.pft2 tr.pf2profit td{background:var(--blue-light);font-weight:800;color:var(--primary);font-size:13px;}
 .cmp-outer{background:#fff;border:1px solid var(--border2);border-radius:12px;box-shadow:var(--shadow);overflow:hidden;}
 .cmp-header{background:var(--primary);color:#fff;padding:10px 0;text-align:center;font-size:14px;font-weight:800;}
 .cmp-body{display:grid;grid-template-columns:1fr 1px 1fr;align-items:start;}
@@ -732,73 +741,43 @@ async function loadProfit() {
 function closeProfitModal() { document.getElementById("profit-modal").classList.remove("open"); }
 
 function renderProfit(r) {
-  const c = r.cost, rev = r.revenue, pf = r.profit, dep = r.depreciation, v = r.vehicle;
+  const c = r.cost, pf = r.profit, v = r.vehicle;
   const pct = n => (n*100).toFixed(1) + "%";
   document.getElementById("profit-doc").innerHTML = `
     <div class="pf-section">
       <div class="pf-title">차량정보</div>
       <table class="pft">
-        <tr><td class="pfl">차량</td><td class="pfv">${v.브랜드명} ${v.시리즈명} ${v.라인업명}</td></tr>
-        <tr><td class="pfl">차량가격</td><td class="pfv">${W(r.input.carPrice)}</td></tr>
+        <tr><td class="pfl">차량</td><td class="pfv" colspan="2">${v.브랜드명} ${v.시리즈명} ${v.라인업명}</td></tr>
+        <tr><td class="pfl">차량가격</td><td class="pfv" colspan="2">${W(r.input.carPrice)}</td></tr>
+        <tr><td class="pfl">보증금율</td><td class="pfv" colspan="2">${(r.input.depositRate*100).toFixed(0)}%</td></tr>
       </table>
     </div>
     <div class="pf-section">
-      <div class="pf-title">취득원가 (하모니 부담)</div>
-      <table class="pft">
-        <tr><td class="pfl">구입가격(공급가)</td><td class="pfv">${W(c.purchasePrice)}</td></tr>
-        <tr><td class="pfl">탁송비</td><td class="pfv">${W(c.delivery)}</td></tr>
-        <tr><td class="pfl">취득세</td><td class="pfv">${W(c.acqTax)}</td></tr>
-        <tr><td class="pfl">채권</td><td class="pfv">${W(c.bond)}</td></tr>
-        <tr><td class="pfl">대행료</td><td class="pfv">${W(c.agency)}</td></tr>
-        <tr class="pfhl"><td class="pfl">취득가액 합계</td><td class="pfv">${W(c.acqTotal)}</td></tr>
-      </table>
-    </div>
-    <div class="pf-section">
-      <div class="pf-title">유지비용 (자동차세)</div>
-      <table class="pft">
-        <tr><td class="pfl">48개월</td><td class="pfv">${W(c.maintTotal48)}</td></tr>
-        <tr><td class="pfl">60개월</td><td class="pfv">${W(c.maintTotal60)}</td></tr>
-      </table>
-    </div>
-    <div class="pf-section">
-      <div class="pf-title">금융조달 (자체 차입금리 ${c.fundRate}%, 원금 85%)</div>
-      <table class="pft">
-        <tr><td class="pfl">조달원금</td><td class="pfv">${W(c.fundPrincipal)}</td></tr>
-        <tr><td class="pfl">월상환금(48)</td><td class="pfv">${W(c.fundMonthly48)}</td></tr>
-        <tr><td class="pfl">월상환금(60)</td><td class="pfv">${W(c.fundMonthly60)}</td></tr>
-        <tr><td class="pfl">금융이자(48)</td><td class="pfv">${W(c.fundInterest48)}</td></tr>
-        <tr><td class="pfl">금융이자(60)</td><td class="pfv">${W(c.fundInterest60)}</td></tr>
-      </table>
-    </div>
-    <div class="pf-section">
-      <div class="pf-title">비용/수익 종합</div>
-      <table class="pft">
-        <tr><td class="pfl">이전비용(추정)</td><td class="pfv">${W(c.transferCostEstimate)}</td></tr>
-        <tr class="pfhl"><td class="pfl">총 비용(48)</td><td class="pfv">${W(c.totalCost48)}</td></tr>
-        <tr class="pfhl"><td class="pfl">총 비용(60)</td><td class="pfv">${W(c.totalCost60)}</td></tr>
-        <tr class="pfhl"><td class="pfl">총 수익(48)</td><td class="pfv">${W(rev.totalRevenue48)}</td></tr>
-        <tr class="pfhl"><td class="pfl">총 수익(60)</td><td class="pfv">${W(rev.totalRevenue60)}</td></tr>
-      </table>
-    </div>
-    <div class="pf-section">
-      <div class="pf-title">순이익 / 수익율</div>
-      <table class="pft">
-        <tr class="pfprofit"><td class="pfl">순 이익(48)</td><td class="pfv">${W(pf.netProfit48)}</td></tr>
-        <tr class="pfprofit"><td class="pfl">수익율(48)</td><td class="pfv">${pct(pf.profitRate48)}</td></tr>
-        <tr class="pfprofit"><td class="pfl">순 이익(60)</td><td class="pfv">${W(pf.netProfit60)}</td></tr>
-        <tr class="pfprofit"><td class="pfl">수익율(60)</td><td class="pfv">${pct(pf.profitRate60)}</td></tr>
-        <tr><td class="pfl">목표수익율</td><td class="pfv">${pct(pf.targetRate)}</td></tr>
-        <tr><td class="pfl">목표대비 차액(48)</td><td class="pfv">${W(pf.targetGap48)}</td></tr>
-        <tr><td class="pfl">목표대비 차액(60)</td><td class="pfv">${W(pf.targetGap60)}</td></tr>
-        <tr><td class="pfl">연간 환산(48)</td><td class="pfv">${W(pf.targetGapAnnual48)}</td></tr>
-        <tr><td class="pfl">연간 환산(60)</td><td class="pfv">${W(pf.targetGapAnnual60)}</td></tr>
-      </table>
-    </div>
-    <div class="pf-section">
-      <div class="pf-title">감가상각</div>
-      <table class="pft">
-        <tr><td class="pfl">실부담액(취득+유지-보증금)</td><td class="pfv">${W(dep.realBurden)}</td></tr>
-        <tr><td class="pfl">월감가액(48개월 기준)</td><td class="pfv">${W(dep.monthlyDepreciation48)}</td></tr>
+      <table class="pft2">
+        <thead><tr><th class="pf2h">구분</th><th class="pf2h">48개월</th><th class="pf2h">60개월</th></tr></thead>
+        <tbody>
+          <tr class="pf2sec"><td colspan="3">취득가액 (하모니 부담)</td></tr>
+          <tr><td class="pfl">구입가격(공급가)</td><td class="pfv">${W(c.purchasePrice)}</td><td class="pfv">${W(c.purchasePrice)}</td></tr>
+          <tr><td class="pfl">탁송비</td><td class="pfv">${W(c.delivery)}</td><td class="pfv">${W(c.delivery)}</td></tr>
+          <tr><td class="pfl">취득세</td><td class="pfv">${W(c.acqTax)}</td><td class="pfv">${W(c.acqTax)}</td></tr>
+          <tr><td class="pfl">채권</td><td class="pfv">${W(c.bond)}</td><td class="pfv">${W(c.bond)}</td></tr>
+          <tr><td class="pfl">대행료</td><td class="pfv">${W(c.agency)}</td><td class="pfv">${W(c.agency)}</td></tr>
+          <tr class="pf2hl"><td class="pfl">취득가액 합계</td><td class="pfv">${W(c.acqTotal)}</td><td class="pfv">${W(c.acqTotal)}</td></tr>
+
+          <tr class="pf2sec"><td colspan="3">자동차세 / 원비용</td></tr>
+          <tr><td class="pfl">자동차세</td><td class="pfv">${W(c.carTax48)}</td><td class="pfv">${W(c.carTax60)}</td></tr>
+          <tr class="pf2hl"><td class="pfl">원비용(취득가액+자동차세-보증금)</td><td class="pfv">${W(c.realCost48)}</td><td class="pfv">${W(c.realCost60)}</td></tr>
+
+          <tr class="pf2sec"><td colspan="3">수익 / 차감비용</td></tr>
+          <tr><td class="pfl">15%이자수익(원비용 PMT, 원금제외)</td><td class="pfv">${W(c.interestIncome48)}</td><td class="pfv">${W(c.interestIncome60)}</td></tr>
+          <tr><td class="pfl">7%조달이자(48개월고정,차량가85%)</td><td class="pfv">${W(c.fundInterest)}</td><td class="pfv">${W(c.fundInterest)}</td></tr>
+          <tr><td class="pfl">GPS비용</td><td class="pfv">${W(c.gps48)}</td><td class="pfv">${W(c.gps60)}</td></tr>
+          <tr><td class="pfl">수수료(P)</td><td class="pfv">${W(c.pAmount)}</td><td class="pfv">${W(c.pAmount)}</td></tr>
+          <tr><td class="pfl">이전비용((취득세+채권+대행료)×35.9%)</td><td class="pfv">${W(c.transferCost)}</td><td class="pfv">${W(c.transferCost)}</td></tr>
+
+          <tr class="pf2profit"><td class="pfl">순 이익</td><td class="pfv">${W(pf.netProfit48)}</td><td class="pfv">${W(pf.netProfit60)}</td></tr>
+          <tr class="pf2profit"><td class="pfl">수익율</td><td class="pfv">${pct(pf.profitRate48)}</td><td class="pfv">${pct(pf.profitRate60)}</td></tr>
+        </tbody>
       </table>
     </div>
   `;
