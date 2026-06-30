@@ -82,6 +82,12 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;heigh
 .padmin-box input:focus{border-color:var(--primary);}
 .padmin-box button{width:100%;padding:11px;background:var(--primary);border:none;border-radius:8px;color:#fff;font-size:14px;font-weight:700;font-family:inherit;cursor:pointer;}
 #padmin-err{color:var(--error);font-size:12px;margin-top:8px;min-height:16px;}
+.pf-input-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.pf-input-row label{font-size:12px;color:var(--text2);font-weight:500;}
+.pf-input-wrap{display:flex;align-items:center;gap:5px;}
+.pf-input-wrap input{width:110px;padding:7px 9px;border:1px solid var(--border);border-radius:6px;font-size:13px;font-family:inherit;outline:none;text-align:right;}
+.pf-input-wrap input:focus{border-color:var(--primary);}
+.pf-input-wrap span{font-size:12px;color:var(--muted);width:16px;}
 .pf-section{margin-bottom:16px;}
 .pf-title{font-size:12px;font-weight:700;color:var(--primary);margin-bottom:6px;padding-bottom:4px;border-bottom:1px solid var(--border2);}
 table.pft{width:100%;border-collapse:collapse;font-size:12px;}
@@ -237,16 +243,7 @@ table.qt tr.qins td{background:#eef2fd;font-size:11px;color:#4a5578;}
               <div class="sl-labels"><span>0%</span><span>25%</span><span>50%</span></div>
             </div>
           </div>
-          <div class="ip-row" style="margin-top:10px;">
-            <label>수수료 (P)</label>
-            <div class="p-input-wrap">
-              <input type="text" id="i-p-val" placeholder="0" oninput="fmtNum(this)"/>
-              <div class="p-toggle">
-                <button id="pt-pct" class="on" onclick="setPMode('pct')">%</button>
-                <button id="pt-won" onclick="setPMode('won')">원</button>
-              </div>
-            </div>
-          </div>
+
         </div>
       </div>
       <div class="calc-wrap">
@@ -274,82 +271,30 @@ table.qt tr.qins td{background:#eef2fd;font-size:11px;color:#4a5578;}
         </button>
       </div>
       <div class="cmp-outer">
-        <div class="cmp-header">[차량구입] 할부 vs 렌트/리스 비교</div>
-        <div class="cmp-body">
-          <div class="cmp-left">
-            <div class="cmp-sub">【할부】 자가용 구입</div>
-            <table class="ct">
-              <thead><tr><th class="thm">구분</th><th>신용제한 고객</th><th>신용제한 고객</th></tr></thead>
-              <tbody>
-                <tr class="bl"><td class="lb">4년 / 5년 총 투입비</td><td class="vr" id="g-tot48">-</td><td class="vr" id="g-tot60">-</td></tr>
-                <tr class="hl"><td class="lb">월 평균비용</td><td class="vr" id="g-avg48">-</td><td class="vr" id="g-avg60">-</td></tr>
-                <tr class="sec"><td colspan="3">차량가격</td></tr>
-                <tr><td class="sb">차량가격</td><td class="vr" id="g-price48">-</td><td class="vr" id="g-price60">-</td></tr>
-                <tr><td class="sb">할부기간</td><td class="vc">48개월</td><td class="vc">60개월</td></tr>
-                <tr class="sec"><td colspan="3">초기비용</td></tr>
-                <tr><td class="sb">인도금(10%)</td><td class="vr" id="g-down">-</td><td class="vr" id="g-down2">-</td></tr>
-                <tr><td class="sb">탁송비</td><td class="vr" id="g-dlv">-</td><td class="vr" id="g-dlv2">-</td></tr>
-                <tr><td class="sb">취득세</td><td class="vr" id="g-acq">-</td><td class="vr" id="g-acq2">-</td></tr>
-                <tr><td class="sb">채권</td><td class="vr" id="g-bond">-</td><td class="vr" id="g-bond2">-</td></tr>
-                <tr><td class="sb">대행료</td><td class="vr" id="g-agc">-</td><td class="vr" id="g-agc2">-</td></tr>
-                <tr class="hl"><td class="sb">합계</td><td class="vr" id="g-init">-</td><td class="vr" id="g-init2">-</td></tr>
-                <tr class="sec"><td colspan="3">유지비용</td></tr>
-                <tr><td class="sb">보험료</td><td class="vr">0원</td><td class="vr">0원</td></tr>
-                <tr><td class="sb">자동차세</td><td class="vr" id="g-ctx48">-</td><td class="vr" id="g-ctx60">-</td></tr>
-                <tr class="hl"><td class="sb">합계</td><td class="vr" id="g-mnt48">-</td><td class="vr" id="g-mnt60">-</td></tr>
-                <tr class="sec"><td colspan="3">할부금</td></tr>
-                <tr><td class="sb">금리</td><td class="vc" id="g-rate">-</td><td class="vc" id="g-rate2">-</td></tr>
-                <tr class="hl"><td class="sb">월부금</td><td class="vr" id="g-m48">-</td><td class="vr" id="g-m60">-</td></tr>
-                <tr><td class="emp" colspan="3"></td></tr>
-                <tr><td class="emp" colspan="3"></td></tr>
-                <tr><td class="emp" colspan="3"></td></tr>
-                <tr><td class="emp" colspan="3"></td></tr>
-                <tr><td class="emp" colspan="3"></td></tr>
-                <tr class="tot"><td>총 할부금</td><td id="g-ti48">-</td><td id="g-ti60">-</td></tr>
-                <tr><td class="emp" colspan="3"></td></tr>
-                <tr class="bl"><td class="lb">4년 / 5년 총 투입비</td><td class="vr" id="g-tot48b">-</td><td class="vr" id="g-tot60b">-</td></tr>
-                <tr class="hl"><td class="lb">월 평균비용</td><td class="vr" id="g-avg48b">-</td><td class="vr" id="g-avg60b">-</td></tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="cmp-div"></div>
-          <div class="cmp-right">
-            <div class="cmp-sub">【하모니】 구입형 리스</div>
-            <table class="ct">
-              <thead><tr><th class="thm">구분</th><th>구입형 리스</th><th>구입형 리스</th></tr></thead>
-              <tbody>
-                <tr class="bl"><td class="lb">4년 / 5년 총 투입비</td><td class="vr" id="l-tot48">-</td><td class="vr" id="l-tot60">-</td></tr>
-                <tr class="hl"><td class="lb">월 평균비용</td><td class="vr" id="l-avg48">-</td><td class="vr" id="l-avg60">-</td></tr>
-                <tr class="sec"><td colspan="3">차량가격</td></tr>
-                <tr><td class="sb">차량가격</td><td class="vr" id="l-price48">-</td><td class="vr" id="l-price60">-</td></tr>
-                <tr><td class="sb">대여기간</td><td class="vc">48개월</td><td class="vc">60개월</td></tr>
-                <tr class="sec"><td colspan="3">초기비용</td></tr>
-                <tr><td class="sb">보증금</td><td class="vr" id="l-dep48">-</td><td class="vr" id="l-dep60">-</td></tr>
-                <tr><td class="emp" colspan="3"></td></tr>
-                <tr><td class="sb">선수금</td><td class="vr" id="l-pre48">-</td><td class="vr" id="l-pre60">-</td></tr>
-                <tr><td class="emp" colspan="3"></td></tr>
-                <tr><td class="emp" colspan="3"></td></tr>
-                <tr class="hl"><td class="sb">합계</td><td class="vr" id="l-init48">-</td><td class="vr" id="l-init60">-</td></tr>
-                <tr class="sec"><td colspan="3">기타비용</td></tr>
-                <tr><td class="sb">하이링크 서비스</td><td class="vr">2,000원/월</td><td class="vr">2,000원/월</td></tr>
-                <tr><td class="emp" colspan="3"></td></tr>
-                <tr><td class="emp" colspan="3"></td></tr>
-                <tr><td class="sb">차량형식</td><td class="vc">구입형 리스</td><td class="vc">구입형 리스</td></tr>
-                <tr><td class="sb">만기처리방식</td><td class="vc">구입형(인수형)</td><td class="vc">구입형(인수형)</td></tr>
-                <tr><td class="sb">만기인수금</td><td class="vr" id="l-res48">-</td><td class="vr" id="l-res60">-</td></tr>
-                <tr><td class="emp" colspan="3"></td></tr>
-                <tr><td class="sb">월 대여료</td><td class="vr" id="l-base48">-</td><td class="vr" id="l-base60">-</td></tr>
-                <tr><td class="sb">선수금차감</td><td class="vr" id="l-ded48">-</td><td class="vr" id="l-ded60">-</td></tr>
-                <tr><td class="emp" colspan="3"></td></tr>
-                <tr class="red"><td class="lb">실납입 대여료</td><td class="vr" id="l-fin48">-</td><td class="vr" id="l-fin60">-</td></tr>
-                <tr class="tot"><td>총 납입대여료</td><td id="l-tl48">-</td><td id="l-tl60">-</td></tr>
-                <tr><td class="emp" colspan="3"></td></tr>
-                <tr class="bl"><td class="lb">4년 / 5년 총 투입비</td><td class="vr" id="l-tot48b">-</td><td class="vr" id="l-tot60b">-</td></tr>
-                <tr class="hl"><td class="lb">월 평균비용</td><td class="vr" id="l-avg48b">-</td><td class="vr" id="l-avg60b">-</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
+        <div class="cmp-header">【하모니】 구입형 리스 견적</div>
+        <table class="ct" style="max-width:600px;margin:0 auto;">
+          <thead><tr><th class="thm">구분</th><th>48개월</th><th>60개월</th></tr></thead>
+          <tbody>
+            <tr class="bl"><td class="lb">4년 / 5년 총 투입비</td><td class="vr" id="l-tot48">-</td><td class="vr" id="l-tot60">-</td></tr>
+            <tr class="hl"><td class="lb">월 평균비용</td><td class="vr" id="l-avg48">-</td><td class="vr" id="l-avg60">-</td></tr>
+            <tr class="sec"><td colspan="3">차량가격</td></tr>
+            <tr><td class="sb">차량가격</td><td class="vr" id="l-price48">-</td><td class="vr" id="l-price60">-</td></tr>
+            <tr><td class="sb">대여기간</td><td class="vc">48개월</td><td class="vc">60개월</td></tr>
+            <tr class="sec"><td colspan="3">초기비용</td></tr>
+            <tr><td class="sb">보증금</td><td class="vr" id="l-dep48">-</td><td class="vr" id="l-dep60">-</td></tr>
+            <tr><td class="sb">선수금</td><td class="vr" id="l-pre48">-</td><td class="vr" id="l-pre60">-</td></tr>
+            <tr class="hl"><td class="sb">합계</td><td class="vr" id="l-init48">-</td><td class="vr" id="l-init60">-</td></tr>
+            <tr><td class="sb">차량형식</td><td class="vc">구입형 리스</td><td class="vc">구입형 리스</td></tr>
+            <tr><td class="sb">만기처리방식</td><td class="vc">구입형(인수형)</td><td class="vc">구입형(인수형)</td></tr>
+            <tr><td class="sb">만기인수금</td><td class="vr" id="l-res48">-</td><td class="vr" id="l-res60">-</td></tr>
+            <tr><td class="sb">월 대여료</td><td class="vr" id="l-base48">-</td><td class="vr" id="l-base60">-</td></tr>
+            <tr><td class="sb">선수금차감</td><td class="vr" id="l-ded48">-</td><td class="vr" id="l-ded60">-</td></tr>
+            <tr class="red"><td class="lb">실납입 대여료</td><td class="vr" id="l-fin48">-</td><td class="vr" id="l-fin60">-</td></tr>
+            <tr class="tot"><td>총 납입대여료</td><td id="l-tl48">-</td><td id="l-tl60">-</td></tr>
+            <tr class="bl"><td class="lb">4년 / 5년 총 투입비</td><td class="vr" id="l-tot48b">-</td><td class="vr" id="l-tot60b">-</td></tr>
+            <tr class="hl"><td class="lb">월 평균비용</td><td class="vr" id="l-avg48b">-</td><td class="vr" id="l-avg60b">-</td></tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
@@ -378,12 +323,40 @@ table.qt tr.qins td{background:#eef2fd;font-size:11px;color:#4a5578;}
   </div>
 </div>
 
+<!-- 수익분석 입력값 설정 모달 -->
+<div class="modal-bg" id="profit-input-modal">
+  <div class="padmin-box" style="width:380px;">
+    <h3>⚙️ 수익분석 변수 설정</h3>
+    <p>비워두면 기본값이 적용됩니다</p>
+    <div style="text-align:left;">
+      <div class="pf-input-row">
+        <label>이자비용 금리</label>
+        <div class="pf-input-wrap"><input type="text" id="pi-rate" placeholder="15"/><span>%</span></div>
+      </div>
+      <div class="pf-input-row">
+        <label>대행료 비율</label>
+        <div class="pf-input-wrap"><input type="text" id="pi-agency" placeholder="1.5"/><span>%</span></div>
+      </div>
+      <div class="pf-input-row">
+        <label>수수료</label>
+        <div class="pf-input-wrap"><input type="text" id="pi-fee" placeholder="300,000" oninput="fmtNum(this)"/><span>원</span></div>
+      </div>
+      <div class="pf-input-row">
+        <label>이전비용</label>
+        <div class="pf-input-wrap"><input type="text" id="pi-transfer" placeholder="0" oninput="fmtNum(this)"/><span>원</span></div>
+      </div>
+    </div>
+    <button onclick="submitProfitInput()" style="margin-top:14px;">수익분석 계산</button>
+  </div>
+</div>
+
 <!-- 수익분석 모달 -->
 <div class="modal-bg" id="profit-modal">
   <div class="modal-box" style="max-width:700px;">
     <div class="modal-top">
       <h3>📊 수익분석 (본사 전용)</h3>
       <div class="modal-btns">
+        <button class="btn-close" onclick="document.getElementById('profit-input-modal').classList.add('open');document.getElementById('profit-modal').classList.remove('open');">⚙️ 변수 재설정</button>
         <button class="btn-close" onclick="closeProfitModal()">닫기</button>
       </div>
     </div>
@@ -528,33 +501,32 @@ function setPMode(mode) {
   document.getElementById("i-p-val")._raw = "";
 }
 function getPAmount(price) {
-  const raw = (document.getElementById("i-p-val")._raw || document.getElementById("i-p-val").value).replace(/,/g,"");
-  const val = parseFloat(raw) || 0;
-  if (pMode === "pct") return Math.round(price * val / 100);
-  return Math.round(val);
+  return 0; // 수수료 입력 제거됨
 }
 const W = n => { if(n===null||n===undefined) return "-"; return Math.round(Number(n)).toLocaleString("ko-KR")+"원"; };
 const N = n => { if(n===null||n===undefined) return "-"; return Math.round(Number(n)).toLocaleString("ko-KR"); };
 function s(id, v) { const el=document.getElementById(id); if(el) el.textContent=v; }
+let adminVars = null; // 관리자가 설정한 변수 (있으면 견적계산에도 반영)
+
 async function doCalc() {
   if (!selV) return;
   const btn = document.getElementById("cbtn");
   btn.disabled = true; btn.textContent = "계산 중...";
   const price = parseInt((document.getElementById("i-price")._raw || document.getElementById("i-price").value).replace(/,/g,"")) || selV.기본가격 || 0;
   const preRate = parseInt(document.getElementById("ps").value) / 100;
-  const pAmount = getPAmount(price);
   try {
+    const body = {
+      token,
+      brandCode: selV.브랜드코드, seriesCode: selV.시리즈코드,
+      modelCode: selV.모델코드, lineupCode: selV.라인업코드,
+      price, depositRate: depRate/100, prepayRate: preRate,
+      regdate: document.getElementById("i-regdate").value,
+      mileage: (document.getElementById("i-mileage")._raw || document.getElementById("i-mileage").value).replace(/,/g,"")
+    };
+    if (adminVars) Object.assign(body, adminVars);
     const r = await fetch(`${WORKER_URL}/api/estimate`, {
       method:"POST", headers:{"Content-Type":"application/json"},
-      body: JSON.stringify({
-        token,
-        brandCode: selV.브랜드코드, seriesCode: selV.시리즈코드,
-        modelCode: selV.모델코드, lineupCode: selV.라인업코드,
-        price, depositRate: depRate/100, prepayRate: preRate,
-        pAmount,
-        regdate: document.getElementById("i-regdate").value,
-        mileage: (document.getElementById("i-mileage")._raw || document.getElementById("i-mileage").value).replace(/,/g,"")
-      })
+      body: JSON.stringify(body)
     });
     const d = await r.json();
     if (!d.success) { alert(d.message); return; }
@@ -564,24 +536,8 @@ async function doCalc() {
   finally { btn.disabled = false; btn.textContent = "견적 계산하기"; }
 }
 function showResult(r) {
-  const g = r.g; const l = r.l;
+  const l = r.l;
   document.getElementById("result").style.display = "block";
-  s("g-tot48",W(g.total48)); s("g-tot60",W(g.total60));
-  s("g-avg48",W(g.avg48));   s("g-avg60",W(g.avg60));
-  s("g-price48",W(g.price)); s("g-price60",W(g.price));
-  s("g-down",W(g.down));     s("g-down2",W(g.down));
-  s("g-dlv",W(g.delivery));  s("g-dlv2",W(g.delivery));
-  s("g-acq",W(g.acqTax));    s("g-acq2",W(g.acqTax));
-  s("g-bond",W(g.bond));     s("g-bond2",W(g.bond));
-  s("g-agc",W(g.agency));    s("g-agc2",W(g.agency));
-  s("g-init",W(g.initG));    s("g-init2",W(g.initG));
-  s("g-ctx48",W(g.maint48)); s("g-ctx60",W(g.maint60));
-  s("g-mnt48",W(g.maint48)); s("g-mnt60",W(g.maint60));
-  s("g-rate",g.rate.toFixed(1)+"%"); s("g-rate2",g.rate.toFixed(1)+"%");
-  s("g-m48",W(g.monthly48)); s("g-m60",W(g.monthly60));
-  s("g-ti48",N(g.totalInstall48)+"원"); s("g-ti60",N(g.totalInstall60)+"원");
-  s("g-tot48b",W(g.total48)); s("g-tot60b",W(g.total60));
-  s("g-avg48b",W(g.avg48));   s("g-avg60b",W(g.avg60));
   s("l-tot48",W(l.total48)); s("l-tot60",W(l.total60));
   s("l-avg48",W(l.avg48));   s("l-avg60",W(l.avg60));
   s("l-price48",W(l.price)); s("l-price60",W(l.price));
@@ -655,7 +611,6 @@ function renderQuote() {
         <tr><td class="ql">부가세</td><td>${W(l.vat48)}</td><td>${W(l.vat60)}</td></tr>
         <tr><td class="ql">월 대여료</td><td>${W(l.monthlyLease48)}</td><td>${W(l.monthlyLease60)}</td></tr>
         <tr><td class="ql">선납금 차감</td><td>${N(l.deduct48)}원</td><td>${N(l.deduct60)}원</td></tr>
-        <tr><td class="ql">하이링크 서비스</td><td>2,000원</td><td>2,000원</td></tr>
         <tr class="qhl"><td class="ql">실납입 대여료</td><td>${W(l.final48)}</td><td>${W(l.final60)}</td></tr>
       </tbody>
     </table>
@@ -679,12 +634,16 @@ function fmtDate(el) {
 function openProfitModal() {
   if (!selV) { alert("차량을 먼저 선택하고 견적을 계산해주세요."); return; }
   if (adminToken) {
-    loadProfit();
+    openProfitInput();
   } else {
     document.getElementById("padmin-pw").value = "";
     document.getElementById("padmin-err").textContent = "";
     document.getElementById("padmin-modal").classList.add("open");
   }
+}
+
+function openProfitInput() {
+  document.getElementById("profit-input-modal").classList.add("open");
 }
 
 async function doAdminLogin() {
@@ -701,7 +660,7 @@ async function doAdminLogin() {
       adminToken = d.token;
       sessionStorage.setItem("at", adminToken);
       document.getElementById("padmin-modal").classList.remove("open");
-      loadProfit();
+      openProfitInput();
     } else {
       err.textContent = d.message || "비밀번호가 틀렸습니다.";
     }
@@ -709,10 +668,30 @@ async function doAdminLogin() {
 }
 document.getElementById("padmin-pw")?.addEventListener("keydown", e => { if(e.key==="Enter") doAdminLogin(); });
 
-async function loadProfit() {
+function getNum(id) {
+  const el = document.getElementById(id);
+  const raw = (el._raw !== undefined ? el._raw : el.value).toString().replace(/,/g,"");
+  return raw === "" ? null : parseFloat(raw);
+}
+
+async function submitProfitInput() {
+  const rateInput = getNum("pi-rate");
+  const agencyInput = getNum("pi-agency");
+  const feeInput = getNum("pi-fee");
+  const transferInput = getNum("pi-transfer");
+
   const price = parseInt((document.getElementById("i-price")._raw || document.getElementById("i-price").value).replace(/,/g,"")) || selV.기본가격 || 0;
-  const preRate = parseInt(document.getElementById("ps").value) / 100;
-  const pAmount = getPAmount(price);
+
+  document.getElementById("profit-input-modal").classList.remove("open");
+
+  // 견적계산에도 반영될 변수 저장
+  adminVars = {
+    interestRate: rateInput !== null ? rateInput/100 : null,
+    agencyRate: agencyInput !== null ? agencyInput/100 : null,
+    feeAmount: feeInput,
+    transferCost: transferInput,
+  };
+
   try {
     const r = await fetch(`${WORKER_URL}/api/profit`, {
       method:"POST", headers:{"Content-Type":"application/json"},
@@ -720,7 +699,8 @@ async function loadProfit() {
         adminToken,
         brandCode: selV.브랜드코드, seriesCode: selV.시리즈코드,
         modelCode: selV.모델코드, lineupCode: selV.라인업코드,
-        price, depositRate: depRate/100, prepayRate: preRate, pAmount
+        price, depositRate: depRate/100,
+        ...adminVars,
       })
     });
     const d = await r.json();
@@ -735,6 +715,8 @@ async function loadProfit() {
     }
     renderProfit(d.result);
     document.getElementById("profit-modal").classList.add("open");
+    // 변경된 변수로 견적도 재계산
+    if (selV) doCalc();
   } catch(e) { alert("오류: "+e.message); }
 }
 
@@ -743,6 +725,7 @@ function closeProfitModal() { document.getElementById("profit-modal").classList.
 function renderProfit(r) {
   const c = r.cost, pf = r.profit, v = r.vehicle;
   const pct = n => (n*100).toFixed(1) + "%";
+  const transferRow = c.transfer ? `<tr><td class="pfl">이전비용(설정값)</td><td class="pfv">${W(c.transfer)}</td><td class="pfv">${W(c.transfer)}</td></tr>` : "";
   document.getElementById("profit-doc").innerHTML = `
     <div class="pf-section">
       <div class="pf-title">차량정보</div>
@@ -750,6 +733,9 @@ function renderProfit(r) {
         <tr><td class="pfl">차량</td><td class="pfv" colspan="2">${v.브랜드명} ${v.시리즈명} ${v.라인업명}</td></tr>
         <tr><td class="pfl">차량가격</td><td class="pfv" colspan="2">${W(r.input.carPrice)}</td></tr>
         <tr><td class="pfl">보증금율</td><td class="pfv" colspan="2">${(r.input.depositRate*100).toFixed(0)}%</td></tr>
+        <tr><td class="pfl">적용 이자비용 금리</td><td class="pfv" colspan="2">${(r.input.interestRate*100).toFixed(1)}%</td></tr>
+        <tr><td class="pfl">적용 대행료 비율</td><td class="pfv" colspan="2">${(r.input.agencyRate*100).toFixed(1)}%</td></tr>
+        <tr><td class="pfl">적용 수수료</td><td class="pfv" colspan="2">${W(r.input.feeAmount)}</td></tr>
       </table>
     </div>
     <div class="pf-section">
@@ -758,23 +744,22 @@ function renderProfit(r) {
         <tbody>
           <tr class="pf2sec"><td colspan="3">취득가액 (하모니 부담)</td></tr>
           <tr><td class="pfl">구입가격(공급가)</td><td class="pfv">${W(c.purchasePrice)}</td><td class="pfv">${W(c.purchasePrice)}</td></tr>
-          <tr><td class="pfl">탁송비</td><td class="pfv">${W(c.delivery)}</td><td class="pfv">${W(c.delivery)}</td></tr>
           <tr><td class="pfl">취득세</td><td class="pfv">${W(c.acqTax)}</td><td class="pfv">${W(c.acqTax)}</td></tr>
           <tr><td class="pfl">채권</td><td class="pfv">${W(c.bond)}</td><td class="pfv">${W(c.bond)}</td></tr>
           <tr><td class="pfl">대행료</td><td class="pfv">${W(c.agency)}</td><td class="pfv">${W(c.agency)}</td></tr>
-          <tr class="pf2hl"><td class="pfl">취득가액 합계</td><td class="pfv">${W(c.acqTotal)}</td><td class="pfv">${W(c.acqTotal)}</td></tr>
 
           <tr class="pf2sec"><td colspan="3">자동차세 / 원비용</td></tr>
           <tr><td class="pfl">자동차세</td><td class="pfv">${W(c.carTax48)}</td><td class="pfv">${W(c.carTax60)}</td></tr>
-          <tr class="pf2hl"><td class="pfl">원비용(취득가액+자동차세-보증금)</td><td class="pfv">${W(c.realCost48)}</td><td class="pfv">${W(c.realCost60)}</td></tr>
+          <tr class="pf2hl"><td class="pfl">원비용(구입가+취득세+채권+대행료-보증금+자동차세)</td><td class="pfv">${W(c.realCost48)}</td><td class="pfv">${W(c.realCost60)}</td></tr>
 
           <tr class="pf2sec"><td colspan="3">수익 / 차감비용</td></tr>
-          <tr><td class="pfl">15%이자수익(원비용 PMT, 원금제외)</td><td class="pfv">${W(c.interestIncome48)}</td><td class="pfv">${W(c.interestIncome60)}</td></tr>
-          <tr><td class="pfl">7%조달이자(48개월고정,차량가85%)</td><td class="pfv">${W(c.fundInterest)}</td><td class="pfv">${W(c.fundInterest)}</td></tr>
+          <tr><td class="pfl">이자비용(원비용 PMT, 원금제외)</td><td class="pfv">${W(c.interestCost48)}</td><td class="pfv">${W(c.interestCost60)}</td></tr>
+          <tr><td class="pfl">조달이자(7%, 원비용 PMT)</td><td class="pfv">${W(c.fundInterest48)}</td><td class="pfv">${W(c.fundInterest60)}</td></tr>
           <tr><td class="pfl">GPS비용</td><td class="pfv">${W(c.gps48)}</td><td class="pfv">${W(c.gps60)}</td></tr>
-          <tr><td class="pfl">수수료(P)</td><td class="pfv">${W(c.pAmount)}</td><td class="pfv">${W(c.pAmount)}</td></tr>
-          <tr><td class="pfl">이전비용((취득세+채권+대행료)×35.9%)</td><td class="pfv">${W(c.transferCost)}</td><td class="pfv">${W(c.transferCost)}</td></tr>
+          <tr><td class="pfl">수수료</td><td class="pfv">${W(c.fee)}</td><td class="pfv">${W(c.fee)}</td></tr>
+          ${transferRow}
 
+          <tr class="pf2hl"><td class="pfl">최종렌트료</td><td class="pfv">${W(c.finalRent48)}</td><td class="pfv">${W(c.finalRent60)}</td></tr>
           <tr class="pf2profit"><td class="pfl">순 이익</td><td class="pfv">${W(pf.netProfit48)}</td><td class="pfv">${W(pf.netProfit60)}</td></tr>
           <tr class="pf2profit"><td class="pfl">수익율</td><td class="pfv">${pct(pf.profitRate48)}</td><td class="pfv">${pct(pf.profitRate60)}</td></tr>
         </tbody>
