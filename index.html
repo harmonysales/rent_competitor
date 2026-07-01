@@ -758,6 +758,7 @@ async function submitProfitInput() {
         brandCode: selV.브랜드코드, seriesCode: selV.시리즈코드,
         modelCode: selV.모델코드, lineupCode: selV.라인업코드,
         price, depositRate: depRate/100,
+        prepayRate: parseInt(document.getElementById("ps").value) / 100,
         extraPRate: currentExtraPRate,
         ...adminVars,
       })
@@ -821,7 +822,7 @@ function renderProfit(r) {
           ${c.extraPAmount48 ? `<tr><td class="pfl">추가P (총액 / 월공급가)</td><td class="pfv">${W(c.extraPAmount48)} / ${W(c.extraPSupply48)}</td><td class="pfv">${W(c.extraPAmount60)} / ${W(c.extraPSupply60)}</td></tr>` : ''}
           ${transferRow}
 
-          <tr class="pf2hl"><td class="pfl">최종렌트료 <span style="font-size:11px;font-weight:400;color:var(--muted);">((이자수익+원비용)/48 + 추가P) × 1.1</span></td><td class="pfv">${W(c.finalRent48)}</td><td class="pfv">${W(c.finalRent60)}</td></tr>
+          <tr class="pf2hl"><td class="pfl">최종렌트료 <span style="font-size:11px;font-weight:400;color:var(--muted);">((이자수익+원비용)/48 + 추가P) × 1.1 - 선납금차감</span></td><td class="pfv">${W(c.finalRent48)}</td><td class="pfv">${W(c.finalRent60)}</td></tr>
           <tr class="pf2profit"><td class="pfl">순 이익 (총)</td><td class="pfv">${W(pf.netProfit48)}</td><td class="pfv">${W(pf.netProfit60)}</td></tr>
           <tr class="pf2profit"><td class="pfl">순 이익 (월)</td><td class="pfv">${W(pf.netProfit48/48)}</td><td class="pfv">${W(pf.netProfit60/60)}</td></tr>
           <tr class="pf2profit"><td class="pfl">수익율</td><td class="pfv">${pct(pf.profitRate48)}</td><td class="pfv">${pct(pf.profitRate60)}</td></tr>
