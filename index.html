@@ -810,14 +810,15 @@ function renderProfit(r) {
           <tr class="pf2sec"><td colspan="3">자동차세 / 원비용</td></tr>
           <tr><td class="pfl">자동차세</td><td class="pfv">${W(c.carTax48)}</td><td class="pfv">${W(c.carTax60)}</td></tr>
           <tr class="pf2hl"><td class="pfl">원비용(구입가+취득세+채권+대행료-보증금+자동차세)</td><td class="pfv">${W(c.realCost48)}</td><td class="pfv">${W(c.realCost60)}</td></tr>
+          <tr><td class="pfl">차량원가(구입가+취득세+채권+대행료+자동차세)</td><td class="pfv">${W(c.vehicleCost48)}</td><td class="pfv">${W(c.vehicleCost60)}</td></tr>
 
           <tr class="pf2sec"><td colspan="3">수익 / 차감비용</td></tr>
           <tr><td class="pfl">이자수익(원비용 PMT, 원금제외)</td><td class="pfv">${W(c.interestCost48)}</td><td class="pfv">${W(c.interestCost60)}</td></tr>
-          <tr><td class="pfl">조달기준액(원비용×${(r.input.fundRatio*100).toFixed(0)}%)</td><td class="pfv">${W(c.fundBase48)}</td><td class="pfv">${W(c.fundBase60)}</td></tr>
+          <tr><td class="pfl">조달기준액(차량원가×${(r.input.fundRatio*100).toFixed(0)}%)</td><td class="pfv">${W(c.fundBase48)}</td><td class="pfv">${W(c.fundBase60)}</td></tr>
           <tr><td class="pfl">조달이자(7%, PMT)</td><td class="pfv">${W(c.fundInterest48)}</td><td class="pfv">${W(c.fundInterest60)}</td></tr>
           <tr><td class="pfl">GPS비용</td><td class="pfv">${W(c.gps48)}</td><td class="pfv">${W(c.gps60)}</td></tr>
           <tr><td class="pfl">수수료</td><td class="pfv">${W(c.fee)}</td><td class="pfv">${W(c.fee)}</td></tr>
-          ${c.extraPAmount48 ? `<tr><td class="pfl">추가P(총액)</td><td class="pfv">${W(c.extraPAmount48)}</td><td class="pfv">${W(c.extraPAmount60)}</td></tr>` : ''}
+          ${c.extraPAmount48 ? `<tr><td class="pfl">추가P (총액 / 월공급가)</td><td class="pfv">${W(c.extraPAmount48)} / ${W(c.extraPSupply48)}</td><td class="pfv">${W(c.extraPAmount60)} / ${W(c.extraPSupply60)}</td></tr>` : ''}
           ${transferRow}
 
           <tr class="pf2hl"><td class="pfl">최종렌트료 <span style="font-size:11px;font-weight:400;color:var(--muted);">((이자수익+원비용)/48 + 추가P) × 1.1</span></td><td class="pfv">${W(c.finalRent48)}</td><td class="pfv">${W(c.finalRent60)}</td></tr>
