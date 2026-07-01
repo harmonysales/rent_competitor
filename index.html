@@ -794,7 +794,7 @@ function renderProfit(r) {
         <tr><td class="pfl">차량가격</td><td class="pfv" colspan="2">${W(r.input.carPrice)}</td></tr>
         <tr><td class="pfl">보증금율</td><td class="pfv" colspan="2">${(r.input.depositRate*100).toFixed(0)}%</td></tr>
         <tr><td class="pfl">적용 이자수익 금리</td><td class="pfv" colspan="2">${(r.input.interestRate*100).toFixed(1)}%</td></tr>
-        <tr><td class="pfl">적용 대행료 비율</td><td class="pfv" colspan="2">${(r.input.agencyRate*100).toFixed(1)}%</td></tr>
+        <tr><td class="pfl">적용 행정비용 비율</td><td class="pfv" colspan="2">${(r.input.agencyRate*100).toFixed(1)}%</td></tr>
         <tr><td class="pfl">적용 수수료</td><td class="pfv" colspan="2">${W(r.input.feeAmount)}</td></tr>
       </table>
     </div>
@@ -806,16 +806,15 @@ function renderProfit(r) {
           <tr><td class="pfl">구입가격(공급가)</td><td class="pfv">${W(c.purchasePrice)}</td><td class="pfv">${W(c.purchasePrice)}</td></tr>
           <tr><td class="pfl">취득세</td><td class="pfv">${W(c.acqTax)}</td><td class="pfv">${W(c.acqTax)}</td></tr>
           <tr><td class="pfl">채권</td><td class="pfv">${W(c.bond)}</td><td class="pfv">${W(c.bond)}</td></tr>
-          <tr><td class="pfl">대행료</td><td class="pfv">${W(c.agency)}</td><td class="pfv">${W(c.agency)}</td></tr>
+          <tr><td class="pfl">행정비용</td><td class="pfv">${W(c.agency)}</td><td class="pfv">${W(c.agency)}</td></tr>
 
           <tr class="pf2sec"><td colspan="3">자동차세 / 원비용</td></tr>
           <tr><td class="pfl">자동차세</td><td class="pfv">${W(c.carTax48)}</td><td class="pfv">${W(c.carTax60)}</td></tr>
-          <tr class="pf2hl"><td class="pfl">원비용(구입가+취득세+채권+대행료-보증금+자동차세)</td><td class="pfv">${W(c.realCost48)}</td><td class="pfv">${W(c.realCost60)}</td></tr>
-          <tr><td class="pfl">차량원가(구입가+취득세+채권+대행료+자동차세)</td><td class="pfv">${W(c.vehicleCost48)}</td><td class="pfv">${W(c.vehicleCost60)}</td></tr>
+          <tr class="pf2hl"><td class="pfl">원비용(구입가+취득세+채권+행정비용-보증금+자동차세)</td><td class="pfv">${W(c.realCost48)}</td><td class="pfv">${W(c.realCost60)}</td></tr>
+          <tr><td class="pfl">조달기준액((차량가+취득세)×${(r.input.fundRatio*100).toFixed(0)}%)</td><td class="pfv">${W(c.vehicleCost48)}</td><td class="pfv">${W(c.vehicleCost60)}</td></tr>
 
           <tr class="pf2sec"><td colspan="3">수익 / 차감비용</td></tr>
           <tr><td class="pfl">이자수익(원비용 PMT, 원금제외)</td><td class="pfv">${W(c.interestCost48)}</td><td class="pfv">${W(c.interestCost60)}</td></tr>
-          <tr><td class="pfl">조달기준액(차량원가×${(r.input.fundRatio*100).toFixed(0)}%)</td><td class="pfv">${W(c.fundBase48)}</td><td class="pfv">${W(c.fundBase60)}</td></tr>
           <tr><td class="pfl">조달이자(7%, PMT)</td><td class="pfv">${W(c.fundInterest48)}</td><td class="pfv">${W(c.fundInterest60)}</td></tr>
           <tr><td class="pfl">GPS비용</td><td class="pfv">${W(c.gps48)}</td><td class="pfv">${W(c.gps60)}</td></tr>
           <tr><td class="pfl">수수료</td><td class="pfv">${W(c.fee)}</td><td class="pfv">${W(c.fee)}</td></tr>
@@ -824,7 +823,8 @@ function renderProfit(r) {
           <tr class="pf2hl"><td class="pfl">최종렌트료 <span style="font-size:11px;font-weight:400;color:var(--muted);">((이자수익+원비용)/48) × 1.1 - 선납금차감</span></td><td class="pfv">${W(c.finalRent48)}</td><td class="pfv">${W(c.finalRent60)}</td></tr>
           <tr class="pf2profit"><td class="pfl">순 이익 (총)</td><td class="pfv">${W(pf.netProfit48)}</td><td class="pfv">${W(pf.netProfit60)}</td></tr>
           <tr class="pf2profit"><td class="pfl">순 이익 (월)</td><td class="pfv">${W(pf.netProfit48/48)}</td><td class="pfv">${W(pf.netProfit60/60)}</td></tr>
-          <tr class="pf2profit"><td class="pfl">수익율</td><td class="pfv">${pct(pf.profitRate48)}</td><td class="pfv">${pct(pf.profitRate60)}</td></tr>
+          <tr class="pf2profit"><td class="pfl">총 수익율</td><td class="pfv">${pct(pf.profitRate48)}</td><td class="pfv">${pct(pf.profitRate60)}</td></tr>
+          <tr class="pf2profit"><td class="pfl">연간 수익율</td><td class="pfv">${pct(pf.annualProfitRate48)}</td><td class="pfv">${pct(pf.annualProfitRate60)}</td></tr>
         </tbody>
       </table>
     </div>
