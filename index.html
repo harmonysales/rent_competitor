@@ -139,60 +139,41 @@ tr.harmony-row:hover td{background:rgba(13,122,78,.06)}
     <div class="kpi harmony-card"><div class="kpi-icon">⭐</div><div class="lbl">하모니렌트카 순위</div><div class="val" id="kHarmony">-</div><div class="sub" id="kHarmonySub"></div></div>
   </div>
 
-  <!-- ROW1: 월별 추이 / 차종별 -->
-  <div class="row2">
-    <div class="panel">
-      <div class="panel-head"><div class="panel-title">월별 총 보유대수 추이</div></div>
-      <div class="chart-box" style="height:200px"><canvas id="trendChart"></canvas></div>
-      <div class="accordion">
-        <button class="accordion-btn" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">💡 차트 해석 가이드 <span class="arrow">▼</span></button>
-        <div class="accordion-body"><p>전국 렌트카 총 보유대수의 월별 흐름입니다. 상승 추세는 업계 전반의 성장을 의미하며, 특정 월에 급변이 있다면 계절성 혹은 정책 변화를 확인해보세요.</p></div>
-      </div>
-    </div>
-    <div class="panel">
-      <div class="panel-head"><div class="panel-title">차종별 구성</div></div>
-      <div class="chart-box" style="height:200px"><canvas id="typeChart"></canvas></div>
-      <div class="accordion">
-        <button class="accordion-btn" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">💡 차트 해석 가이드 <span class="arrow">▼</span></button>
-        <div class="accordion-body"><p>기준년월 기준 차종별 비중입니다.</p></div>
-      </div>
+  <!-- ROW1: 월별 추이 -->
+  <div class="panel" style="margin-bottom:13px">
+    <div class="panel-head"><div class="panel-title">월별 총 보유대수 추이</div></div>
+    <div class="chart-box" style="height:200px"><canvas id="trendChart"></canvas></div>
+    <div class="accordion">
+      <button class="accordion-btn" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">💡 차트 해석 가이드 <span class="arrow">▼</span></button>
+      <div class="accordion-body"><p>전국 렌트카 총 보유대수의 월별 흐름입니다. 상승 추세는 업계 전반의 성장을 의미하며, 특정 월에 급변이 있다면 계절성 혹은 정책 변화를 확인해보세요.</p></div>
     </div>
   </div>
 
-  <!-- ROW2: TOP10 / 경쟁사 대수 추이 -->
-  <div class="row2">
-    <div class="panel">
-      <div class="panel-head"><div class="panel-title">TOP 10 업체 보유대수</div></div>
-      <div class="chart-box" id="top10Wrap" style="height:300px"><canvas id="top10Chart"></canvas></div>
-      <div class="accordion">
-        <button class="accordion-btn" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">💡 차트 해석 가이드 <span class="arrow">▼</span></button>
-        <div class="accordion-body"><p>기준년월 보유대수 상위 10개 업체입니다. 하모니렌트카(초록)의 위치와 상위 업체와의 격차를 확인하세요.</p></div>
-      </div>
+  <!-- ROW2: 경쟁사 대수 추이 -->
+  <div class="panel" style="margin-bottom:13px">
+    <div class="panel-head"><div class="panel-title">경쟁사 대수 추이</div></div>
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="compInput" placeholder="업체명 검색하여 추가..." autocomplete="off"
+        oninput="showAC('compInput','compAC',addCompTag)" onkeydown="acKey(event,'compAC',addCompTag,'compInput')">
+      <div class="autocomplete" id="compAC"></div>
     </div>
-    <div class="panel">
-      <div class="panel-head"><div class="panel-title">경쟁사 대수 추이</div></div>
-      <div class="search-wrap">
-        <span class="search-icon">🔍</span>
-        <input type="text" id="compInput" placeholder="업체명 검색하여 추가..." autocomplete="off"
-          oninput="showAC('compInput','compAC',addCompTag)" onkeydown="acKey(event,'compAC',addCompTag,'compInput')">
-        <div class="autocomplete" id="compAC"></div>
-      </div>
-      <div class="tag-list" id="compTags"></div>
-      <div class="chart-box" style="height:220px"><canvas id="compChart"></canvas></div>
-      <div class="accordion">
-        <button class="accordion-btn" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">💡 차트 해석 가이드 <span class="arrow">▼</span></button>
-        <div class="accordion-body"><p>선택한 업체들의 보유대수 변화 추이입니다. 대수가 빠르게 증가하는 업체가 있다면 경쟁이 심화되고 있는 신호입니다.</p></div>
-      </div>
+    <div class="tag-list" id="compTags"></div>
+    <div class="chart-box" style="height:220px"><canvas id="compChart"></canvas></div>
+    <div class="accordion">
+      <button class="accordion-btn" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">💡 차트 해석 가이드 <span class="arrow">▼</span></button>
+      <div class="accordion-body"><p>선택한 업체들의 보유대수 변화 추이입니다. 대수가 빠르게 증가하는 업체가 있다면 경쟁이 심화되고 있는 신호입니다.</p></div>
     </div>
   </div>
 
   <!-- 하모니 추이 -->
   <div class="panel" style="margin-bottom:13px">
-    <div class="panel-head"><div class="panel-title">하모니렌트카 순위 · 대수 추이</div></div>
-    <div class="chart-box" style="height:180px"><canvas id="harmonyChart"></canvas></div>
+    <div class="panel-head"><div class="panel-title">하모니렌트카 보유대수 추이</div></div>
+    <div id="harmonyStatRow" style="display:flex;gap:18px;margin-bottom:10px;flex-wrap:wrap"></div>
+    <div class="chart-box" style="height:200px"><canvas id="harmonyChart"></canvas></div>
     <div class="accordion">
       <button class="accordion-btn" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">💡 차트 해석 가이드 <span class="arrow">▼</span></button>
-      <div class="accordion-body"><p>하모니렌트카의 순위(초록 실선)와 보유대수(파란 점선)를 동시에 확인합니다. 대수가 늘어도 순위가 제자리라면 경쟁사 성장이 더 빠른 것입니다.</p></div>
+      <div class="accordion-body"><p>하모니렌트카의 월별 보유대수 추이입니다. 전월 대비·전년 동월 대비 증감률을 함께 확인하세요.</p></div>
     </div>
   </div>
 
@@ -221,8 +202,9 @@ tr.harmony-row:hover td{background:rgba(13,122,78,.06)}
           oninput="showAC('indivInput','indivAC',selectIndiv)" onkeydown="acKey(event,'indivAC',selectIndiv,'indivInput')">
         <div class="autocomplete" id="indivAC"></div>
       </div>
-      <div id="indivName" style="font-size:14px;font-weight:700;color:var(--blue4);margin-bottom:8px;min-height:20px"></div>
-      <div class="chart-box" style="height:240px"><canvas id="indivChart"></canvas></div>
+      <div id="indivName" style="font-size:14px;font-weight:700;color:var(--blue4);margin-bottom:6px;min-height:20px"></div>
+      <div id="indivStatRow" style="display:flex;gap:18px;margin-bottom:8px;flex-wrap:wrap"></div>
+      <div class="chart-box" style="height:200px"><canvas id="indivChart"></canvas></div>
     </div>
   </div>
 
@@ -272,6 +254,7 @@ const COLORS = ['#2272d9','#0d7a4e','#e67e22','#8e44ad','#e74c3c','#16a085','#29
 
 let annualExpanded = false;
 let annualQuery = '';
+let curIndivName = '';
 
 /* ── 스마트 단위 포맷 ── */
 function smartUnit(maxVal) {
@@ -313,8 +296,9 @@ function getMonthData(m){ return getAllData()[m] || []; }
 
 function onMonthChange() {
   curMonth = document.getElementById('monthSel').value;
-  updateKPI(); drawTrend(); drawType(); drawTop10(); drawComp(); drawHarmony();
+  updateKPI(); drawTrend(); drawComp(); drawHarmony();
   renderDetailTable('');
+  if (curIndivName) drawIndiv(curIndivName);
   renderAnnualTable();
 }
 
@@ -416,63 +400,9 @@ function drawTrend() {
   });
 }
 
-/* ── 차종별 ── */
-function drawType() {
-  destroyChart('typeChart');
-  const rows  = getMonthData(curMonth);
-  const sedan = rows.reduce((s,r) => s + r[2], 0);
-  const van   = rows.reduce((s,r) => s + r[3], 0);
-  const etc   = rows.reduce((s,r) => s + r[4], 0);
-  const total = rows.reduce((s,r) => s + r[1], 0);
-  charts['typeChart'] = new Chart(document.getElementById('typeChart'), {
-    type: 'doughnut',
-    data: { labels:['승용차','승합차','기타'],
-      datasets:[{ data:[sedan,van,etc], backgroundColor:['#2272d9','#16a085','#bdc3c7'], borderWidth:0, hoverOffset:4 }] },
-    options: {
-      responsive:true, maintainAspectRatio:false, cutout:'62%',
-      plugins:{
-        legend:{ position:'right', labels:{ color:'#1a3350', font:{ size:12, weight:'500' }, padding:14, boxWidth:11, boxHeight:11 } },
-        tooltip:{ callbacks:{ label:c => ' ' + fmt(c.raw) + '대 (' + ((c.raw/total)*100).toFixed(1) + '%)' } },
-        datalabels:{ display:false },
-      }
-    }
-  });
-}
 
-/* ── TOP10 ── */
-function drawTop10() {
-  destroyChart('top10Chart');
-  const rows   = getMonthData(curMonth).slice(0, 10);
-  const labels = rows.map(r => r[0].length > 10 ? r[0].slice(0, 10) + '…' : r[0]);
-  const vals   = rows.map(r => r[1]);
-  const maxVal = Math.max(...vals);
-  const u      = smartUnit(maxVal);
-  const bg  = rows.map(r => r[0].includes(HARMONY_KEY) ? 'rgba(13,122,78,.75)'  : 'rgba(34,114,217,.7)');
-  const bgh = rows.map(r => r[0].includes(HARMONY_KEY) ? '#0d7a4e' : '#2272d9');
-  const ht = rows.length * 36 + 40;
-  document.getElementById('top10Wrap').style.height = ht + 'px';
-  charts['top10Chart'] = new Chart(document.getElementById('top10Chart'), {
-    type: 'bar',
-    data: { labels, datasets:[{ label:'보유대수', data:vals, backgroundColor:bg, hoverBackgroundColor:bgh, borderRadius:4, borderSkipped:false }] },
-    options: {
-      indexAxis:'y', responsive:true, maintainAspectRatio:false, clip:false,
-      layout:{ padding:{ right:52 } },
-      plugins:{
-        legend:{ display:false },
-        tooltip:{ callbacks:{ label:c => ' ' + fmt(c.raw) + '대' } },
-        datalabels:{
-          color:'#1a3350', font:{ size:11, weight:'700' },
-          anchor:'end', align:'right', offset:4,
-          formatter: fmtLabel,
-        },
-      },
-      scales:{
-        x:{ ticks:{ color:TICK_C, font:{ size:11 }, callback: v => (v/u.div).toFixed(0) + u.suffix.replace('대','') }, grid:{ color:GRID_C } },
-        y:{ ticks:{ color:'#1a3350', font:{ size:12, weight:'500' } }, grid:{ display:false } }
-      }
-    }
-  });
-}
+
+
 
 /* ── 경쟁사 대수 추이 (스마트 Y축 + 데이터 레이블) ── */
 function drawComp() {
@@ -524,37 +454,66 @@ function drawComp() {
   });
 }
 
+/* ── 퍼센티지 stat row 렌더 ── */
+function renderStatRow(elId, curVal, prevVal, yoyVal) {
+  const el = document.getElementById(elId);
+  if (!el) return;
+  const mkChip = (label, cur, prev, color) => {
+    if (prev == null || prev === 0) return '';
+    const pct = ((cur - prev) / prev * 100);
+    const sign = pct >= 0 ? '+' : '';
+    const arrow = pct > 0 ? '▲' : pct < 0 ? '▼' : '─';
+    const col = pct > 0 ? '#2272d9' : pct < 0 ? '#c0392b' : '#5a7a9e';
+    return `<div style="background:#f5f7fc;border:1px solid var(--border);border-radius:8px;padding:5px 11px;font-size:12px;font-weight:600;color:${col}">
+      <span style="color:var(--text3);font-weight:500;margin-right:4px">${label}</span>${arrow} ${sign}${pct.toFixed(1)}%
+      <span style="color:var(--text3);font-weight:400;margin-left:3px">(${pct>=0?'+':''}${fmt(cur-prev)}대)</span>
+    </div>`;
+  };
+  el.innerHTML = mkChip('전월 대비', curVal, prevVal) + mkChip('전년 동월 대비', curVal, yoyVal);
+}
+
 /* ── 하모니 추이 ── */
 function drawHarmony() {
   destroyChart('harmonyChart');
-  const ranks  = getMonths().map(m => { const s=getMonthData(m); const i=s.findIndex(r=>r[0].includes(HARMONY_KEY)); return i>=0?i+1:null; });
-  const counts = getMonths().map(m => { const r=getMonthData(m).find(r=>r[0].includes(HARMONY_KEY)); return r?r[1]:null; });
+  const months = getMonths();
+  const counts = months.map(m => { const r=getMonthData(m).find(r=>r[0].includes(HARMONY_KEY)); return r?r[1]:null; });
   const maxC   = Math.max(...counts.filter(v=>v!==null));
   const u      = smartUnit(maxC);
+  const bgColors = months.map((m,i) => m===curMonth ? '#0d7a4e' : 'rgba(13,122,78,.45)');
+
+  // stat row
+  const curIdx = months.indexOf(curMonth);
+  const curVal = counts[curIdx];
+  const prevVal = curIdx > 0 ? counts[curIdx-1] : null;
+  const yoyIdx = months.indexOf(months[curIdx]?.replace(/^(\d+)\./, m => (parseInt(m)-1)+'.' ));
+  // 전년 동월: 같은 월, 1년 전
+  const [cy, cm] = curMonth.split('.');
+  const yoyKey = (parseInt(cy)-1) + '.' + cm;
+  const yoyIdx2 = months.indexOf(yoyKey);
+  const yoyVal = yoyIdx2 >= 0 ? counts[yoyIdx2] : null;
+  renderStatRow('harmonyStatRow', curVal, prevVal, yoyVal);
+
   charts['harmonyChart'] = new Chart(document.getElementById('harmonyChart'), {
-    type: 'line',
-    data: { labels: getMonths().map(fmtMonth), datasets: [
-      { label:'순위', data:ranks, borderColor:'#0d7a4e', pointBackgroundColor:'#0d7a4e', yAxisID:'y1',
-        tension:.35, pointRadius:4, borderWidth:2, backgroundColor:'transparent', spanGaps:true,
-        datalabels:{ color:'#0d7a4e', font:{ size:10, weight:'700' }, anchor:'end', align:'top', offset:3, formatter:v=>v+'위',
-          display:ctx=>{ const n=ctx.dataset.data.filter(x=>x!==null).length; return n<=12?true:ctx.dataIndex%3===0; } } },
-      { label:'보유대수', data:counts, borderColor:'#2272d9', pointBackgroundColor:'#2272d9', yAxisID:'y2',
-        tension:.35, pointRadius:4, borderWidth:2, backgroundColor:'rgba(34,114,217,.06)', fill:true, spanGaps:true, borderDash:[5,3],
-        datalabels:{ color:'#2272d9', font:{ size:10, weight:'700' }, anchor:'end', align:'bottom', offset:3, formatter:fmtLabel,
-          display:ctx=>{ const n=ctx.dataset.data.filter(x=>x!==null).length; return n<=12?true:ctx.dataIndex%3===0; } } },
+    type: 'bar',
+    data: { labels: months.map(fmtMonth), datasets: [
+      { label:'보유대수', data:counts, backgroundColor:bgColors,
+        hoverBackgroundColor:'#0a6040', borderRadius:4, borderSkipped:false,
+        datalabels:{ color:'#0a6040', font:{ size:10, weight:'700' }, anchor:'end', align:'top', offset:2,
+          formatter: fmtLabel,
+          display: ctx => { const n=months.length; return n<=12?true:ctx.dataIndex%2===0||ctx.dataIndex===curIdx; } }
+      }
     ]},
     options:{
       responsive:true, maintainAspectRatio:false, clip:false,
-      layout:{ padding:{ top:24, bottom:10 } },
+      layout:{ padding:{ top:22, right:10 } },
       plugins:{
-        legend:{ position:'bottom', labels:{ color:'#1a3350', font:{ size:12, weight:'500' }, padding:14, boxWidth:18, usePointStyle:true } },
-        tooltip:{ callbacks:{ label:c=>c.datasetIndex===0?' '+c.raw+'위':' '+fmt(c.raw)+'대' } },
+        legend:{ display:false },
+        tooltip:{ callbacks:{ label:c=>' '+fmt(c.raw)+'대' } },
         datalabels:{},
       },
       scales:{
-        y1:{ position:'left',  reverse:true, ticks:{ color:'#0d7a4e', font:{ size:11 }, stepSize:1, callback:v=>v+'위' }, grid:{ color:GRID_C } },
-        y2:{ position:'right', ticks:{ color:'#2272d9', font:{ size:11 }, callback:v=>(v/u.div).toFixed(0)+u.suffix }, grid:{ display:false } },
-        x:{ ticks:{ color:TICK_C, font:{ size:11, weight:'500' } }, grid:{ color:GRID_C } }
+        x:{ ticks:{ color:TICK_C, font:{ size:11, weight:'500' } }, grid:{ color:GRID_C } },
+        y:{ ticks:{ color:TICK_C, font:{ size:11 }, callback:v=>(v/u.div).toFixed(0)+u.suffix }, grid:{ color:GRID_C } }
       }
     }
   });
@@ -608,44 +567,55 @@ function selectDetailSearch(name) {
 
 /* ── 개별 추이 ── */
 function selectIndiv(name) {
+  curIndivName = name;
   document.getElementById('indivInput').value = name;
   document.getElementById('indivName').textContent = name;
+  document.getElementById('indivStatRow').innerHTML = '';
   hideAC('indivAC');
   drawIndiv(name);
 }
 function drawIndiv(name) {
   destroyChart('indivChart');
-  const ranks  = getMonths().map(m => { const s=getMonthData(m); const i=s.findIndex(r=>r[0]===name); return i>=0?i+1:null; });
-  const counts = getMonths().map(m => { const r=getMonthData(m).find(r=>r[0]===name); return r?r[1]:null; });
+  const months = getMonths();
+  const counts = months.map(m => { const r=getMonthData(m).find(r=>r[0]===name); return r?r[1]:null; });
   const maxC   = Math.max(...counts.filter(v=>v!==null));
   const u      = smartUnit(maxC);
   const isH    = name.includes(HARMONY_KEY);
-  const c1     = isH ? '#0d7a4e' : '#2272d9';
-  const c2     = isH ? '#16a085' : '#1a5cad';
+  const baseCol = isH ? '#0d7a4e' : '#2272d9';
+  const fadeCol = isH ? 'rgba(13,122,78,.4)' : 'rgba(34,114,217,.4)';
+  const curIdx = months.indexOf(curMonth);
+  const bgColors = months.map((_,i) => i===curIdx ? baseCol : fadeCol);
+
+  // stat row
+  const curVal  = counts[curIdx];
+  const prevVal = curIdx > 0 ? counts[curIdx-1] : null;
+  const [cy, cm] = curMonth.split('.');
+  const yoyKey  = (parseInt(cy)-1) + '.' + cm;
+  const yoyIdx  = months.indexOf(yoyKey);
+  const yoyVal  = yoyIdx >= 0 ? counts[yoyIdx] : null;
+  renderStatRow('indivStatRow', curVal, prevVal, yoyVal);
+
   charts['indivChart'] = new Chart(document.getElementById('indivChart'), {
-    type:'line',
-    data:{ labels:getMonths().map(fmtMonth), datasets:[
-      { label:'순위', data:ranks, borderColor:c1, pointBackgroundColor:c1, yAxisID:'y1',
-        tension:.35, pointRadius:4, borderWidth:2, backgroundColor:'transparent', spanGaps:true,
-        datalabels:{ color:c1, font:{ size:10, weight:'700' }, anchor:'end', align:'top', offset:3, formatter:v=>v+'위',
-          display:ctx=>{ const n=ctx.dataset.data.filter(x=>x!==null).length; return n<=12?true:ctx.dataIndex%3===0; } } },
-      { label:'보유대수', data:counts, borderColor:c2, pointBackgroundColor:c2, yAxisID:'y2',
-        tension:.35, pointRadius:4, borderWidth:2, backgroundColor:isH?'rgba(13,122,78,.06)':'rgba(34,114,217,.06)', fill:true, spanGaps:true, borderDash:[5,3],
-        datalabels:{ color:c2, font:{ size:10, weight:'700' }, anchor:'end', align:'bottom', offset:3, formatter:fmtLabel,
-          display:ctx=>{ const n=ctx.dataset.data.filter(x=>x!==null).length; return n<=12?true:ctx.dataIndex%3===0; } } },
+    type:'bar',
+    data:{ labels:months.map(fmtMonth), datasets:[
+      { label:'보유대수', data:counts, backgroundColor:bgColors,
+        hoverBackgroundColor:baseCol, borderRadius:4, borderSkipped:false,
+        datalabels:{ color:baseCol, font:{ size:10, weight:'700' }, anchor:'end', align:'top', offset:2,
+          formatter: fmtLabel,
+          display: ctx => { const n=months.length; return n<=12?true:ctx.dataIndex%2===0||ctx.dataIndex===curIdx; } }
+      }
     ]},
     options:{
       responsive:true, maintainAspectRatio:false, clip:false,
-      layout:{ padding:{ top:24, bottom:10 } },
+      layout:{ padding:{ top:22, right:10 } },
       plugins:{
-        legend:{ position:'bottom', labels:{ color:'#1a3350', font:{ size:12, weight:'500' }, padding:14, boxWidth:18, usePointStyle:true } },
-        tooltip:{ callbacks:{ label:c=>c.datasetIndex===0?' '+c.raw+'위':' '+fmt(c.raw)+'대' } },
+        legend:{ display:false },
+        tooltip:{ callbacks:{ label:c=>' '+fmt(c.raw)+'대' } },
         datalabels:{},
       },
       scales:{
-        y1:{ position:'left',  reverse:true, ticks:{ color:c1, font:{ size:11 }, stepSize:1, callback:v=>v+'위' }, grid:{ color:GRID_C } },
-        y2:{ position:'right', ticks:{ color:c2, font:{ size:11 }, callback:v=>(v/u.div).toFixed(0)+u.suffix }, grid:{ display:false } },
-        x:{ ticks:{ color:TICK_C, font:{ size:11, weight:'500' } }, grid:{ color:GRID_C } }
+        x:{ ticks:{ color:TICK_C, font:{ size:11, weight:'500' } }, grid:{ color:GRID_C } },
+        y:{ ticks:{ color:TICK_C, font:{ size:11 }, callback:v=>(v/u.div).toFixed(0)+u.suffix }, grid:{ color:GRID_C } }
       }
     }
   });
