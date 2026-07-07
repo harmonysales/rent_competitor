@@ -397,10 +397,10 @@ function updateScalePanel() {
   const THRESHOLD = 1000;
   const calc = (dataRows, tot) => {
     const over  = dataRows.filter(r => r[1] >= THRESHOLD);
-    const under = dataRows.filter(r => r[1] > 0 && r[1] < THRESHOLD);
+    const under = dataRows.filter(r => r[1] < THRESHOLD);
     const overSum  = over.reduce((s,r) => s+r[1], 0);
     const underSum = under.reduce((s,r) => s+r[1], 0);
-    const totalCo  = dataRows.filter(r => r[1] > 0).length;
+    const totalCo  = dataRows.length;
     return {
       overCo:over.length, overSum, overPct:tot?overSum/tot*100:0, overCoPct:totalCo?over.length/totalCo*100:0,
       underCo:under.length, underSum, underPct:tot?underSum/tot*100:0, underCoPct:totalCo?under.length/totalCo*100:0,
