@@ -558,6 +558,12 @@ function renderDetailTable(q) {
     const diff      = prevIdx >= 0 ? r[1] - prevRows[prevIdx][1] : null;
     const rankClass = i===0?'r1':i===1?'r2':i===2?'r3':'';
     const tr = document.createElement('tr');
+    tr.style.cursor = 'pointer';
+    tr.title = '더블클릭하면 개별 추이로 이동';
+    tr.ondblclick = () => {
+      selectIndiv(r[0]);
+      document.getElementById('indivInput').scrollIntoView({ behavior:'smooth', block:'center' });
+    };
     if (!q && !detailExpanded && i >= 20) { tr.className = 'hidden-row'; tr.style.display = 'none'; }
     if (isHarmony) tr.className = (tr.className ? tr.className + ' ' : '') + 'harmony-row';
     const diffHtml = diff === null
